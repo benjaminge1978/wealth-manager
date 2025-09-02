@@ -9,7 +9,7 @@ import { ContactSection } from "./ContactSection";
 
 export function HomePage() {
   return (
-    <main>
+    <main id="main-content">
       <HeroSection />
       <ServicesBar />
       <ServicesSection />

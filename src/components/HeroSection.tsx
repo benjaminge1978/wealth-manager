@@ -15,9 +15,6 @@ const iconMap = {
 
 export function HeroSection() {
   const { data: heroData, loading, error } = useHeroData();
-  
-  // Log for debugging
-  console.log('Hero component state:', { heroData, loading, error });
 
   // Fallback data when CMS data is not available
   const fallbackData: HeroData = {
@@ -109,6 +106,9 @@ export function HeroSection() {
                 src={displayData.heroImage ? getImageUrl(displayData.heroImage, 800, 500) : heroImage}
                 alt="Couple looking at their financial future together" 
                 className="w-full h-[500px] object-cover rounded-lg shadow-2xl"
+                priority={true}
+                width={800}
+                height={500}
               />
             </div>
             <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/30 rounded-lg"></div>

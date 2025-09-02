@@ -5,8 +5,76 @@ import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { useState } from "react";
 
 export function ContactSection() {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    phone: '',
+    message: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = 'First name is required';
+    }
+    
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = 'Last name is required';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'Please tell us about your goals';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    try {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      alert('Thank you for your interest! We will contact you within 24 hours to schedule your consultation.');
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+      setErrors({});
+    } catch (error) {
+      alert('Something went wrong. Please try again or call us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
   const contactInfo = [
     {
       icon: <Phone className="w-5 h-5 text-primary" />,
@@ -49,40 +117,116 @@ export function ContactSection() {
                   Fill out the form below and we'll contact you within 24 hours to schedule your complimentary consultation.
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name</Label>
-                    <Input id="firstName" placeholder="John" />
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="firstName">First Name <span className="text-red-500" aria-label="required">*</span></Label>
+                      <Input 
+                        id="firstName" 
+                        placeholder="John"
+                        value={formData.firstName}
+                        onChange={(e) => handleInputChange('firstName', e.target.value)}
+                        required
+                        aria-invalid={!!errors.firstName}
+                        aria-describedby={errors.firstName ? "firstName-error" : undefined}
+                        className={errors.firstName ? "border-red-500 focus:ring-red-500" : ""}
+                      />
+                      {errors.firstName && (
+                        <p id="firstName-error" className="text-red-500 text-sm" role="alert">
+                          {errors.firstName}
+                        </p>
+                      )}
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="lastName">Last Name <span className="text-red-500" aria-label="required">*</span></Label>
+                      <Input 
+                        id="lastName" 
+                        placeholder="Doe"
+                        value={formData.lastName}
+                        onChange={(e) => handleInputChange('lastName', e.target.value)}
+                        required
+                        aria-invalid={!!errors.lastName}
+                        aria-describedby={errors.lastName ? "lastName-error" : undefined}
+                        className={errors.lastName ? "border-red-500 focus:ring-red-500" : ""}
+                      />
+                      {errors.lastName && (
+                        <p id="lastName-error" className="text-red-500 text-sm" role="alert">
+                          {errors.lastName}
+                        </p>
+                      )}
+                    </div>
                   </div>
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name</Label>
-                    <Input id="lastName" placeholder="Doe" />
+                    <Label htmlFor="email">Email <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Input 
+                      id="email" 
+                      type="email" 
+                      placeholder="john@example.com"
+                      value={formData.email}
+                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      required
+                      aria-invalid={!!errors.email}
+                      aria-describedby={errors.email ? "email-error" : undefined}
+                      className={errors.email ? "border-red-500 focus:ring-red-500" : ""}
+                    />
+                    {errors.email && (
+                      <p id="email-error" className="text-red-500 text-sm" role="alert">
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
-                  <Input id="phone" type="tel" placeholder="(555) 123-4567" />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="message">Tell us about your goals</Label>
-                  <Textarea 
-                    id="message" 
-                    placeholder="I'm interested in retirement planning and would like to discuss my investment strategy..."
-                    className="min-h-[120px]"
-                  />
-                </div>
-                
-                <Button className="w-full" size="lg">
-                  Schedule Consultation
-                </Button>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Phone <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Input 
+                      id="phone" 
+                      type="tel" 
+                      placeholder="(555) 123-4567"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      required
+                      aria-invalid={!!errors.phone}
+                      aria-describedby={errors.phone ? "phone-error" : undefined}
+                      className={errors.phone ? "border-red-500 focus:ring-red-500" : ""}
+                    />
+                    {errors.phone && (
+                      <p id="phone-error" className="text-red-500 text-sm" role="alert">
+                        {errors.phone}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="message">Tell us about your goals <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Textarea 
+                      id="message" 
+                      placeholder="I'm interested in retirement planning and would like to discuss my investment strategy..."
+                      className={`min-h-[120px] ${errors.message ? "border-red-500 focus:ring-red-500" : ""}`}
+                      value={formData.message}
+                      onChange={(e) => handleInputChange('message', e.target.value)}
+                      required
+                      aria-invalid={!!errors.message}
+                      aria-describedby={errors.message ? "message-error" : undefined}
+                    />
+                    {errors.message && (
+                      <p id="message-error" className="text-red-500 text-sm" role="alert">
+                        {errors.message}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    size="lg" 
+                    disabled={isSubmitting}
+                    aria-label={isSubmitting ? "Submitting consultation request..." : "Schedule consultation"}
+                  >
+                    {isSubmitting ? "Scheduling..." : "Schedule Consultation"}
+                  </Button>
+                </form>
               </CardContent>
             </Card>
           </div>

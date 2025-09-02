@@ -1,8 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { Menu } from "lucide-react";
+import { useState } from "react";
 
 export function Header() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -20,55 +22,139 @@ export function Header() {
   };
 
   return (
-    <header className="border-b bg-white/95 backdrop-blur sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-        <Link to="/" className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-            <span className="text-primary-foreground text-sm font-medium">WM</span>
-          </div>
-          <span className="font-medium text-lg">WealthMaster</span>
-        </Link>
-        
-        <nav className="hidden md:flex items-center space-x-8">
-          <button 
-            onClick={() => handleNavClick('services')} 
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Services
-          </button>
-          <button 
-            onClick={() => handleNavClick('about')} 
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            About
-          </button>
-          <button 
-            onClick={() => handleNavClick('process')} 
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Our Process
-          </button>
+    <>
+      {/* Skip Navigation Link */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-primary-foreground px-4 py-2 rounded-md z-50"
+      >
+        Skip to main content
+      </a>
+      
+      <header className="border-b bg-white/95 backdrop-blur sticky top-0 z-50" role="banner">
+        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link 
-            to="/blog" 
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            to="/" 
+            className="flex items-center space-x-2"
+            aria-label="WealthMaster home page"
           >
-            Blog
+            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+              <span className="text-primary-foreground text-sm font-medium">WM</span>
+            </div>
+            <span className="font-medium text-lg">WealthMaster</span>
           </Link>
-          <button 
-            onClick={() => handleNavClick('contact')} 
-            className="text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Contact
-          </button>
-        </nav>
+          
+          <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
+            <button 
+              onClick={() => handleNavClick('services')} 
+              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              aria-label="Navigate to Services section"
+            >
+              Services
+            </button>
+            <button 
+              onClick={() => handleNavClick('about')} 
+              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              aria-label="Navigate to About section"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => handleNavClick('process')} 
+              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              aria-label="Navigate to Our Process section"
+            >
+              Our Process
+            </button>
+            <Link 
+              to="/blog" 
+              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              aria-label="View our blog posts"
+            >
+              Blog
+            </Link>
+            <button 
+              onClick={() => handleNavClick('contact')} 
+              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              aria-label="Navigate to Contact section"
+            >
+              Contact
+            </button>
+          </nav>
 
-        <div className="flex items-center space-x-4">
-          <Button>Speak to an advisor</Button>
-          <Button variant="ghost" size="sm" className="md:hidden">
-            <Menu className="w-5 h-5" />
-          </Button>
+          <div className="flex items-center space-x-4">
+            <Button aria-label="Schedule consultation with a financial advisor">
+              Speak to an advisor
+            </Button>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={mobileMenuOpen}
+              aria-controls="mobile-navigation"
+            >
+              <Menu className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
-      </div>
-    </header>
+        
+        {/* Mobile Navigation Menu */}
+        {mobileMenuOpen && (
+          <nav 
+            id="mobile-navigation"
+            className="md:hidden border-t bg-white/95 backdrop-blur"
+            role="navigation" 
+            aria-label="Mobile navigation"
+          >
+            <div className="container mx-auto px-4 py-4 space-y-4">
+              <button 
+                onClick={() => { handleNavClick('services'); setMobileMenuOpen(false); }}
+                className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
+                aria-label="Navigate to Services section and close menu"
+              >
+                Services
+              </button>
+              <button 
+                onClick={() => { handleNavClick('about'); setMobileMenuOpen(false); }}
+                className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
+                aria-label="Navigate to About section and close menu"
+              >
+                About
+              </button>
+              <button 
+                onClick={() => { handleNavClick('process'); setMobileMenuOpen(false); }}
+                className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
+                aria-label="Navigate to Our Process section and close menu"
+              >
+                Our Process
+              </button>
+              <Link 
+                to="/blog" 
+                className="block text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="View our blog posts and close menu"
+              >
+                Blog
+              </Link>
+              <button 
+                onClick={() => { handleNavClick('contact'); setMobileMenuOpen(false); }}
+                className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
+                aria-label="Navigate to Contact section and close menu"
+              >
+                Contact
+              </button>
+              <Button 
+                className="w-full mt-4" 
+                aria-label="Schedule consultation with a financial advisor"
+              >
+                Speak to an advisor
+              </Button>
+            </div>
+          </nav>
+        )}
+      </header>
+    </>
   );
 }

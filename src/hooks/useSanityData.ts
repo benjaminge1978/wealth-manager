@@ -11,9 +11,7 @@ export function useSanityData<T>(query: string) {
     async function fetchData() {
       try {
         setLoading(true)
-        console.log('Fetching from Sanity with query:', query)
         const result = await client.fetch<T>(query)
-        console.log('Sanity response:', result)
         setData(result)
         setError(null)
       } catch (err) {
