@@ -53,6 +53,40 @@
     build: {
       target: 'esnext',
       outDir: 'dist',
+      sourcemap: false,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            // Vendor chunk - separate React and other large libraries
+            react: ['react', 'react-dom', 'react-router-dom'],
+            // UI chunk - separate UI components
+            ui: ['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge'],
+            // Sanity chunk - separate CMS related code
+            sanity: ['@sanity/client', '@sanity/image-url'],
+            // Icons chunk
+            icons: ['lucide-react'],
+          },
+          // Optimize asset file names for caching
+          assetFileNames: (assetInfo) => {
+            const fileName = assetInfo.name || 'asset';
+            const extType = fileName.split('.').at(-1) || '';
+            if (/png|jpe?g|svg|gif|tiff|bmp|ico|webp/i.test(extType)) {
+              return `assets/images/[name]-[hash][extname]`;
+            }
+            if (/css/i.test(extType)) {
+              return `assets/css/[name]-[hash][extname]`;
+            }
+            return `assets/[name]-[hash][extname]`;
+          },
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          entryFileNames: 'assets/js/[name]-[hash].js',
+        },
+      },
+      // Reduce bundle size
+      minify: 'esbuild',
+      cssMinify: true,
+      // Set chunk size warning limit
+      chunkSizeWarningLimit: 1000,
     },
     server: {
       port: 3000,

@@ -1,10 +1,25 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
-import { RetirementCalculator } from "./calculators/RetirementCalculator";
-import { MortgageCalculator } from "./calculators/MortgageCalculator";
-import { InvestmentCalculator } from "./calculators/InvestmentCalculator";
-import { LoanCalculator } from "./calculators/LoanCalculator";
+import { Suspense, lazy } from "react";
 import { Calculator, Home, TrendingUp, CreditCard } from "lucide-react";
+
+// Lazy load calculator components for better performance
+const RetirementCalculator = lazy(() => import("./calculators/RetirementCalculator").then(module => ({ default: module.RetirementCalculator })));
+const MortgageCalculator = lazy(() => import("./calculators/MortgageCalculator").then(module => ({ default: module.MortgageCalculator })));
+const InvestmentCalculator = lazy(() => import("./calculators/InvestmentCalculator").then(module => ({ default: module.InvestmentCalculator })));
+const LoanCalculator = lazy(() => import("./calculators/LoanCalculator").then(module => ({ default: module.LoanCalculator })));
+
+// Loading component for calculators
+function CalculatorLoading() {
+  return (
+    <div className="flex items-center justify-center p-8">
+      <div className="text-center">
+        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto mb-2"></div>
+        <p className="text-sm text-muted-foreground">Loading calculator...</p>
+      </div>
+    </div>
+  );
+}
 
 export function CalculatorSection() {
   return (
@@ -50,7 +65,9 @@ export function CalculatorSection() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <RetirementCalculator />
+                  <Suspense fallback={<CalculatorLoading />}>
+                    <RetirementCalculator />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -64,7 +81,9 @@ export function CalculatorSection() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <MortgageCalculator />
+                  <Suspense fallback={<CalculatorLoading />}>
+                    <MortgageCalculator />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -78,7 +97,9 @@ export function CalculatorSection() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <InvestmentCalculator />
+                  <Suspense fallback={<CalculatorLoading />}>
+                    <InvestmentCalculator />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
@@ -92,7 +113,9 @@ export function CalculatorSection() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <LoanCalculator />
+                  <Suspense fallback={<CalculatorLoading />}>
+                    <LoanCalculator />
+                  </Suspense>
                 </CardContent>
               </Card>
             </TabsContent>
