@@ -7,42 +7,86 @@ import {
   Heart, 
   Home,
   Briefcase,
-  GraduationCap 
+  GraduationCap,
+  DollarSign,
+  Building,
+  BarChart,
+  Target,
+  Scale,
+  Lock,
+  Gem,
+  Smartphone,
+  Star,
+  Zap
 } from "lucide-react";
+import { useServicesData } from "../hooks/useSanityData";
 
 export function ServicesSection() {
-  const services = [
+  const { data: servicesData, loading, error } = useServicesData();
+
+  // Icon mapping
+  const iconMap = {
+    PieChart,
+    FileText,
+    Shield,
+    TrendingUp,
+    GraduationCap,
+    Heart,
+    DollarSign,
+    Building,
+    BarChart,
+    Target,
+    Briefcase,
+    Home,
+    Scale,
+    Lock,
+    Gem,
+    Smartphone,
+    Star,
+    Zap
+  } as const;
+
+  // Fallback data
+  const fallbackServices = [
     {
-      icon: <PieChart className="w-8 h-8 text-primary" />,
+      icon: "PieChart",
       title: "Wealth Management",
-      description: "Comprehensive portfolio management and investment strategies tailored to your risk tolerance and financial goals."
+      description: "Comprehensive portfolio management and investment strategies tailored to your risk tolerance and financial goals.",
+      order: 1
     },
     {
-      icon: <FileText className="w-8 h-8 text-primary" />,
+      icon: "FileText",
       title: "Financial Planning",
-      description: "Goals-based financial planning that creates a clear roadmap to achieve your short and long-term objectives."
+      description: "Goals-based financial planning that creates a clear roadmap to achieve your short and long-term objectives.",
+      order: 2
     },
     {
-      icon: <Shield className="w-8 h-8 text-primary" />,
+      icon: "Shield",
       title: "Risk Management",
-      description: "Protect your wealth with strategic insurance planning and risk assessment tailored to your unique situation."
+      description: "Protect your wealth with strategic insurance planning and risk assessment tailored to your unique situation.",
+      order: 3
     },
     {
-      icon: <TrendingUp className="w-8 h-8 text-primary" />,
+      icon: "TrendingUp",
       title: "Investment Advisory",
-      description: "Regulated investment advice with ongoing portfolio monitoring and strategic adjustments as markets evolve."
+      description: "Regulated investment advice with ongoing portfolio monitoring and strategic adjustments as markets evolve.",
+      order: 4
     },
     {
-      icon: <GraduationCap className="w-8 h-8 text-primary" />,
+      icon: "GraduationCap",
       title: "Education Planning",
-      description: "Strategic planning for education expenses with tax-efficient savings strategies and investment growth."
+      description: "Strategic planning for education expenses with tax-efficient savings strategies and investment growth.",
+      order: 5
     },
     {
-      icon: <Heart className="w-8 h-8 text-primary" />,
+      icon: "Heart",
       title: "Retirement Planning",
-      description: "Comprehensive retirement strategies ensuring you maintain your desired lifestyle throughout your golden years."
+      description: "Comprehensive retirement strategies ensuring you maintain your desired lifestyle throughout your golden years.",
+      order: 6
     }
   ];
+
+  const services = servicesData || fallbackServices;
 
   const specialties = [
     {
@@ -67,39 +111,35 @@ export function ServicesSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {services.map((service, index) => (
-            <Card key={index} className="group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 border-border/50 hover:border-primary/20">
-              <CardHeader className="space-y-4">
-                <div className="group-hover:scale-110 transition-transform duration-300">
-                  {service.icon}
-                </div>
-                <CardTitle className="text-xl">{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base leading-relaxed">
-                  {service.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        <div className="bg-gradient-to-r from-card to-secondary/10 border border-primary/10 rounded-lg p-8 shadow-sm">
-          <h3 className="text-2xl font-medium mb-6 text-center">Specialized Expertise</h3>
-          <div className="grid md:grid-cols-2 gap-8">
-            {specialties.map((specialty, index) => (
-              <div key={index} className="flex items-start space-x-4">
-                <div className="flex-shrink-0 p-2 bg-primary/10 rounded-lg">
-                  {specialty.icon}
-                </div>
-                <div>
-                  <h4 className="font-medium mb-2">{specialty.title}</h4>
-                  <p className="text-muted-foreground">{specialty.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => {
+            const IconComponent = iconMap[service.icon as keyof typeof iconMap] || PieChart;
+            return (
+              <Card key={index} className="group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 border-border/50 hover:border-primary/20">
+                <CardHeader className="space-y-4">
+                  <div 
+                    className="group-hover:scale-110 transition-transform duration-300 inline-block"
+                    style={{ transformOrigin: 'left center' }}
+                  >
+                    <IconComponent className="w-8 h-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-xl">{service.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base leading-relaxed mb-4">
+                    {service.description}
+                  </CardDescription>
+                  <a 
+                    href={service.link || "#services"} 
+                    className="text-primary hover:text-primary/80 text-base font-medium inline-flex items-center gap-1 transition-colors"
+                  >
+                    Learn more
+                    <span className="text-sm">›</span>
+                  </a>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

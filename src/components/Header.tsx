@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Menu, Phone } from "lucide-react";
+import { Menu } from "lucide-react";
 
 export function Header() {
   const location = useLocation();
@@ -63,11 +63,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center space-x-4">
-          <div className="hidden sm:flex items-center space-x-2 text-sm text-muted-foreground">
-            <Phone className="w-4 h-4" />
-            <span>(555) 123-4567</span>
-          </div>
-          <Button>Get Started</Button>
+          <Button>Speak to an advisor</Button>
           <Button variant="ghost" size="sm" className="md:hidden">
             <Menu className="w-5 h-5" />
           </Button>

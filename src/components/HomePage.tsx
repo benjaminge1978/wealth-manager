@@ -1,4 +1,5 @@
 import { HeroSection } from "./HeroSection";
+import { ServicesBar } from "./ServicesBar";
 import { ServicesSection } from "./ServicesSection";
 import { ProcessSection } from "./ProcessSection";
 import { CalculatorSection } from "./CalculatorSection";
@@ -10,6 +11,7 @@ export function HomePage() {
   return (
     <main>
       <HeroSection />
+      <ServicesBar />
       <ServicesSection />
       <ProcessSection />
       <CalculatorSection />
