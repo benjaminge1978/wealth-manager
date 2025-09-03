@@ -7,6 +7,11 @@ import { ContactPage } from "./components/ContactPage";
 import { PrivacyPolicy } from "./components/PrivacyPolicy";
 import { WealthManagementPage } from "./components/WealthManagementPage";
 import { AdvisorGuide } from "./components/AdvisorGuide";
+import { LondonAdvisors } from "./components/cities/LondonAdvisors";
+import { ManchesterAdvisors } from "./components/cities/ManchesterAdvisors";
+import { EdinburghAdvisors } from "./components/cities/EdinburghAdvisors";
+import { BirminghamAdvisors } from "./components/cities/BirminghamAdvisors";
+import { LeedsAdvisors } from "./components/cities/LeedsAdvisors";
 
 // Lazy load blog components for code splitting
 const BlogListing = lazy(() => import("./components/blog/BlogListing").then(module => ({ default: module.BlogListing })));
@@ -32,6 +37,11 @@ export default function App() {
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/blog" element={<BlogListing />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/financial-advisors-london" element={<LondonAdvisors />} />
+          <Route path="/financial-advisors-manchester" element={<ManchesterAdvisors />} />
+          <Route path="/financial-advisors-edinburgh" element={<EdinburghAdvisors />} />
+          <Route path="/financial-advisors-birmingham" element={<BirminghamAdvisors />} />
+          <Route path="/financial-advisors-leeds" element={<LeedsAdvisors />} />
         </Routes>
       </Suspense>
       <Footer />

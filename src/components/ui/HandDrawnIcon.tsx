@@ -7,7 +7,8 @@ interface HandDrawnIconProps {
         'credit-card' | 'award' | 'target' | 'check-circle' | 'message-square' | 
         'star' | 'bookmark' | 'calendar' | 'users' | 'pie-chart' | 'file-text' |
         'graduation-cap' | 'heart' | 'briefcase' | 'help-circle' | 'chevron-down' |
-        'plus' | 'minus' | 'quote' | 'x-circle' | 'lightbulb' | 'repeat';
+        'plus' | 'minus' | 'quote' | 'x-circle' | 'lightbulb' | 'repeat' | 'handshake' |
+        'building' | 'globe' | 'alert-triangle';
   size?: number;
   className?: string;
   color?: string;
@@ -1240,6 +1241,150 @@ export function HandDrawnIcon({ type, size = 32, className = '', color = 'curren
             fill: 'none'
           }
         ));
+        break;
+
+      case 'handshake':
+        // Handshake - two hands meeting
+        const handW = size * 0.3;
+        const handH = size * 0.4;
+        
+        // Left hand (palm facing right)
+        svg.appendChild(rc.rectangle(size * 0.1, size * 0.3, handW, handH * 0.6, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Right hand (palm facing left)
+        svg.appendChild(rc.rectangle(size * 0.6, size * 0.3, handW, handH * 0.6, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Connection/grip line
+        svg.appendChild(rc.line(size * 0.4, size * 0.5, size * 0.6, size * 0.5, {
+          stroke: color,
+          strokeWidth: strokeWidth * 1.2,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'building':
+        // Building/office
+        const buildingW = size * 0.6;
+        const buildingH = size * 0.7;
+        const buildingX = (size - buildingW) / 2;
+        const buildingY = size * 0.2;
+        
+        // Main building structure
+        svg.appendChild(rc.rectangle(buildingX, buildingY, buildingW, buildingH, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Windows (3x4 grid)
+        const windowSize = buildingW / 8;
+        for (let row = 0; row < 4; row++) {
+          for (let col = 0; col < 3; col++) {
+            const windowX = buildingX + (col + 1) * buildingW / 4 - windowSize / 2;
+            const windowY = buildingY + (row + 1) * buildingH / 5 - windowSize / 2;
+            svg.appendChild(rc.rectangle(windowX, windowY, windowSize, windowSize, {
+              stroke: color,
+              strokeWidth: strokeWidth * 0.7,
+              roughness: roughness * 0.6,
+              bowing,
+              fill: 'none'
+            }));
+          }
+        }
+        break;
+
+      case 'globe':
+        // Globe/world
+        const globeR = size * 0.35;
+        const globeCX = size / 2;
+        const globeCY = size / 2;
+        
+        // Outer circle
+        svg.appendChild(rc.circle(globeCX, globeCY, globeR * 2, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Vertical meridian
+        svg.appendChild(rc.ellipse(globeCX, globeCY, globeR * 2, globeR * 1.2, {
+          stroke: color,
+          strokeWidth: strokeWidth * 0.8,
+          roughness: roughness * 0.7,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Horizontal equator
+        svg.appendChild(rc.line(globeCX - globeR, globeCY, globeCX + globeR, globeCY, {
+          stroke: color,
+          strokeWidth: strokeWidth * 0.8,
+          roughness: roughness * 0.7,
+          bowing
+        }));
+        
+        // Additional latitude lines
+        svg.appendChild(rc.ellipse(globeCX, globeCY, globeR * 2, globeR * 0.6, {
+          stroke: color,
+          strokeWidth: strokeWidth * 0.6,
+          roughness: roughness * 0.7,
+          bowing,
+          fill: 'none'
+        }));
+        break;
+
+      case 'alert-triangle':
+        // Warning triangle
+        const triSize = size * 0.7;
+        const triH = triSize * 0.866; // height of equilateral triangle
+        const triY = (size - triH) / 2;
+        
+        // Triangle
+        svg.appendChild(rc.path(
+          `M ${size/2} ${triY} L ${size/2 - triSize/2} ${triY + triH} L ${size/2 + triSize/2} ${triY + triH} Z`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        
+        // Exclamation mark
+        svg.appendChild(rc.line(size/2, triY + triH * 0.25, size/2, triY + triH * 0.65, {
+          stroke: color,
+          strokeWidth: strokeWidth * 1.5,
+          roughness,
+          bowing
+        }));
+        
+        // Exclamation dot
+        svg.appendChild(rc.circle(size/2, triY + triH * 0.8, strokeWidth * 1.5, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: color,
+          fillStyle: 'solid'
+        }));
         break;
     }
   }, [type, size, color]);
