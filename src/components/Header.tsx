@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useState } from "react";
+import wealthMasterLogo from "../assets/wealth_master_logo.svg";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -35,13 +36,14 @@ export function Header() {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <Link 
             to="/" 
-            className="flex items-center space-x-2"
+            className="flex items-center"
             aria-label="WealthMaster home page"
           >
-            <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-              <span className="text-primary-foreground text-sm font-medium">WM</span>
-            </div>
-            <span className="font-medium text-lg">WealthMaster</span>
+            <img 
+              src={wealthMasterLogo} 
+              alt="WealthMaster Logo" 
+              className="h-10 w-auto"
+            />
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">

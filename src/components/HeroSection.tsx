@@ -123,7 +123,7 @@ export function HeroSection() {
                 alt="" 
                 className="w-full h-full object-contain"
                 style={{
-                  filter: 'brightness(0) saturate(100%) invert(44%) sepia(79%) saturate(2476%) hue-rotate(246deg) brightness(94%) contrast(86%)',
+                  filter: 'brightness(0) saturate(100%) invert(89%) sepia(43%) saturate(463%) hue-rotate(320deg) brightness(101%) contrast(97%)',
                   opacity: 0.8,
                   transform: 'rotate(45deg)'
                 }}
