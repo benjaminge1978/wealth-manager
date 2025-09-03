@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Separator } from "./ui/separator";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 
@@ -34,7 +35,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-primary-foreground/80">
               <li><a href="#about" className="hover:text-primary-foreground transition-colors">About Us</a></li>
               <li><a href="#process" className="hover:text-primary-foreground transition-colors">Our Process</a></li>
-              <li><a href="#" className="hover:text-primary-foreground transition-colors">Privacy Policy</a></li>
+              <li><Link to="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
               <li><a href="#" className="hover:text-primary-foreground transition-colors">Terms of Service</a></li>
               <li><a href="#" className="hover:text-primary-foreground transition-colors">Regulatory Information</a></li>
             </ul>
