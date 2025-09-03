@@ -6,7 +6,8 @@ interface HandDrawnIconProps {
         'phone' | 'mail' | 'map-pin' | 'calculator' | 'home' | 'trending-up' | 
         'credit-card' | 'award' | 'target' | 'check-circle' | 'message-square' | 
         'star' | 'bookmark' | 'calendar' | 'users' | 'pie-chart' | 'file-text' |
-        'graduation-cap' | 'heart' | 'briefcase';
+        'graduation-cap' | 'heart' | 'briefcase' | 'help-circle' | 'chevron-down' |
+        'plus' | 'minus' | 'quote' | 'x-circle' | 'lightbulb' | 'repeat';
   size?: number;
   className?: string;
   color?: string;
@@ -1046,6 +1047,194 @@ export function HandDrawnIcon({ type, size = 32, className = '', color = 'curren
           {
             stroke: color,
             strokeWidth: strokeWidth * 0.8,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        break;
+
+      case 'help-circle':
+        // Question mark in circle
+        svg.appendChild(rc.circle(size/2, size/2, size * 0.8, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Question mark
+        const qSize = size * 0.4;
+        svg.appendChild(rc.path(
+          `M ${size/2 - qSize/4} ${size/2 - qSize/4} Q ${size/2} ${size/2 - qSize/2} ${size/2 + qSize/4} ${size/2 - qSize/4} Q ${size/2 + qSize/3} ${size/2} ${size/2} ${size/2 + qSize/6}`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        
+        // Dot
+        svg.appendChild(rc.circle(size/2, size/2 + qSize/2.5, strokeWidth * 2, {
+          stroke: color,
+          strokeWidth: strokeWidth,
+          roughness,
+          bowing,
+          fill: color,
+          fillStyle: 'solid'
+        }));
+        break;
+
+      case 'chevron-down':
+        // Down arrow chevron
+        const chevronSize = size * 0.4;
+        svg.appendChild(rc.path(
+          `M ${size/2 - chevronSize} ${size/2 - chevronSize/2} L ${size/2} ${size/2 + chevronSize/2} L ${size/2 + chevronSize} ${size/2 - chevronSize/2}`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        break;
+
+      case 'plus':
+        // Plus sign
+        const plusSize = size * 0.6;
+        svg.appendChild(rc.line(size/2 - plusSize/2, size/2, size/2 + plusSize/2, size/2, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(size/2, size/2 - plusSize/2, size/2, size/2 + plusSize/2, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'minus':
+        // Minus sign
+        const minusSize = size * 0.6;
+        svg.appendChild(rc.line(size/2 - minusSize/2, size/2, size/2 + minusSize/2, size/2, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'quote':
+        // Quotation marks
+        svg.appendChild(rc.path(
+          `M ${size * 0.2} ${size * 0.3} Q ${size * 0.25} ${size * 0.2} ${size * 0.3} ${size * 0.3} Q ${size * 0.25} ${size * 0.4} ${size * 0.2} ${size * 0.5}`,
+          {
+            stroke: color,
+            strokeWidth: strokeWidth * 1.5,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        svg.appendChild(rc.path(
+          `M ${size * 0.6} ${size * 0.3} Q ${size * 0.65} ${size * 0.2} ${size * 0.7} ${size * 0.3} Q ${size * 0.65} ${size * 0.4} ${size * 0.6} ${size * 0.5}`,
+          {
+            stroke: color,
+            strokeWidth: strokeWidth * 1.5,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        break;
+
+      case 'x-circle':
+        // X in circle
+        svg.appendChild(rc.circle(size/2, size/2, size * 0.8, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        const xSize = size * 0.4;
+        svg.appendChild(rc.line(size/2 - xSize/2, size/2 - xSize/2, size/2 + xSize/2, size/2 + xSize/2, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(size/2 + xSize/2, size/2 - xSize/2, size/2 - xSize/2, size/2 + xSize/2, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'lightbulb':
+        // Light bulb
+        const bulbRadius = size * 0.25;
+        svg.appendChild(rc.circle(size/2, size/2 - size/8, bulbRadius, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Base
+        svg.appendChild(rc.rectangle(size/2 - size/8, size/2 + size/8, size/4, size/6, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        
+        // Lines coming from bulb
+        svg.appendChild(rc.line(size/2 - size/3, size/2 - size/2.5, size/2 - size/4, size/2 - size/3.5, {
+          stroke: color,
+          strokeWidth: strokeWidth * 0.8,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(size/2 + size/3, size/2 - size/2.5, size/2 + size/4, size/2 - size/3.5, {
+          stroke: color,
+          strokeWidth: strokeWidth * 0.8,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'repeat':
+        // Repeat/refresh arrows
+        const repeatRadius = size * 0.3;
+        svg.appendChild(rc.path(
+          `M ${size/2 + repeatRadius} ${size/2} A ${repeatRadius} ${repeatRadius} 0 1 1 ${size/2 - repeatRadius} ${size/2}`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        
+        // Arrow head
+        svg.appendChild(rc.path(
+          `M ${size/2 + repeatRadius - size/8} ${size/2 - size/8} L ${size/2 + repeatRadius} ${size/2} L ${size/2 + repeatRadius - size/8} ${size/2 + size/8}`,
+          {
+            stroke: color,
+            strokeWidth,
             roughness,
             bowing,
             fill: 'none'

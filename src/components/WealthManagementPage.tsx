@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import rough from 'roughjs';
 import heroImage from "../assets/wealth-managemt.webp";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
@@ -963,6 +963,12 @@ function WealthFinalCTASection() {
 
 // FAQ Section Component for AEO Optimization
 function WealthFAQSection() {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  const toggleFAQ = (index: number) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   const faqs = [
     {
       question: "How do I choose a good wealth manager?",
@@ -1028,18 +1034,50 @@ function WealthFAQSection() {
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {faqs.map((faq, index) => (
-              <Card key={index} className="border-border/50 hover:border-primary/20 transition-colors">
-                <CardContent className="p-6">
-                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-start gap-2">
-                    <HandDrawnIcon type="help-circle" size={20} color="#3b82f6" className="mt-1 flex-shrink-0" />
-                    {faq.question}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed pl-7">
-                    {faq.answer}
-                  </p>
-                </CardContent>
+              <Card 
+                key={index} 
+                className="border-border/50 hover:border-primary/20 transition-colors overflow-hidden"
+              >
+                <button
+                  onClick={() => toggleFAQ(index)}
+                  className="w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
+                  aria-expanded={openIndex === index}
+                  aria-controls={`faq-answer-${index}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-start gap-3">
+                      <HandDrawnIcon 
+                        type="help-circle" 
+                        size={20} 
+                        color="#3b82f6" 
+                        className="mt-1 flex-shrink-0" 
+                      />
+                      <h3 className="text-lg font-semibold text-foreground pr-4">
+                        {faq.question}
+                      </h3>
+                    </div>
+                    <HandDrawnIcon 
+                      type={openIndex === index ? "minus" : "plus"} 
+                      size={20} 
+                      color="#3b82f6" 
+                      className="flex-shrink-0 transition-transform duration-200"
+                    />
+                  </div>
+                </button>
+                <div 
+                  id={`faq-answer-${index}`}
+                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
+                    openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="px-6 pb-6">
+                    <p className="text-muted-foreground leading-relaxed pl-7">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
               </Card>
             ))}
           </div>
