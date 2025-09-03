@@ -961,6 +961,110 @@ function WealthFinalCTASection() {
   );
 }
 
+// FAQ Section Component for AEO Optimization
+function WealthFAQSection() {
+  const faqs = [
+    {
+      question: "How do I choose a good wealth manager?",
+      answer: "Look for credentials like CFP or CFA, fee-only structure, fiduciary duty, minimum asset requirements that match your portfolio, transparent fee disclosure, and a clear investment philosophy. Verify their registration with the FCA and check for any disciplinary actions. Interview multiple advisors and ask about their experience with clients in similar situations to yours."
+    },
+    {
+      question: "What's the difference between a financial advisor and wealth manager?",
+      answer: "Financial advisors typically work with middle-income clients on budgeting, retirement planning, and basic investment advice. Wealth managers focus on high-net-worth individuals (usually £250k+ assets) and provide comprehensive services including tax planning, estate planning, alternative investments, and coordinated financial strategies."
+    },
+    {
+      question: "How much should I pay for wealth management?",
+      answer: "Typical fees range from 0.5% to 2% of assets under management annually. Fee-only advisors charge transparent rates: around 1% for portfolios over £500k, 0.75% for £1M+, and 0.5% for £2M+. Avoid commission-based advisors who may have conflicts of interest. Always understand exactly what services you're getting for the fee."
+    },
+    {
+      question: "What are red flags when choosing a financial advisor?",
+      answer: "Warning signs include: promising guaranteed returns, pressure to invest immediately, lack of proper credentials, commission-only compensation, not registered as a fiduciary, avoiding fee disclosure, poor communication, no written investment policy, recent disciplinary actions, or pushing inappropriate high-risk investments."
+    },
+    {
+      question: "Should I use a fee-only or commission-based advisor?",
+      answer: "Fee-only advisors are generally preferred because they have no conflicts of interest from product sales. They're paid directly by you for advice, not by investment companies for selling products. Commission-based advisors may recommend investments that pay them higher fees rather than what's best for your portfolio."
+    },
+    {
+      question: "When do I need a wealth manager vs DIY investing?",
+      answer: "Consider professional wealth management when you have £250k+ in investable assets, complex financial situations (business ownership, inheritance, multiple properties), limited time for investment research, or need specialized services like tax planning or estate planning. DIY works for simple buy-and-hold strategies with smaller portfolios."
+    },
+    {
+      question: "How do I verify a financial advisor's credentials?",
+      answer: "Check their registration with the Financial Conduct Authority (FCA) using their online register. Verify professional certifications like CFP (Certified Financial Planner) or CFA (Chartered Financial Analyst) with the issuing organizations. Look up any disciplinary actions or complaints through regulatory databases."
+    },
+    {
+      question: "What questions should I ask a potential wealth manager?",
+      answer: "Essential questions include: Are you a fiduciary? How are you compensated? What are your credentials and experience? What's your investment philosophy? How often will we meet? What services are included in your fee? Can you provide references? How do you handle market downturns? What's your typical client profile?"
+    }
+  ];
+
+  // Generate FAQ Schema for AI engines
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map(faq => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  };
+
+  return (
+    <section className="py-20 bg-gradient-to-b from-background to-muted/50">
+      {/* FAQ Schema Markup for AI Optimization */}
+      <script 
+        type="application/ld+json" 
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center space-y-4 mb-16">
+            <h2 className="text-3xl lg:text-4xl font-medium">Frequently Asked Questions</h2>
+            <p className="text-lg text-muted-foreground">
+              Everything you need to know about choosing and working with a wealth manager
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {faqs.map((faq, index) => (
+              <Card key={index} className="border-border/50 hover:border-primary/20 transition-colors">
+                <CardContent className="p-6">
+                  <h3 className="text-lg font-semibold text-foreground mb-4 flex items-start gap-2">
+                    <HandDrawnIcon type="help-circle" size={20} color="#3b82f6" className="mt-1 flex-shrink-0" />
+                    {faq.question}
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed pl-7">
+                    {faq.answer}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="bg-primary/5 rounded-2xl p-8">
+              <h3 className="text-xl font-semibold mb-4">Still Have Questions?</h3>
+              <p className="text-muted-foreground mb-6">
+                Our vetted wealth management professionals can answer your specific questions and help you make the right financial decisions.
+              </p>
+              <Button size="lg" className="group">
+                Speak to a Qualified Advisor
+                <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
+              </Button>
+              <p className="text-sm text-muted-foreground mt-3">
+                Free consultation • No obligation • Matched to your specific needs
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function WealthManagementPage() {
   return (
     <div className="min-h-screen bg-background" id="main-content">
@@ -969,6 +1073,7 @@ export function WealthManagementPage() {
       <WealthKnowledgeSection />
       <WealthProcessSection />
       <WealthSocialProofSection />
+      <WealthFAQSection />
       <WealthFinalCTASection />
     </div>
   );

@@ -6,6 +6,7 @@ import { HomePage } from "./components/HomePage";
 import { ContactPage } from "./components/ContactPage";
 import { PrivacyPolicy } from "./components/PrivacyPolicy";
 import { WealthManagementPage } from "./components/WealthManagementPage";
+import { AdvisorGuide } from "./components/AdvisorGuide";
 
 // Lazy load blog components for code splitting
 const BlogListing = lazy(() => import("./components/blog/BlogListing").then(module => ({ default: module.BlogListing })));
@@ -26,6 +27,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/wealth-management" element={<WealthManagementPage />} />
+          <Route path="/how-to-choose-financial-advisor" element={<AdvisorGuide />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/blog" element={<BlogListing />} />
