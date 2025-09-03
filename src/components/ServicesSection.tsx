@@ -1,6 +1,52 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useServicesData } from "../hooks/useSanityData";
+import { useEffect, useRef } from 'react';
+import rough from 'roughjs';
+
+function RoughCircleBackground({ color, size }: { color: string, size: number }) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const hasDrawn = useRef(false);
+
+  useEffect(() => {
+    if (!svgRef.current || hasDrawn.current) return;
+
+    const svg = svgRef.current;
+    const rc = rough.svg(svg);
+
+    const strokeWidth = 1.5;
+    const roughness = 0.8;
+    const bowing = 0.5;
+
+    // Only draw once
+    svg.appendChild(rc.circle(size / 2, size / 2, size * 0.85, {
+      stroke: color,
+      strokeWidth,
+      roughness,
+      bowing,
+      fill: color,
+      fillStyle: 'solid',
+      fillOpacity: 0.2
+    }));
+
+    hasDrawn.current = true;
+  }, [color, size]);
+
+  return (
+    <svg
+      ref={svgRef}
+      width={size}
+      height={size}
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        zIndex: 0
+      }}
+    />
+  );
+}
 
 export function ServicesSection() {
   const { data: servicesData, loading, error } = useServicesData();
@@ -15,43 +61,67 @@ export function ServicesSection() {
     Heart: 'heart' as const,
   };
 
-  // Fallback data
+  // Fallback data with color coordination
   const fallbackServices = [
     {
       icon: "PieChart",
       title: "Wealth Management",
       description: "Comprehensive portfolio management and investment strategies tailored to your risk tolerance and financial goals.",
-      order: 1
+      order: 1,
+      iconColor: "#7c3aed", // Purple
+      pastelColor: "#c4b5fd", // Light purple
+      iconBackground: "bg-violet-100 group-hover:bg-violet-200",
+      circleColor: "bg-violet-300"
     },
     {
       icon: "FileText",
       title: "Financial Planning",
       description: "Goals-based financial planning that creates a clear roadmap to achieve your short and long-term objectives.",
-      order: 2
+      order: 2,
+      iconColor: "#0ea5e9", // Sky blue
+      pastelColor: "#93c5fd", // Light sky blue
+      iconBackground: "bg-sky-100 group-hover:bg-sky-200",
+      circleColor: "bg-sky-300"
     },
     {
       icon: "Shield",
       title: "Risk Management",
       description: "Protect your wealth with strategic insurance planning and risk assessment tailored to your unique situation.",
-      order: 3
+      order: 3,
+      iconColor: "#059669", // Emerald
+      pastelColor: "#86efac", // Light emerald
+      iconBackground: "bg-emerald-100 group-hover:bg-emerald-200",
+      circleColor: "bg-emerald-300"
     },
     {
       icon: "TrendingUp",
       title: "Investment Advisory",
       description: "Regulated investment advice with ongoing portfolio monitoring and strategic adjustments as markets evolve.",
-      order: 4
+      order: 4,
+      iconColor: "#dc2626", // Red
+      pastelColor: "#fca5a5", // Light red
+      iconBackground: "bg-red-100 group-hover:bg-red-200",
+      circleColor: "bg-red-300"
     },
     {
       icon: "GraduationCap",
       title: "Education Planning",
       description: "Strategic planning for education expenses with tax-efficient savings strategies and investment growth.",
-      order: 5
+      order: 5,
+      iconColor: "#d97706", // Amber
+      pastelColor: "#fcd34d", // Light amber
+      iconBackground: "bg-amber-100 group-hover:bg-amber-200",
+      circleColor: "bg-amber-300"
     },
     {
       icon: "Heart",
       title: "Retirement Planning",
       description: "Comprehensive retirement strategies ensuring you maintain your desired lifestyle throughout your golden years.",
-      order: 6
+      order: 6,
+      iconColor: "#e11d48", // Rose
+      pastelColor: "#fda4af", // Light rose
+      iconBackground: "bg-rose-100 group-hover:bg-rose-200",
+      circleColor: "bg-rose-300"
     }
   ];
 
@@ -73,11 +143,18 @@ export function ServicesSection() {
             return (
               <Card key={index} className="group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 border-border/50 hover:border-primary/20">
                 <CardHeader className="space-y-4">
-                  <div 
-                    className="group-hover:scale-110 transition-transform duration-300 inline-block"
-                    style={{ transformOrigin: 'left center' }}
-                  >
-                    <HandDrawnIcon type={iconType} size={32} className="text-primary" />
+                  <div className="relative w-16 h-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+                    {/* Rough circle background - smaller with pastel colors */}
+                    <RoughCircleBackground color={service.pastelColor} size={60} />
+                    {/* Icon in front */}
+                    <div className="relative z-10">
+                      <HandDrawnIcon 
+                        type={iconType} 
+                        size={32} 
+                        color={service.iconColor}
+                        className="group-hover:scale-110 transition-transform duration-300" 
+                      />
+                    </div>
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                 </CardHeader>
