@@ -5,7 +5,7 @@ import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { Badge } from '../ui/badge';
-import { Search, X } from 'lucide-react';
+import { HandDrawnIcon } from '../ui/HandDrawnIcon';
 import { blogPosts } from '../../data/blogPosts';
 import { BLOG_CATEGORIES } from '../../types/blog';
 
@@ -98,8 +98,10 @@ export function BlogListing() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="relative w-full lg:w-96">
-              <Search 
-                className="absolute top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" 
+              <HandDrawnIcon 
+                type="search"
+                size={16}
+                className="absolute top-1/2 transform -translate-y-1/2 text-muted-foreground"
                 style={{ left: '16px' }}
               />
               <Input
@@ -157,7 +159,7 @@ export function BlogListing() {
                   onClick={clearFilters}
                   title="Clear filters"
                 >
-                  <X className="w-4 h-4" />
+                  <HandDrawnIcon type="x" size={16} />
                 </Button>
               )}
             </div>

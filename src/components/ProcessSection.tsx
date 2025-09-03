@@ -1,5 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { CheckCircle2, MessageSquare, Target, TrendingUp } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 
 export function ProcessSection() {
   const stepColors = [
@@ -32,25 +32,25 @@ export function ProcessSection() {
   const steps = [
     {
       step: "01",
-      icon: <MessageSquare className="w-8 h-8" />,
+      icon: <HandDrawnIcon type="message-square" size={32} />,
       title: "Discovery & Consultation",
       description: "We start with an in-depth consultation to understand your current financial situation, goals, and concerns. This forms the foundation of your personalized strategy."
     },
     {
       step: "02",
-      icon: <Target className="w-8 h-8" />,
+      icon: <HandDrawnIcon type="target" size={32} />,
       title: "Goals-Based Planning",
       description: "We create a comprehensive financial plan that aligns with your specific goals, whether it's retirement, education funding, or wealth preservation."
     },
     {
       step: "03",
-      icon: <CheckCircle2 className="w-8 h-8" />,
+      icon: <HandDrawnIcon type="check-circle" size={32} />,
       title: "Implementation",
       description: "We execute your personalized strategy with regulated investment advice and ongoing portfolio management to keep you on track."
     },
     {
       step: "04",
-      icon: <TrendingUp className="w-8 h-8" />,
+      icon: <HandDrawnIcon type="trending-up" size={32} />,
       title: "Monitoring & Adjusting",
       description: "We continuously monitor your progress and adjust your strategy as your life circumstances and market conditions change."
     }

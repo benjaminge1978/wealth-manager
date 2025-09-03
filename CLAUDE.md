@@ -91,3 +91,23 @@ This applies to:
 - No testing framework is currently configured
 - No linting or formatting tools are set up
 - Images in `src/assets/` use specific naming conventions that should be preserved
+
+## ⚠️ CRITICAL DEV NOTE - SANITY CONFIGURATION
+
+**DO NOT MODIFY THE SANITY HOOK OR CLIENT CONFIGURATION**
+
+The Sanity CMS integration has specific CORS limitations:
+- Sanity project (uvt95dbx) does NOT allow localhost:3000 in CORS origins
+- Attempting to add localhost:3000 to CORS settings results in "NOT ALLOWED" error
+- The site works perfectly on the hosted/production version with live Sanity data
+- On localhost, Sanity calls will fail with 403/CORS errors and fallback to static data
+- This is EXPECTED BEHAVIOR - do not attempt to "fix" the CORS errors
+- The current setup ensures fast local development with static fallback data
+
+**What NOT to do:**
+- Do not modify `src/hooks/useSanityData.ts` to "fix" CORS
+- Do not change the Sanity client configuration in `src/lib/sanity.ts`  
+- Do not try to bypass or disable Sanity calls on localhost
+- Do not modify loading states or error handling for Sanity
+
+**The current behavior is correct:** Localhost uses fast static fallback data, production uses live Sanity data.

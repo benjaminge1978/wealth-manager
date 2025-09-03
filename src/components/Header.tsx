@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { Menu } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useState } from "react";
 
 export function Header() {
@@ -95,7 +95,7 @@ export function Header() {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-navigation"
             >
-              <Menu className="w-5 h-5" />
+              <HandDrawnIcon type="menu" size={20} />
             </Button>
           </div>
         </div>

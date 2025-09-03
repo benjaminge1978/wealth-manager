@@ -4,7 +4,7 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useState } from "react";
 
 export function ContactSection() {
@@ -77,22 +77,22 @@ export function ContactSection() {
   };
   const contactInfo = [
     {
-      icon: <Phone className="w-5 h-5 text-primary" />,
+      icon: <HandDrawnIcon type="phone" size={20} className="text-primary" />,
       label: "Phone",
       value: "(555) 123-4567"
     },
     {
-      icon: <Mail className="w-5 h-5 text-primary" />,
+      icon: <HandDrawnIcon type="mail" size={20} className="text-primary" />,
       label: "Email",
       value: "info@wealthmaster.com"
     },
     {
-      icon: <MapPin className="w-5 h-5 text-primary" />,
+      icon: <HandDrawnIcon type="map-pin" size={20} className="text-primary" />,
       label: "Office",
       value: "123 Financial District, Suite 500\nNew York, NY 10004"
     },
     {
-      icon: <Clock className="w-5 h-5 text-primary" />,
+      icon: <HandDrawnIcon type="clock" size={20} className="text-primary" />,
       label: "Hours",
       value: "Monday - Friday: 9:00 AM - 6:00 PM\nSaturday: 10:00 AM - 2:00 PM"
     }

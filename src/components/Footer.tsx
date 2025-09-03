@@ -1,5 +1,5 @@
 import { Separator } from "./ui/separator";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 
 export function Footer() {
   return (
@@ -44,15 +44,15 @@ export function Footer() {
             <h4 className="font-medium">Contact</h4>
             <div className="space-y-3 text-sm text-primary-foreground/80">
               <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4" />
+                <HandDrawnIcon type="phone" size={16} />
                 <span>(555) 123-4567</span>
               </div>
               <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4" />
+                <HandDrawnIcon type="mail" size={16} />
                 <span>info@wealthmaster.com</span>
               </div>
               <div className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0" />
+                <HandDrawnIcon type="map-pin" size={16} className="mt-0.5 flex-shrink-0" />
                 <span>123 Financial District, Suite 500<br />New York, NY 10004</span>
               </div>
             </div>

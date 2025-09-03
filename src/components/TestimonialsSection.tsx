@@ -1,5 +1,5 @@
 import { Card, CardContent } from "./ui/card";
-import { Star } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 
 export function TestimonialsSection() {
   const testimonials = [
@@ -39,7 +39,7 @@ export function TestimonialsSection() {
               <CardContent className="p-8 space-y-6">
                 <div className="flex space-x-1">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-primary text-primary" />
+                    <HandDrawnIcon key={i} type="star" size={20} className="fill-primary text-primary" />
                   ))}
                 </div>
                 

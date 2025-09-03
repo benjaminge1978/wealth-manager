@@ -1,27 +1,27 @@
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Card, CardContent } from "./ui/card";
-import { Award, Users, Clock, Shield } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import aboutImage from "../assets/financial-advive-couple.jpg";
 
 export function AboutSection() {
   const stats = [
     {
-      icon: <Users className="w-6 h-6 text-primary" />,
+      icon: <HandDrawnIcon type="users" size={24} className="text-primary" />,
       value: "500+",
       label: "Clients Served"
     },
     {
-      icon: <Clock className="w-6 h-6 text-primary" />,
+      icon: <HandDrawnIcon type="clock" size={24} className="text-primary" />,
       value: "15+",
       label: "Years Experience"
     },
     {
-      icon: <Award className="w-6 h-6 text-primary" />,
+      icon: <HandDrawnIcon type="award" size={24} className="text-primary" />,
       value: "$250M+",
       label: "Assets Under Management"
     },
     {
-      icon: <Shield className="w-6 h-6 text-primary" />,
+      icon: <HandDrawnIcon type="shield" size={24} className="text-primary" />,
       value: "100%",
       label: "Regulated & Compliant"
     }

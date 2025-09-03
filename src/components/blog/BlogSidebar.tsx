@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Badge } from '../ui/badge';
-import { Calendar, TrendingUp, Mail, Bookmark } from 'lucide-react';
+import { HandDrawnIcon } from '../ui/HandDrawnIcon';
 import { BlogPost } from '../../types/blog';
 import { BLOG_CATEGORIES } from '../../types/blog';
 
@@ -33,7 +33,7 @@ export function BlogSidebar({ recentPosts, onCategoryClick, selectedCategory }: 
       <Card className="border-primary/20 bg-gradient-to-br from-card to-primary/5">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Mail className="w-5 h-5 text-primary" />
+            <HandDrawnIcon type="mail" size={20} className="text-primary" />
             Newsletter
           </CardTitle>
         </CardHeader>
@@ -61,7 +61,7 @@ export function BlogSidebar({ recentPosts, onCategoryClick, selectedCategory }: 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-primary" />
+            <HandDrawnIcon type="trending-up" size={20} className="text-primary" />
             Recent Articles
           </CardTitle>
         </CardHeader>
@@ -77,7 +77,7 @@ export function BlogSidebar({ recentPosts, onCategoryClick, selectedCategory }: 
                     {post.title}
                   </h4>
                   <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                    <Calendar className="w-3 h-3" />
+                    <HandDrawnIcon type="calendar" size={12} />
                     <span>{formatDate(post.publishedDate)}</span>
                     <span>•</span>
                     <span>{post.readTime} min read</span>
@@ -93,7 +93,7 @@ export function BlogSidebar({ recentPosts, onCategoryClick, selectedCategory }: 
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Bookmark className="w-5 h-5 text-primary" />
+            <HandDrawnIcon type="bookmark" size={20} className="text-primary" />
             Categories
           </CardTitle>
         </CardHeader>

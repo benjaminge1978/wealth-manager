@@ -1,5 +1,6 @@
 import { HeroSection } from "./HeroSection";
 import { ServicesBar } from "./ServicesBar";
+import { WhyWealthMasterSection } from "./WhyWealthMasterSection";
 import { ServicesSection } from "./ServicesSection";
 import { ProcessSection } from "./ProcessSection";
 import { CalculatorSection } from "./CalculatorSection";
@@ -12,6 +13,7 @@ export function HomePage() {
     <main id="main-content">
       <HeroSection />
       <ServicesBar />
+      <WhyWealthMasterSection />
       <ServicesSection />
       <ProcessSection />
       <CalculatorSection />

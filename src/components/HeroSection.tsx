@@ -1,17 +1,19 @@
 import { Button } from "./ui/button";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { ArrowRight, Shield, Target, TrendingUp } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useHeroData } from "../hooks/useSanityData";
 import { getImageUrl } from "../lib/sanity";
 import heroImage from "../assets/wealth-management-happy-family.jpg";
+import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
+import topRightScribble from "../assets/top-right-scribble.svg";
 import { HeroData } from "../types/sanity";
 
 // Icon mapping for dynamic icons
 const iconMap = {
-  Shield,
-  Target,
-  TrendingUp,
-} as const;
+  Shield: 'shield' as const,
+  Target: 'target' as const,
+  TrendingUp: 'trending-up' as const,
+};
 
 export function HeroSection() {
   const { data: heroData, loading, error } = useHeroData();
@@ -76,7 +78,7 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="group" onClick={() => displayData.primaryButtonLink && window.open(displayData.primaryButtonLink)}>
                 {displayData.primaryButtonText}
-                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <HandDrawnIcon type="arrow-right" size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
               {displayData.secondaryButtonText && (
                 <Button variant="outline" size="lg" onClick={() => displayData.secondaryButtonLink && window.open(displayData.secondaryButtonLink)}>
@@ -88,10 +90,10 @@ export function HeroSection() {
             {displayData.features && displayData.features.length > 0 && (
               <div className="grid grid-cols-3 gap-6 pt-8 border-t">
                 {displayData.features.map((feature, index) => {
-                  const IconComponent = iconMap[feature.icon as keyof typeof iconMap] || Shield;
+                  const iconType = iconMap[feature.icon as keyof typeof iconMap] || 'shield';
                   return (
                     <div key={index} className="text-center">
-                      <IconComponent className="w-8 h-8 text-primary mx-auto mb-2" />
+                      <HandDrawnIcon type={iconType} size={32} className="text-primary mx-auto mb-2" />
                       <p className="text-sm font-medium">{feature.text}</p>
                     </div>
                   );
@@ -111,8 +113,34 @@ export function HeroSection() {
                 height={500}
               />
             </div>
-            <div className="absolute -bottom-4 -left-4 w-24 h-24 bg-gradient-to-br from-primary/20 to-accent/30 rounded-lg"></div>
-            <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-accent to-primary/20 rounded-lg"></div>
+            <div className="absolute -bottom-4 w-52 h-16" style={{ left: '-6.25rem' }}>
+              <img 
+                src={bottomLeftScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(44%) sepia(79%) saturate(2476%) hue-rotate(246deg) brightness(94%) contrast(86%)',
+                  opacity: 0.8,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
+              />
+            </div>
+            <div className="absolute -top-4 w-52 h-16" style={{ right: '-6.25rem' }}>
+              <img 
+                src={topRightScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
+                  opacity: 0.7,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
+              />
+            </div>
           </div>
         </div>
       </div>

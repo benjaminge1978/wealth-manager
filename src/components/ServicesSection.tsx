@@ -1,50 +1,19 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { 
-  PieChart, 
-  Shield, 
-  TrendingUp, 
-  FileText, 
-  Heart, 
-  Home,
-  Briefcase,
-  GraduationCap,
-  DollarSign,
-  Building,
-  BarChart,
-  Target,
-  Scale,
-  Lock,
-  Gem,
-  Smartphone,
-  Star,
-  Zap
-} from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useServicesData } from "../hooks/useSanityData";
 
 export function ServicesSection() {
   const { data: servicesData, loading, error } = useServicesData();
 
-  // Icon mapping
+  // Icon mapping for hand-drawn icons
   const iconMap = {
-    PieChart,
-    FileText,
-    Shield,
-    TrendingUp,
-    GraduationCap,
-    Heart,
-    DollarSign,
-    Building,
-    BarChart,
-    Target,
-    Briefcase,
-    Home,
-    Scale,
-    Lock,
-    Gem,
-    Smartphone,
-    Star,
-    Zap
-  } as const;
+    PieChart: 'pie-chart' as const,
+    FileText: 'file-text' as const,
+    Shield: 'shield' as const,
+    TrendingUp: 'trending-up' as const,
+    GraduationCap: 'graduation-cap' as const,
+    Heart: 'heart' as const,
+  };
 
   // Fallback data
   const fallbackServices = [
@@ -88,19 +57,6 @@ export function ServicesSection() {
 
   const services = servicesData || fallbackServices;
 
-  const specialties = [
-    {
-      icon: <Briefcase className="w-6 h-6 text-primary" />,
-      title: "Business Owners",
-      description: "Exit planning, succession strategies, and business protection"
-    },
-    {
-      icon: <Home className="w-6 h-6 text-primary" />,
-      title: "Estate Planning",
-      description: "Wealth transfer strategies and legacy preservation"
-    }
-  ];
-
   return (
     <section id="services" className="py-20 bg-gradient-to-b from-background to-muted/50">
       <div className="container mx-auto px-4">
@@ -113,7 +69,7 @@ export function ServicesSection() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => {
-            const IconComponent = iconMap[service.icon as keyof typeof iconMap] || PieChart;
+            const iconType = iconMap[service.icon as keyof typeof iconMap] || 'pie-chart';
             return (
               <Card key={index} className="group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 border-border/50 hover:border-primary/20">
                 <CardHeader className="space-y-4">
@@ -121,7 +77,7 @@ export function ServicesSection() {
                     className="group-hover:scale-110 transition-transform duration-300 inline-block"
                     style={{ transformOrigin: 'left center' }}
                   >
-                    <IconComponent className="w-8 h-8 text-primary" />
+                    <HandDrawnIcon type={iconType} size={32} className="text-primary" />
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                 </CardHeader>

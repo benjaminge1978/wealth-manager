@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 import { Suspense, lazy } from "react";
-import { Calculator, Home, TrendingUp, CreditCard } from "lucide-react";
+import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 
 // Lazy load calculator components for better performance
 const RetirementCalculator = lazy(() => import("./calculators/RetirementCalculator").then(module => ({ default: module.RetirementCalculator })));
@@ -27,7 +27,7 @@ export function CalculatorSection() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <div className="inline-flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mb-4">
-            <Calculator className="w-6 h-6 text-primary" />
+            <HandDrawnIcon type="calculator" size={24} className="text-primary" />
           </div>
           <h2 className="mb-4">Financial Planning Tools</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -39,19 +39,19 @@ export function CalculatorSection() {
           <Tabs defaultValue="retirement" className="w-full">
             <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="retirement" className="flex items-center gap-2">
-                <TrendingUp className="w-4 h-4" />
+                <HandDrawnIcon type="trending-up" size={16} />
                 <span className="hidden sm:inline">Retirement</span>
               </TabsTrigger>
               <TabsTrigger value="mortgage" className="flex items-center gap-2">
-                <Home className="w-4 h-4" />
+                <HandDrawnIcon type="home" size={16} />
                 <span className="hidden sm:inline">Mortgage</span>
               </TabsTrigger>
               <TabsTrigger value="investment" className="flex items-center gap-2">
-                <Calculator className="w-4 h-4" />
+                <HandDrawnIcon type="calculator" size={16} />
                 <span className="hidden sm:inline">Investment</span>
               </TabsTrigger>
               <TabsTrigger value="loan" className="flex items-center gap-2">
-                <CreditCard className="w-4 h-4" />
+                <HandDrawnIcon type="credit-card" size={16} />
                 <span className="hidden sm:inline">Loan</span>
               </TabsTrigger>
             </TabsList>
