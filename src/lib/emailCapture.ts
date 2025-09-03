@@ -15,10 +15,10 @@ export interface EmailCaptureResponse {
 
 // ConvertKit API integration
 const CONVERTKIT_API_URL = 'https://api.convertkit.com/v3';
-const CONVERTKIT_API_KEY = process.env.VITE_CONVERTKIT_API_KEY;
+const CONVERTKIT_API_KEY = import.meta.env.VITE_CONVERTKIT_API_KEY;
 const CONVERTKIT_FORM_IDS = {
-  'advisor-checklist': process.env.VITE_CONVERTKIT_CHECKLIST_FORM_ID,
-  'interview-questions': process.env.VITE_CONVERTKIT_QUESTIONS_FORM_ID,
+  'advisor-checklist': import.meta.env.VITE_CONVERTKIT_CHECKLIST_FORM_ID,
+  'interview-questions': import.meta.env.VITE_CONVERTKIT_QUESTIONS_FORM_ID,
 };
 
 export async function captureEmail(data: EmailCaptureData): Promise<EmailCaptureResponse> {
