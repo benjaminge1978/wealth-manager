@@ -78,7 +78,7 @@ export function HeroSection() {
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="group" onClick={() => displayData.primaryButtonLink && window.open(displayData.primaryButtonLink)}>
                 {displayData.primaryButtonText}
-                <HandDrawnIcon type="arrow-right" size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>
               {displayData.secondaryButtonText && (
                 <Button variant="outline" size="lg" onClick={() => displayData.secondaryButtonLink && window.open(displayData.secondaryButtonLink)}>

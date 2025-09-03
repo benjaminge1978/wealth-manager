@@ -122,17 +122,7 @@ export function ProcessSection() {
             return (
               <Card 
                 key={index} 
-                className="relative group transition-all duration-300 border-border/50"
-                style={{
-                  backgroundColor: colors.cardBg,
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = colors.hoverCardBg;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = colors.cardBg;
-                }}
+                className="relative group transition-all duration-300 border-0 bg-transparent"
               >
                 <CardHeader className="text-center space-y-4">
                   <div className="relative mx-auto w-16 h-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">

@@ -7,10 +7,10 @@ export function WhyWealthMasterSection() {
       iconType: "gift" as const,
       title: "A totally FREE, No obligation consultation",
       description: "Start your journey with a comprehensive financial review at no cost. We'll assess your needs and outline opportunities.",
-      cardStyle: { background: 'linear-gradient(to bottom right, #fff5f5, #fce7f3)' },
-      iconBackground: "bg-rose-100 group-hover:bg-rose-200",
-      circleColor: "bg-rose-300/60",
-      iconColor: "#e11d48"
+      cardStyle: { background: 'linear-gradient(to bottom right, #fffbeb, #fef3c7)' },
+      iconBackground: "bg-amber-100 group-hover:bg-amber-200",
+      circleColor: "bg-amber-300/60",
+      iconColor: "#f59e0b"
     },
     {
       iconType: "clock" as const,
@@ -73,10 +73,11 @@ export function WhyWealthMasterSection() {
                   <div className="text-center pt-2">
                     <a 
                       href="#contact" 
-                      className="text-sm font-medium hover:underline transition-all duration-200"
+                      className="text-sm font-medium hover:underline transition-all duration-200 inline-flex items-center gap-1"
                       style={{ color: feature.iconColor }}
                     >
-                      Find an advisor →
+                      Find an advisor
+                      <span className="text-sm transition-transform duration-200 hover:translate-x-0.5">→</span>
                     </a>
                   </div>
                 </CardContent>

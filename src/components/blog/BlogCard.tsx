@@ -81,9 +81,9 @@ export function BlogCard({ post }: BlogCardProps) {
           
           <Link
             to={`/blog/${post.slug}`}
-            className="text-primary hover:text-primary/80 transition-colors"
+            className="text-primary hover:text-primary/80 transition-colors inline-flex items-center"
           >
-            <HandDrawnIcon type="arrow-right" size={16} />
+            <span className="text-lg transition-transform duration-200 hover:translate-x-0.5">→</span>
           </Link>
         </div>
       </CardFooter>
