@@ -2,16 +2,40 @@ import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { HandDrawnIcon } from "../ui/HandDrawnIcon";
 import { useState } from "react";
+import { captureEmail, downloadPDF } from "../../lib/emailCapture";
 
 export function AdvisorSelectionChecklist() {
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Integrate with ConvertKit or email service
-    console.log("Email captured:", email);
-    setIsSubmitted(true);
+    setIsLoading(true);
+    setError("");
+    
+    try {
+      const result = await captureEmail({
+        email,
+        guide: 'advisor-checklist',
+        source: 'checklist-page'
+      });
+      
+      if (result.success) {
+        setIsSubmitted(true);
+        // Trigger immediate download
+        setTimeout(() => {
+          downloadPDF('advisor-checklist');
+        }, 1000);
+      } else {
+        setError(result.message);
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const checklistItems = [
@@ -85,18 +109,28 @@ export function AdvisorSelectionChecklist() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mx-auto mb-4">
               <HandDrawnIcon type="check-circle" size={32} color="#10b981" />
             </div>
-            <CardTitle className="text-2xl">Download Link Sent!</CardTitle>
+            <CardTitle className="text-2xl">Success! Your Guide is Ready</CardTitle>
             <CardDescription className="text-lg">
-              Check your email for the comprehensive Financial Advisor Selection Checklist PDF.
+              Your download should start automatically. If not, click the button below.
             </CardDescription>
           </CardHeader>
-          <CardContent className="text-center">
-            <p className="text-muted-foreground mb-6">
-              You'll also receive our weekly newsletter with expert financial planning insights and advisor selection tips.
-            </p>
-            <Button onClick={() => window.history.back()}>
-              Return to Previous Page
-            </Button>
+          <CardContent className="text-center space-y-6">
+            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+              <p className="text-green-800 font-medium mb-2">What happens next:</p>
+              <ul className="text-sm text-green-700 space-y-1">
+                <li>✓ Your PDF download should start automatically</li>
+                <li>✓ We've saved your spot for weekly expert insights</li>
+                <li>✓ No spam - unsubscribe anytime</li>
+              </ul>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button onClick={() => downloadPDF('advisor-checklist')} variant="outline">
+                Download PDF Again
+              </Button>
+              <Button onClick={() => window.history.back()}>
+                Return to Previous Page
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -191,13 +225,28 @@ export function AdvisorSelectionChecklist() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
+                        disabled={isLoading}
                         placeholder="Enter your email address"
-                        className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg"
+                        className="w-full px-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-lg disabled:opacity-50"
                       />
                     </div>
-                    <Button type="submit" size="lg" className="w-full group">
-                      Download Free Checklist PDF
-                      <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
+                    {error && (
+                      <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                        {error}
+                      </div>
+                    )}
+                    <Button type="submit" size="lg" className="w-full group" disabled={isLoading}>
+                      {isLoading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                          Preparing your guide...
+                        </>
+                      ) : (
+                        <>
+                          Download Free Checklist PDF
+                          <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
+                        </>
+                      )}
                     </Button>
                     <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
