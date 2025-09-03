@@ -70,6 +70,10 @@ export function HeroSection() {
                   </>
                 )}
               </h1>
+              <div className="flex items-center gap-2">
+                <HandDrawnIcon type="check-circle" size={20} color="#3b82f6" className="text-blue-500" />
+                <p className="text-black font-semibold text-lg">Your first consultation is FREE and no obligation.</p>
+              </div>
               <p className="text-lg text-muted-foreground max-w-lg">
                 {displayData.subheadline}
               </p>

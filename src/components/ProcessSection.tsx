@@ -47,6 +47,138 @@ function RoughCircleBackground({ color, size }: { color: string, size: number })
   );
 }
 
+function RoughNumber({ 
+  number, 
+  size = 64, 
+  color = 'currentColor', 
+  className = '' 
+}: { 
+  number: string;
+  size?: number;
+  color?: string;
+  className?: string;
+}) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const hasDrawn = useRef(false);
+
+  useEffect(() => {
+    if (!svgRef.current || hasDrawn.current) return;
+
+    const svg = svgRef.current;
+    const rc = rough.svg(svg);
+
+    const strokeWidth = Math.max(2, size / 20);
+    const roughness = 0.8;
+    const bowing = 0.5;
+
+    // Only draw once
+    switch (number) {
+      case '01':
+      case '1':
+        // Number 1 - vertical line with serifs
+        svg.appendChild(rc.line(size * 0.5, size * 0.15, size * 0.5, size * 0.85, {
+          stroke: color,
+          strokeWidth: strokeWidth * 1.5,
+          roughness,
+          bowing
+        }));
+        // Top serif
+        svg.appendChild(rc.line(size * 0.35, size * 0.25, size * 0.5, size * 0.15, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Bottom serif
+        svg.appendChild(rc.line(size * 0.35, size * 0.85, size * 0.65, size * 0.85, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case '02':
+      case '2':
+        // Number 2 - curved top, angled middle, straight bottom
+        svg.appendChild(rc.path(
+          `M ${size * 0.25} ${size * 0.3} Q ${size * 0.5} ${size * 0.1} ${size * 0.75} ${size * 0.3} Q ${size * 0.8} ${size * 0.45} ${size * 0.6} ${size * 0.6} L ${size * 0.25} ${size * 0.8} L ${size * 0.8} ${size * 0.8}`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        break;
+
+      case '03':
+      case '3':
+        // Number 3 - two curved segments
+        svg.appendChild(rc.path(
+          `M ${size * 0.25} ${size * 0.25} Q ${size * 0.6} ${size * 0.15} ${size * 0.6} ${size * 0.35} Q ${size * 0.6} ${size * 0.5} ${size * 0.45} ${size * 0.5}`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        svg.appendChild(rc.path(
+          `M ${size * 0.45} ${size * 0.5} Q ${size * 0.65} ${size * 0.5} ${size * 0.65} ${size * 0.7} Q ${size * 0.65} ${size * 0.85} ${size * 0.25} ${size * 0.75}`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        break;
+
+      case '04':
+      case '4':
+        // Number 4 - vertical line, horizontal line, angled line
+        // Left vertical
+        svg.appendChild(rc.line(size * 0.3, size * 0.2, size * 0.3, size * 0.6, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Horizontal crossbar
+        svg.appendChild(rc.line(size * 0.3, size * 0.6, size * 0.7, size * 0.6, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Right vertical (full height)
+        svg.appendChild(rc.line(size * 0.7, size * 0.15, size * 0.7, size * 0.85, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        break;
+    }
+
+    hasDrawn.current = true;
+  }, [number, size, color]);
+
+  return (
+    <svg
+      ref={svgRef}
+      width={size}
+      height={size}
+      className={className}
+      style={{ color }}
+    />
+  );
+}
+
 export function ProcessSection() {
   const stepColors = [
     {
@@ -73,9 +205,9 @@ export function ProcessSection() {
     {
       cardBg: "#E6F3FF", // Soft Blue (same as step 2)
       hoverCardBg: "#D6EDFF",
-      accent: "#4FFFCB", 
-      iconColor: "#4FFFCB",
-      pastelColor: "#86efac" // Light emerald
+      accent: "#10b981", 
+      iconColor: "#10b981",
+      pastelColor: "#34d399" // Darker emerald
     }
   ];
 
@@ -128,11 +260,11 @@ export function ProcessSection() {
                   <div className="relative mx-auto w-16 h-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     {/* Rough circle background */}
                     <RoughCircleBackground color={colors.pastelColor} size={60} />
-                    {/* Icon in front */}
+                    {/* Rough number in front */}
                     <div className="relative z-10">
-                      <HandDrawnIcon 
-                        type={step.iconType} 
-                        size={32} 
+                      <RoughNumber 
+                        number={step.step} 
+                        size={40} 
                         color={colors.iconColor}
                         className="group-hover:scale-110 transition-transform duration-300" 
                       />

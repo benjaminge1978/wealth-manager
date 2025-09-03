@@ -630,7 +630,7 @@ export function HandDrawnIcon({ type, size = 32, className = '', color = 'curren
         break;
 
       case 'check-circle':
-        // Circle with checkmark
+        // Circle with checkmark (less rough)
         const checkRadius = size * 0.4;
         const checkCenterX = size / 2;
         const checkCenterY = size / 2;
@@ -638,8 +638,8 @@ export function HandDrawnIcon({ type, size = 32, className = '', color = 'curren
         svg.appendChild(rc.circle(checkCenterX, checkCenterY, checkRadius * 2, {
           stroke: color,
           strokeWidth,
-          roughness,
-          bowing,
+          roughness: 0.3,
+          bowing: 0.2,
           fill: 'none'
         }));
         
@@ -647,8 +647,8 @@ export function HandDrawnIcon({ type, size = 32, className = '', color = 'curren
         svg.appendChild(rc.path(`M ${checkCenterX - checkRadius * 0.4} ${checkCenterY} L ${checkCenterX - checkRadius * 0.1} ${checkCenterY + checkRadius * 0.3} L ${checkCenterX + checkRadius * 0.4} ${checkCenterY - checkRadius * 0.2}`, {
           stroke: color,
           strokeWidth: strokeWidth * 1.2,
-          roughness,
-          bowing
+          roughness: 0.3,
+          bowing: 0.2
         }));
         break;
 
