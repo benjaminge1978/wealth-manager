@@ -3,6 +3,7 @@ import { Suspense, lazy } from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { HomePage } from "./components/HomePage";
+import { ContactPage } from "./components/ContactPage";
 
 // Lazy load blog components for code splitting
 const BlogListing = lazy(() => import("./components/blog/BlogListing").then(module => ({ default: module.BlogListing })));
@@ -22,6 +23,7 @@ export default function App() {
       }>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/blog" element={<BlogListing />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>

@@ -3,7 +3,7 @@ import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-br from-primary via-primary to-accent/80 text-primary-foreground">
+    <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="space-y-4">

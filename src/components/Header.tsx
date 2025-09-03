@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useState } from "react";
-import wealthMasterLogo from "../assets/wealth_master_logo.svg";
+import netfinLogo from "../assets/netfin-logo.svg";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -40,8 +40,8 @@ export function Header() {
             aria-label="WealthMaster home page"
           >
             <img 
-              src={wealthMasterLogo} 
-              alt="WealthMaster Logo" 
+              src={netfinLogo} 
+              alt="Netfin Logo" 
               className="h-10 w-auto"
             />
           </Link>
@@ -75,18 +75,18 @@ export function Header() {
             >
               Blog
             </Link>
-            <button 
-              onClick={() => handleNavClick('contact')} 
+            <Link 
+              to="/contact" 
               className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
-              aria-label="Navigate to Contact section"
+              aria-label="Go to contact page"
             >
               Contact
-            </button>
+            </Link>
           </nav>
 
           <div className="flex items-center space-x-4">
-            <Button aria-label="Schedule consultation with a financial advisor">
-              Speak to an advisor
+            <Button aria-label="Schedule consultation with a financial adviser">
+              Speak to an adviser
             </Button>
             <Button 
               variant="ghost" 
@@ -140,18 +140,19 @@ export function Header() {
               >
                 Blog
               </Link>
-              <button 
-                onClick={() => { handleNavClick('contact'); setMobileMenuOpen(false); }}
-                className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
-                aria-label="Navigate to Contact section and close menu"
+              <Link 
+                to="/contact"
+                className="block text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Go to contact page and close menu"
               >
                 Contact
-              </button>
+              </Link>
               <Button 
                 className="w-full mt-4" 
-                aria-label="Schedule consultation with a financial advisor"
+                aria-label="Schedule consultation with a financial adviser"
               >
-                Speak to an advisor
+                Speak to an adviser
               </Button>
             </div>
           </nav>
