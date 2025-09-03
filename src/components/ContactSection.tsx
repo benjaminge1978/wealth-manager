@@ -3,9 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
+import { Checkbox } from "./ui/checkbox";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -13,7 +15,8 @@ export function ContactSection() {
     lastName: '',
     email: '',
     phone: '',
-    message: ''
+    message: '',
+    gdprConsent: false
   });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,6 +46,10 @@ export function ContactSection() {
       newErrors.message = 'Please tell us about your goals';
     }
     
+    if (!formData.gdprConsent) {
+      newErrors.gdprConsent = 'You must agree to the processing of your personal data';
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -60,7 +67,7 @@ export function ContactSection() {
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
       alert('Thank you for your interest! We will contact you within 24 hours to schedule your consultation.');
-      setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '', gdprConsent: false });
       setErrors({});
     } catch (error) {
       alert('Something went wrong. Please try again or call us directly.');
@@ -215,6 +222,34 @@ export function ContactSection() {
                         {errors.message}
                       </p>
                     )}
+                  </div>
+                  
+                  <div className="flex items-start space-x-2">
+                    <Checkbox 
+                      id="gdpr-consent" 
+                      checked={formData.gdprConsent}
+                      onCheckedChange={(checked) => handleInputChange('gdprConsent', checked)}
+                      className="mt-1"
+                      aria-invalid={!!errors.gdprConsent}
+                      aria-describedby={errors.gdprConsent ? "gdpr-consent-error" : undefined}
+                    />
+                    <div className="space-y-1">
+                      <Label 
+                        htmlFor="gdpr-consent" 
+                        className="text-sm font-normal cursor-pointer"
+                      >
+                        I agree to the processing of my personal data in accordance with the{" "}
+                        <Link to="/privacy" className="text-primary hover:underline" target="_blank">
+                          Privacy Policy
+                        </Link>
+                        <span className="text-red-500 ml-1" aria-label="required">*</span>
+                      </Label>
+                      {errors.gdprConsent && (
+                        <p id="gdpr-consent-error" className="text-red-500 text-sm" role="alert">
+                          {errors.gdprConsent}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   
                   <Button 

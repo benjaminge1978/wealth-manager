@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Separator } from "./ui/separator";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
+import netfinLogo from "../assets/netfin-logo.svg";
 
 export function Footer() {
   return (
@@ -8,11 +9,13 @@ export function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid md:grid-cols-4 gap-8">
           <div className="space-y-4">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary-foreground/20 rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground text-sm font-medium">WM</span>
-              </div>
-              <span className="font-medium text-lg">WealthMaster</span>
+            <div className="flex items-center">
+              <img 
+                src={netfinLogo} 
+                alt="Netfin Logo" 
+                className="h-10 w-auto"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
             </div>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               Your trusted partner for goals-based financial planning and wealth management. Building financial success through regulated advice and personalized strategies.

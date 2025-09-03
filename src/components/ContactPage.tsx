@@ -4,15 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
+import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
+import { Link } from "react-router-dom";
+import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
+import topRightScribble from "../assets/top-right-scribble.svg";
 
 export function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     advisorType: '',
-    message: ''
+    message: '',
+    gdprConsent: false
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -33,6 +38,10 @@ export function ContactPage() {
       newErrors.advisorType = 'Please select an advisor type';
     }
     
+    if (!formData.gdprConsent) {
+      newErrors.gdprConsent = 'You must agree to the processing of your personal data';
+    }
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -50,7 +59,7 @@ export function ContactPage() {
       // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 1000));
       setIsSubmitted(true);
-      setFormData({ name: '', phone: '', advisorType: '', message: '' });
+      setFormData({ name: '', phone: '', advisorType: '', message: '', gdprConsent: false });
       setErrors({});
     } catch (error) {
       alert('Something went wrong. Please try again or call us directly.');
@@ -162,8 +171,8 @@ export function ContactPage() {
           </div>
 
           {/* Right Form */}
-          <div>
-            <Card className="shadow-2xl">
+          <div className="relative">
+            <Card className="shadow-2xl relative z-10">
               <CardHeader>
                 <CardTitle className="text-2xl">Schedule Your FREE Consultation</CardTitle>
                 <p className="text-muted-foreground">
@@ -239,15 +248,32 @@ export function ContactPage() {
                     )}
                   </div>
                   
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Tell us about your goals (optional)</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="I'm interested in retirement planning and would like to discuss my investment strategy..."
-                      className="min-h-[100px]"
-                      value={formData.message}
-                      onChange={(e) => handleInputChange('message', e.target.value)}
+                  <div className="flex items-start space-x-2">
+                    <Checkbox 
+                      id="gdpr-consent-contact" 
+                      checked={formData.gdprConsent}
+                      onCheckedChange={(checked: boolean) => handleInputChange('gdprConsent', checked)}
+                      className="mt-1"
+                      aria-invalid={!!errors.gdprConsent}
+                      aria-describedby={errors.gdprConsent ? "gdpr-consent-error" : undefined}
                     />
+                    <div className="space-y-1">
+                      <Label 
+                        htmlFor="gdpr-consent-contact" 
+                        className="text-sm font-normal cursor-pointer"
+                      >
+                        I agree to the processing of my personal data in accordance with the{" "}
+                        <Link to="/privacy" className="text-primary hover:underline" target="_blank">
+                          Privacy Policy
+                        </Link>
+                        <span className="text-red-500 ml-1" aria-label="required">*</span>
+                      </Label>
+                      {errors.gdprConsent && (
+                        <p id="gdpr-consent-error" className="text-red-500 text-sm" role="alert">
+                          {errors.gdprConsent}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   
                   <Button 
@@ -266,6 +292,36 @@ export function ContactPage() {
                 </form>
               </CardContent>
             </Card>
+            {/* Bottom left scribble */}
+            <div className="absolute -bottom-4 w-40 h-12" style={{ left: '-2rem' }}>
+              <img 
+                src={bottomLeftScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(89%) sepia(43%) saturate(463%) hue-rotate(320deg) brightness(101%) contrast(97%)',
+                  opacity: 0.8,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
+              />
+            </div>
+            {/* Top right scribble */}
+            <div className="absolute -top-4 w-40 h-12" style={{ right: 'calc(-2rem - 30px)' }}>
+              <img 
+                src={topRightScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
+                  opacity: 0.7,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
+              />
+            </div>
           </div>
         </div>
       </div>
