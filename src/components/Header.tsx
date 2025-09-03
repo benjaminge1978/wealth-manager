@@ -6,6 +6,7 @@ import netfinLogo from "../assets/netfin-logo.svg";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const location = useLocation();
   const isHomePage = location.pathname === '/';
 
@@ -47,13 +48,58 @@ export function Header() {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8" role="navigation" aria-label="Main navigation">
-            <button 
-              onClick={() => handleNavClick('services')} 
-              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
-              aria-label="Navigate to Services section"
-            >
-              Services
-            </button>
+            <div className="relative">
+              <button 
+                onClick={() => setServicesDropdownOpen(!servicesDropdownOpen)}
+                onBlur={(e) => {
+                  // Close dropdown if focus moves outside the dropdown container
+                  if (!e.currentTarget.parentElement?.contains(e.relatedTarget as Node)) {
+                    setTimeout(() => setServicesDropdownOpen(false), 150);
+                  }
+                }}
+                className={`text-muted-foreground hover:text-foreground transition-colors focus:outline-none px-2 py-1 flex items-center gap-1 relative ${servicesDropdownOpen ? 'text-foreground' : ''}`}
+                style={servicesDropdownOpen ? { 
+                  borderBottom: '2px solid #3b82f6',
+                  paddingBottom: 'calc(0.25rem - 2px)'
+                } : {}}
+                aria-label="Services menu"
+                aria-expanded={servicesDropdownOpen}
+              >
+                Services
+                <HandDrawnIcon 
+                  type="chevron-down" 
+                  size={14} 
+                  className="transition-transform duration-200" 
+                  style={{ transform: servicesDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)' }} 
+                />
+              </button>
+              {servicesDropdownOpen && (
+                <div 
+                  className="absolute top-full left-0 mt-1 rounded-xl shadow-xl py-2 z-50 w-[450px]"
+                  style={{ backgroundColor: '#ffffff', boxShadow: '0 10px 40px rgba(0,0,0,0.1)' }}
+                >
+                  <Link
+                    to="/wealth-management"
+                    className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors whitespace-nowrap"
+                    onClick={() => setServicesDropdownOpen(false)}
+                  >
+                    Wealth Management
+                  </Link>
+                  <button
+                    onClick={() => { handleNavClick('services'); setServicesDropdownOpen(false); }}
+                    className="block w-full text-left px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
+                  >
+                    Financial Planning
+                  </button>
+                  <button
+                    onClick={() => { handleNavClick('services'); setServicesDropdownOpen(false); }}
+                    className="block w-full text-left px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
+                  >
+                    Investment Advisory
+                  </button>
+                </div>
+              )}
+            </div>
             <button 
               onClick={() => handleNavClick('about')} 
               className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
@@ -111,13 +157,45 @@ export function Header() {
             aria-label="Mobile navigation"
           >
             <div className="container mx-auto px-4 py-4 space-y-4">
-              <button 
-                onClick={() => { handleNavClick('services'); setMobileMenuOpen(false); }}
-                className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
-                aria-label="Navigate to Services section and close menu"
-              >
-                Services
-              </button>
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-muted-foreground px-2 py-1 uppercase tracking-wider">
+                  Services
+                </div>
+                <div className="bg-muted/30 rounded-lg p-2 space-y-1">
+                  <Link 
+                    to="/wealth-management"
+                    className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Go to Wealth Management page and close menu"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-primary/30 mr-3"></div>
+                    <div>
+                      <div className="font-medium">Wealth Management</div>
+                      <div className="text-xs text-muted-foreground">Build lasting wealth</div>
+                    </div>
+                  </Link>
+                  <button
+                    onClick={() => { handleNavClick('services'); setMobileMenuOpen(false); }}
+                    className="flex items-center w-full px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-emerald-500/30 mr-3"></div>
+                    <div className="text-left">
+                      <div className="font-medium">Financial Planning</div>
+                      <div className="text-xs text-muted-foreground">Goals-based strategies</div>
+                    </div>
+                  </button>
+                  <button
+                    onClick={() => { handleNavClick('services'); setMobileMenuOpen(false); }}
+                    className="flex items-center w-full px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-blue-500/30 mr-3"></div>
+                    <div className="text-left">
+                      <div className="font-medium">Investment Advisory</div>
+                      <div className="text-xs text-muted-foreground">Expert portfolio management</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
               <button 
                 onClick={() => { handleNavClick('about'); setMobileMenuOpen(false); }}
                 className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
