@@ -28,7 +28,7 @@ git push -u origin main
 3. **Connect to GitHub** and select your repository
 4. **Build settings:**
    - Build command: `npm run build`
-   - Publish directory: `build`
+   - Publish directory: `dist`
    - Node version: `18`
 
 5. **Environment Variables** (Site settings → Environment variables):
