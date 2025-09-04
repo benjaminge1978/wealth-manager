@@ -57,8 +57,8 @@ export function Header() {
                     setTimeout(() => setServicesDropdownOpen(false), 150);
                   }
                 }}
-                className={`text-muted-foreground hover:text-foreground transition-colors focus:outline-none px-2 py-1 flex items-center gap-1 relative ${servicesDropdownOpen ? 'text-foreground' : ''}`}
-                style={servicesDropdownOpen ? { 
+                className={`hover:text-foreground transition-colors focus:outline-none px-2 py-1 flex items-center gap-1 relative ${servicesDropdownOpen || location.pathname === '/wealth-management' ? 'text-foreground' : 'text-muted-foreground'}`}
+                style={servicesDropdownOpen || location.pathname === '/wealth-management' ? { 
                   borderBottom: '2px solid #3b82f6',
                   paddingBottom: 'calc(0.25rem - 2px)'
                 } : {}}
@@ -102,21 +102,29 @@ export function Header() {
             </div>
             <button 
               onClick={() => handleNavClick('about')} 
-              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none px-2 py-1 relative"
               aria-label="Navigate to About section"
             >
               About
             </button>
             <Link 
               to="/insights" 
-              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              className={`hover:text-foreground transition-colors focus:outline-none px-2 py-1 relative ${location.pathname.startsWith('/insights') ? 'text-foreground' : 'text-muted-foreground'}`}
+              style={location.pathname.startsWith('/insights') ? { 
+                borderBottom: '2px solid #3b82f6',
+                paddingBottom: 'calc(0.25rem - 2px)'
+              } : {}}
               aria-label="View our insights and resources"
             >
               Insights
             </Link>
             <Link 
               to="/contact" 
-              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
+              className={`hover:text-foreground transition-colors focus:outline-none px-2 py-1 relative ${location.pathname === '/contact' ? 'text-foreground' : 'text-muted-foreground'}`}
+              style={location.pathname === '/contact' ? { 
+                borderBottom: '2px solid #3b82f6',
+                paddingBottom: 'calc(0.25rem - 2px)'
+              } : {}}
               aria-label="Go to contact page"
             >
               Contact

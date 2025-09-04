@@ -49,7 +49,7 @@ export function Footer() {
             <div className="space-y-3 text-sm text-primary-foreground/80">
               <div className="flex items-center space-x-2">
                 <HandDrawnIcon type="mail" size={16} />
-                <span>info@netfin.com</span>
+                <span>finance@netfin.com</span>
               </div>
             </div>
           </div>

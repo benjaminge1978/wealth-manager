@@ -149,8 +149,8 @@ export function ContactPage() {
                 <HandDrawnIcon type="mail" size={24} className="text-primary" />
                 <div>
                   <p className="text-sm text-muted-foreground">Email us directly</p>
-                  <a href="mailto:contact@netfin.co.uk" className="text-lg font-medium text-primary hover:underline">
-                    contact@netfin.co.uk
+                  <a href="mailto:finance@netfin.co.uk" className="text-lg font-medium text-primary hover:underline">
+                    finance@netfin.co.uk
                   </a>
                 </div>
               </div>
