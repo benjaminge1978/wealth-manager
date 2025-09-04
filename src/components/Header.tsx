@@ -107,13 +107,6 @@ export function Header() {
             >
               About
             </button>
-            <button 
-              onClick={() => handleNavClick('process')} 
-              className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
-              aria-label="Navigate to Our Process section"
-            >
-              Our Process
-            </button>
             <Link 
               to="/insights" 
               className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
@@ -202,13 +195,6 @@ export function Header() {
                 aria-label="Navigate to About section and close menu"
               >
                 About
-              </button>
-              <button 
-                onClick={() => { handleNavClick('process'); setMobileMenuOpen(false); }}
-                className="block w-full text-left text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
-                aria-label="Navigate to Our Process section and close menu"
-              >
-                Our Process
               </button>
               <Link 
                 to="/insights" 

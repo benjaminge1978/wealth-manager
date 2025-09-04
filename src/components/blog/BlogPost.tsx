@@ -81,7 +81,7 @@ export function BlogPost() {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background pb-24">
       {/* Hero Section */}
       <section 
         className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30"
@@ -165,14 +165,28 @@ export function BlogPost() {
               </div>
               
               <div className="prose prose-lg max-w-none dark:prose-invert">
-                <ReactMarkdown>{post.content}</ReactMarkdown>
+                <ReactMarkdown 
+                  components={{
+                    h1: ({children}) => <h1 className="text-3xl font-semibold mt-8 mb-4">{children}</h1>,
+                    h2: ({children}) => <h2 className="text-2xl font-semibold mt-8 mb-4">{children}</h2>,
+                    h3: ({children}) => <h3 className="text-xl font-semibold mt-6 mb-3">{children}</h3>,
+                    h4: ({children}) => <h4 className="text-lg font-semibold mt-4 mb-2">{children}</h4>,
+                    p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
+                    ul: ({children}) => <ul className="mb-4 ml-6 list-disc space-y-2">{children}</ul>,
+                    ol: ({children}) => <ol className="mb-4 ml-6 list-decimal space-y-2">{children}</ol>,
+                    li: ({children}) => <li className="leading-relaxed">{children}</li>,
+                    strong: ({children}) => <strong className="font-semibold">{children}</strong>,
+                  }}
+                >
+                  {post.content}
+                </ReactMarkdown>
               </div>
               
               {/* FAQ Section */}
               <BlogFAQ post={post} maxFAQs={6} />
               
               {/* Tags */}
-              <div className="mt-8 pt-8 border-t">
+              <div className="mt-8 border-t" style={{ paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className="text-sm font-medium">Tags:</span>
                   {post.tags.map(tag => (
@@ -267,11 +281,9 @@ export function BlogPost() {
         </div>
       </section>
 
-      {/* FAQ Section */}
-      <BlogFAQ post={post} maxFAQs={6} />
 
       {/* Related Posts Section */}
-      <section className="py-8">
+      <section className="pt-8" style={{ paddingBottom: '6rem' }}>
         <div 
           className="mx-auto px-4"
           style={{ maxWidth: '50rem' }}

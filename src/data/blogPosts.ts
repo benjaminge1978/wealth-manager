@@ -7,8 +7,6 @@ export const blogPosts: BlogPost[] = [
     title: 'Maximizing Your Retirement Savings in 2025: A Comprehensive Guide',
     excerpt: 'Discover the latest strategies for optimizing your retirement contributions, including changes to contribution limits and new tax advantages for the current year.',
     content: `
-# Maximizing Your Retirement Savings in 2025: A Comprehensive Guide
-
 Retirement planning has never been more critical, and 2025 brings new opportunities and challenges for those looking to secure their financial future. With updated contribution limits and evolving tax regulations, it's essential to stay informed and make strategic decisions about your retirement savings.
 
 ## Understanding the New Contribution Limits
@@ -85,8 +83,6 @@ Remember, everyone's financial situation is unique. Consider consulting with a q
     title: 'Understanding Market Volatility: A Guide for Long-Term Investors',
     excerpt: 'Learn how to navigate market ups and downs with confidence, and why staying the course often beats trying to time the market.',
     content: `
-# Understanding Market Volatility: A Guide for Long-Term Investors
-
 Market volatility can be unsettling, but it's a normal part of investing. Understanding how to navigate these fluctuations is crucial for long-term investment success.
 
 ## What Causes Market Volatility?
@@ -171,8 +167,6 @@ Market volatility is an inherent part of investing, not something to be feared. 
     title: 'Estate Planning Essentials: Protecting Your Legacy',
     excerpt: 'Essential estate planning strategies to ensure your assets are distributed according to your wishes and your loved ones are protected.',
     content: `
-# Estate Planning Essentials: Protecting Your Legacy
-
 Estate planning is about more than just distributing assets—it's about protecting your loved ones, minimizing taxes, and ensuring your wishes are carried out. Here's what you need to know.
 
 ## Key Documents Everyone Needs
@@ -260,8 +254,6 @@ Proper estate planning provides peace of mind and protects your loved ones. Star
     title: 'Tax-Efficient Investment Strategies for High Earners',
     excerpt: 'Discover advanced tax strategies to minimize your tax burden while maximizing investment returns.',
     content: `
-# Tax-Efficient Investment Strategies for High Earners
-
 For high-income individuals, tax efficiency can significantly impact overall investment returns. Here are strategies to help minimize your tax burden while growing your wealth.
 
 ## Understanding Your Tax Bracket
@@ -347,8 +339,6 @@ Tax-efficient investing requires ongoing attention and strategic planning. Work 
     title: 'Building Generational Wealth: A Family Approach',
     excerpt: 'Learn how to create and preserve wealth that can benefit multiple generations of your family.',
     content: `
-# Building Generational Wealth: A Family Approach
-
 Creating wealth that lasts for generations requires more than just accumulating assets—it demands strategic planning, family involvement, and a long-term vision.
 
 ## The Foundation of Generational Wealth
@@ -444,8 +434,6 @@ Building generational wealth is a marathon, not a sprint. It requires dedication
     title: 'Navigating Inflation: Adjusting Your Investment Strategy',
     excerpt: 'How to protect and grow your wealth during inflationary periods with smart investment choices.',
     content: `
-# Navigating Inflation: Adjusting Your Investment Strategy
-
 Inflation can erode purchasing power and impact investment returns. Here's how to adjust your strategy to protect and grow your wealth during inflationary periods.
 
 ## Understanding Inflation's Impact
@@ -546,8 +534,6 @@ While inflation presents challenges, a well-thought-out investment strategy can 
     title: 'Sustainable Investing: Aligning Values with Returns',
     excerpt: 'Explore how ESG investing can align your portfolio with your values while pursuing competitive returns.',
     content: `
-# Sustainable Investing: Aligning Values with Returns
-
 Environmental, Social, and Governance (ESG) investing has moved from niche to mainstream. Learn how to incorporate sustainability into your investment strategy.
 
 ## Understanding ESG Investing
@@ -638,8 +624,6 @@ Sustainable investing offers the opportunity to align your investment portfolio 
     title: 'Cryptocurrency in Your Portfolio: A Measured Approach',
     excerpt: 'Understanding the role of digital assets in a diversified investment portfolio and how to approach crypto investing responsibly.',
     content: `
-# Cryptocurrency in Your Portfolio: A Measured Approach
-
 As digital assets mature, many investors are considering cryptocurrency allocation. Here's a balanced perspective on incorporating crypto into your portfolio.
 
 ## Understanding Cryptocurrency
@@ -745,8 +729,6 @@ Cryptocurrency can play a role in a diversified portfolio, but it requires caref
     title: 'Planning for Healthcare Costs in Retirement',
     excerpt: 'A comprehensive guide to estimating and preparing for medical expenses in your retirement years.',
     content: `
-# Planning for Healthcare Costs in Retirement
-
 Healthcare expenses are one of the largest and most unpredictable costs in retirement. Proper planning can help ensure you're prepared for these expenses.
 
 ## Understanding the Costs
@@ -849,8 +831,6 @@ Healthcare costs in retirement require careful planning and consideration. Start
     title: 'Financial Planning for Millennials: Building Wealth Early',
     excerpt: 'Essential financial strategies for millennials to build wealth, manage debt, and secure their financial future.',
     content: `
-# Financial Planning for Millennials: Building Wealth Early
-
 Millennials face unique financial challenges and opportunities. Here's how to navigate them and build long-term wealth.
 
 ## Understanding Millennial Challenges

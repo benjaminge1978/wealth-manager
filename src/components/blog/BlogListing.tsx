@@ -98,11 +98,6 @@ export function BlogListing() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
             <div className="relative w-full lg:w-96">
-              <HandDrawnIcon 
-                type="search"
-                size={16}
-                className="absolute top-1/2 left-13 transform -translate-y-1/2 text-muted-foreground"
-              />
               <Input
                 type="text"
                 placeholder="Search articles..."
@@ -111,7 +106,7 @@ export function BlogListing() {
                 className="border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                 style={{
                   backgroundColor: 'white',
-                  paddingLeft: '80px',
+                  paddingLeft: '16px',
                   paddingRight: '16px',
                   paddingTop: '12px',
                   paddingBottom: '12px',
