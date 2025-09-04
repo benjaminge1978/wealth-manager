@@ -40,7 +40,7 @@ export function HeroSection() {
       <section className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
+            <div className="space-y-8 lg:order-1 order-2">
               <div className="h-32 bg-muted animate-pulse rounded-lg"></div>
               <div className="h-20 bg-muted animate-pulse rounded-lg"></div>
               <div className="flex gap-4">
@@ -48,7 +48,7 @@ export function HeroSection() {
                 <div className="h-12 w-40 bg-muted animate-pulse rounded-lg"></div>
               </div>
             </div>
-            <div className="h-[500px] bg-muted animate-pulse rounded-lg"></div>
+            <div className="h-[500px] bg-muted animate-pulse rounded-lg lg:order-2 order-1"></div>
           </div>
         </div>
       </section>
@@ -59,7 +59,7 @@ export function HeroSection() {
     <section className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <div className="space-y-8 lg:order-1 order-2">
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
                 {displayData.headline}
@@ -106,7 +106,7 @@ export function HeroSection() {
             )}
           </div>
 
-          <div className="relative">
+          <div className="relative lg:order-2 order-1">
             <div className="relative z-10">
               <ImageWithFallback 
                 src={displayData.heroImage ? getImageUrl(displayData.heroImage, 800, 500) : heroImage}

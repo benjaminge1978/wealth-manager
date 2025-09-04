@@ -31,7 +31,7 @@ export function AboutSection() {
     <section id="about" className="py-20 bg-gradient-to-b from-muted/50 to-secondary/20">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
+          <div className="space-y-8 lg:order-1 order-2">
             <div className="space-y-6">
               <h2 className="text-3xl lg:text-4xl font-medium">
                 Trusted Financial Guidance
@@ -63,7 +63,7 @@ export function AboutSection() {
             </div>
           </div>
 
-          <div className="space-y-8">
+          <div className="space-y-8 lg:order-2 order-1">
             <div className="relative">
               <ImageWithFallback 
                 src={aboutImage}

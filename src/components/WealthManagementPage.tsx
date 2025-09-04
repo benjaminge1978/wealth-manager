@@ -1,5 +1,9 @@
 import { Button } from "./ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
+import { Checkbox } from "./ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useEffect, useRef, useState } from 'react';
@@ -57,7 +61,7 @@ function WealthHeroSection() {
     <section className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
       <div className="container mx-auto px-4">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-8">
+          <div className="space-y-8 lg:order-1 order-2">
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
                 Turn Your Income Into 
@@ -98,7 +102,7 @@ function WealthHeroSection() {
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative lg:order-2 order-1">
             <div className="relative z-10">
               <ImageWithFallback 
                 src={heroImage}
@@ -793,169 +797,318 @@ function WealthSocialProofSection() {
 
 // Final CTA Section Component
 function WealthFinalCTASection() {
-  return (
-    <section className="py-20 bg-gradient-to-br from-primary/10 via-secondary/20 to-accent/30 relative overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="max-w-5xl mx-auto">
-          {/* Main CTA Block */}
-          <div className="text-center space-y-8 mb-16">
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    advisorType: '',
+    message: '',
+    gdprConsent: false
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+    
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    }
+    
+    if (!formData.advisorType) {
+      newErrors.advisorType = 'Please select an advisor type';
+    }
+    
+    if (!formData.gdprConsent) {
+      newErrors.gdprConsent = 'You must agree to the processing of your personal data';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate form submission
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setIsSubmitted(true);
+      setFormData({ name: '', phone: '', advisorType: '', message: '', gdprConsent: false });
+      setErrors({});
+    } catch (error) {
+      alert('Something went wrong. Please try again or call us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const benefits = [
+    "FREE consultations with certified advisors",
+    "We call you within one hour guaranteed", 
+    "Personalized wealth strategy in 30 minutes"
+  ];
+
+  const advisorTypes = [
+    { value: "wealth-management", label: "Wealth Manager" },
+    { value: "financial", label: "Financial Advisor" },
+    { value: "investment", label: "Investment Advisor" },
+    { value: "estate-planning", label: "Estate Planning" }
+  ];
+
+  if (isSubmitted) {
+    return (
+      <section className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center space-y-8">
             <div className="space-y-6">
-              <h2 className="text-4xl lg:text-5xl font-medium leading-tight">
-                Start Building Your Wealth 
-                <span className="text-primary"> Today</span>
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Every day you wait is a day of compound growth lost forever. The clients who started 5 years ago now have millions more than those who waited.
+              <HandDrawnIcon type="check-circle" size={80} color="#0065ff" className="mx-auto text-primary" />
+              <h1 className="text-4xl lg:text-5xl font-medium leading-tight">
+                Thank You!
+              </h1>
+              <p className="text-xl text-muted-foreground">
+                Thank you for contacting us. We'll be with you within the hour.
+              </p>
+              <p className="text-lg text-muted-foreground">
+                One of our certified wealth managers will contact you at <span className="font-medium text-foreground">{formData.phone}</span> to discuss your financial goals.
               </p>
             </div>
-
-            {/* Urgency Elements */}
-            <div className="bg-primary/5 border border-primary/20 rounded-2xl p-6 max-w-2xl mx-auto">
-              <div className="flex items-center justify-center gap-2 mb-3">
-                <HandDrawnIcon type="clock" size={20} color="#dc2626" />
-                <span className="text-red-600 font-semibold">Limited Time Opportunity</span>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                We only take on 12 new wealth management clients per month to ensure personalized attention. 
-                <strong> 7 spots remaining for January 2025.</strong>
-              </p>
-            </div>
-
-            {/* Primary CTA */}
-            <div className="space-y-4">
-              <Button size="lg" className="group text-lg px-8 py-4 h-auto">
-                Claim Your FREE Wealth Assessment
-                <span className="ml-2 text-xl transition-transform duration-200 group-hover:translate-x-1">→</span>
+            <div className="pt-8">
+              <Button 
+                onClick={() => setIsSubmitted(false)}
+                variant="outline"
+                size="lg"
+              >
+                Submit Another Request
               </Button>
-              <p className="text-sm text-muted-foreground">
-                ⚡ Response within 1 hour • 📅 60-minute consultation • 📈 Personal strategy roadmap
-              </p>
-            </div>
-          </div>
-
-          {/* Value Proposition Grid */}
-          <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <Card className="text-center p-6 border-primary/20 bg-white/50 backdrop-blur">
-              <HandDrawnIcon type="gift" size={32} className="text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">100% FREE Assessment</h3>
-              <p className="text-sm text-muted-foreground">
-                Complete financial analysis with personalized recommendations. No strings attached.
-              </p>
-            </Card>
-            <Card className="text-center p-6 border-primary/20 bg-white/50 backdrop-blur">
-              <HandDrawnIcon type="shield" size={32} className="text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">Risk-Free Guarantee</h3>
-              <p className="text-sm text-muted-foreground">
-                If you're not satisfied with your strategy, we'll refund your first year's fees.
-              </p>
-            </Card>
-            <Card className="text-center p-6 border-primary/20 bg-white/50 backdrop-blur">
-              <HandDrawnIcon type="users" size={32} className="text-primary mx-auto mb-4" />
-              <h3 className="font-semibold mb-2">5,000+ Success Stories</h3>
-              <p className="text-sm text-muted-foreground">
-                Join thousands who've achieved financial freedom through our proven strategies.
-              </p>
-            </Card>
-          </div>
-
-          {/* Objection Handling */}
-          <div className="bg-white/80 rounded-2xl p-8 mb-12">
-            <h3 className="text-2xl font-semibold text-center mb-8">Still Have Questions?</h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-primary">❓ "Is this really free?"</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Yes, completely free. We believe in proving our value first. No hidden fees, no obligations.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-primary">❓ "What if I don't have much to invest?"</h4>
-                  <p className="text-sm text-muted-foreground">
-                    We work with clients starting from £50k. Our strategies are designed to grow wealth at any level.
-                  </p>
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-primary">❓ "Will you pressure me to sign up?"</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Never. We only work with clients who are genuinely excited about building wealth with us.
-                  </p>
-                </div>
-                <div className="space-y-2">
-                  <h4 className="font-semibold text-primary">❓ "How quickly will I see results?"</h4>
-                  <p className="text-sm text-muted-foreground">
-                    Most clients see measurable improvements within 6 months and substantial growth within 2 years.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Final Push */}
-          <div className="text-center space-y-8">
-            <div className="bg-gradient-to-r from-primary/20 to-secondary/20 rounded-2xl p-8">
-              <h3 className="text-2xl font-semibold mb-4">The Cost of Waiting</h3>
-              <div className="grid md:grid-cols-3 gap-4 text-center mb-6">
-                <div>
-                  <div className="text-2xl font-bold text-red-500">£180k</div>
-                  <div className="text-sm">Lost by waiting 1 year</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-red-500">£520k</div>
-                  <div className="text-sm">Lost by waiting 3 years</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-red-500">£1.2M</div>
-                  <div className="text-sm">Lost by waiting 5 years</div>
-                </div>
-              </div>
-              <p className="text-muted-foreground mb-6">
-                Based on average compound growth. Every day you delay costs you exponentially more.
-              </p>
-            </div>
-
-            <div className="space-y-4">
-              <Button size="lg" className="group text-lg px-12 py-4 h-auto">
-                Secure Your Spot Now
-                <span className="ml-2 text-xl transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <p className="text-xs text-muted-foreground max-w-2xl mx-auto">
-                By clicking above, you'll be taken to our secure scheduling system. We respect your privacy and never share your information. 
-                You can unsubscribe at any time.
-              </p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
+    );
+  }
 
-      {/* Background decorations */}
-      <div className="absolute top-20 left-10 w-32 h-16 opacity-20">
-        <img 
-          src={bottomLeftScribble} 
-          alt="" 
-          className="w-full h-full object-contain"
-          style={{
-            filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
-            transform: 'rotate(15deg)'
-          }}
-          role="presentation"
-          aria-hidden="true"
-        />
-      </div>
-      <div className="absolute bottom-20 right-10 w-32 h-16 opacity-20">
-        <img 
-          src={topRightScribble} 
-          alt="" 
-          className="w-full h-full object-contain"
-          style={{
-            filter: 'brightness(0) saturate(100%) invert(89%) sepia(43%) saturate(463%) hue-rotate(320deg) brightness(101%) contrast(97%)',
-            transform: 'rotate(-15deg)'
-          }}
-          role="presentation"
-          aria-hidden="true"
-        />
+  return (
+    <section className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left Content */}
+          <div className="space-y-8 lg:order-1 order-2">
+            <div className="space-y-6">
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
+                Get Your <span className="text-primary">FREE</span> Wealth Consultation
+              </h1>
+              <p className="text-lg text-muted-foreground max-w-lg">
+                Speak with a regulated wealth manager within one hour - no obligation required
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <HandDrawnIcon type="check-circle" size={24} color="#0065ff" className="text-primary flex-shrink-0" />
+                  <p className="text-lg font-medium">{benefit}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-6 border-t">
+              <div className="flex items-center gap-3">
+                <HandDrawnIcon type="mail" size={24} className="text-primary" />
+                <div>
+                  <p className="text-sm text-muted-foreground">Email us directly</p>
+                  <a href="mailto:contact@netfin.co.uk" className="text-lg font-medium text-primary hover:underline">
+                    contact@netfin.co.uk
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card/50 backdrop-blur border rounded-lg p-6">
+              <div className="flex items-start gap-4">
+                <HandDrawnIcon type="award" size={32} className="text-primary flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium mb-2">Trusted by 500+ Families</h3>
+                  <p className="text-sm text-muted-foreground">
+                    "Professional, knowledgeable, and always puts our needs first. Highly recommended!"
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-2">- Sarah M., London</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Form */}
+          <div className="relative lg:order-2 order-1">
+            <Card className="shadow-2xl relative z-10">
+              <CardHeader>
+                <CardTitle className="text-2xl">Schedule Your FREE Consultation</CardTitle>
+                <p className="text-muted-foreground">
+                  We'll contact you within one hour to schedule your complimentary consultation.
+                </p>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Your Name <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Input 
+                      id="name" 
+                      placeholder="John Smith"
+                      value={formData.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
+                      required
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "name-error" : undefined}
+                      className={errors.name ? "border-red-500 focus:ring-red-500" : ""}
+                    />
+                    {errors.name && (
+                      <p id="name-error" className="text-red-500 text-sm" role="alert">
+                        {errors.name}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="phone">Best Phone Number <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Input 
+                      id="phone" 
+                      type="tel" 
+                      placeholder="020 7123 4567"
+                      value={formData.phone}
+                      onChange={(e) => handleInputChange('phone', e.target.value)}
+                      required
+                      aria-invalid={!!errors.phone}
+                      aria-describedby={errors.phone ? "phone-error" : undefined}
+                      className={errors.phone ? "border-red-500 focus:ring-red-500" : ""}
+                    />
+                    {errors.phone && (
+                      <p id="phone-error" className="text-red-500 text-sm" role="alert">
+                        {errors.phone}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="advisorType">Which advisor can help you most? <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Select 
+                      value={formData.advisorType} 
+                      onValueChange={(value) => handleInputChange('advisorType', value)}
+                    >
+                      <SelectTrigger 
+                        className={errors.advisorType ? "border-red-500 focus:ring-red-500" : ""}
+                        aria-invalid={!!errors.advisorType}
+                        aria-describedby={errors.advisorType ? "advisorType-error" : undefined}
+                      >
+                        <SelectValue placeholder="Select an advisor type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {advisorTypes.map((advisor) => (
+                          <SelectItem key={advisor.value} value={advisor.value}>
+                            {advisor.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.advisorType && (
+                      <p id="advisorType-error" className="text-red-500 text-sm" role="alert">
+                        {errors.advisorType}
+                      </p>
+                    )}
+                  </div>
+                  
+                  <div className="flex items-start space-x-2">
+                    <Checkbox 
+                      id="gdpr-consent-wealth" 
+                      checked={formData.gdprConsent}
+                      onCheckedChange={(checked: boolean) => handleInputChange('gdprConsent', checked)}
+                      className="mt-1"
+                      aria-invalid={!!errors.gdprConsent}
+                      aria-describedby={errors.gdprConsent ? "gdpr-consent-error" : undefined}
+                    />
+                    <div className="space-y-1">
+                      <Label 
+                        htmlFor="gdpr-consent-wealth" 
+                        className="text-sm font-normal cursor-pointer"
+                      >
+                        I agree to the processing of my personal data in accordance with the{" "}
+                        <a href="/privacy" className="text-primary hover:underline" target="_blank">
+                          Privacy Policy
+                        </a>
+                        <span className="text-red-500 ml-1" aria-label="required">*</span>
+                      </Label>
+                      {errors.gdprConsent && (
+                        <p id="gdpr-consent-error" className="text-red-500 text-sm" role="alert">
+                          {errors.gdprConsent}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    size="lg" 
+                    disabled={isSubmitting}
+                    aria-label={isSubmitting ? "Scheduling consultation..." : "Get my free consultation"}
+                  >
+                    {isSubmitting ? "Scheduling..." : "Get My FREE Consultation"}
+                  </Button>
+
+                  <p className="text-xs text-center text-muted-foreground">
+                    100% confidential • No obligation • Usually responds within 1 hour
+                  </p>
+                </form>
+              </CardContent>
+            </Card>
+            {/* Bottom left scribble */}
+            <div className="absolute -bottom-4 w-40 h-12" style={{ left: '-2rem' }}>
+              <img 
+                src={bottomLeftScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(89%) sepia(43%) saturate(463%) hue-rotate(320deg) brightness(101%) contrast(97%)',
+                  opacity: 0.8,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
+              />
+            </div>
+            {/* Top right scribble */}
+            <div className="absolute -top-4 w-40 h-12" style={{ right: 'calc(-2rem - 30px)' }}>
+              <img 
+                src={topRightScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
+                  opacity: 0.7,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
