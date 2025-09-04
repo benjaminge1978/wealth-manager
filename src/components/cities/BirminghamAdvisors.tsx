@@ -9,7 +9,7 @@ export function BirminghamAdvisors() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Financial Advisors in Birmingham - WealthMaster",
+    "name": "Financial Advisors in Birmingham - Netfin",
     "description": "Find vetted, qualified financial advisors and wealth managers in Birmingham. Expert Midlands financial planning with competitive rates.",
     "address": {
       "@type": "PostalAddress",

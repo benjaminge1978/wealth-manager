@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useState } from "react";
-import netfinLogo from "../assets/netfin-logo.svg";
+import wealthMasterLogo from "../assets/wealth_master_logo.svg";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -38,10 +38,10 @@ export function Header() {
           <Link 
             to="/" 
             className="flex items-center"
-            aria-label="WealthMaster home page"
+            aria-label="Netfin home page"
           >
             <img 
-              src={netfinLogo} 
+              src={wealthMasterLogo} 
               alt="Netfin Logo" 
               className="h-10 w-auto"
             />

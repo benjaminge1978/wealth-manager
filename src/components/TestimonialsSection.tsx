@@ -4,21 +4,21 @@ import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 export function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Sarah Mitchell",
-      role: "Business Owner",
-      content: "WealthMaster helped us plan for both business succession and personal retirement goals. Their goals-based approach made complex financial decisions much clearer.",
+      name: "Chris's Client",
+      role: "First-Time Homebuyer",
+      content: "Chris made the daunting mortgage process very straightforward and went above and beyond to secure the best deal. His industry knowledge proved invaluable and nothing was too much trouble.",
       rating: 5
     },
     {
-      name: "David Chen",
-      role: "Engineering Manager",
-      content: "The personalized investment strategy has exceeded our expectations. We're now confident we'll meet our children's education goals and our retirement timeline.",
+      name: "Investment Client",
+      role: "Savings Planner",
+      content: "Chris was extremely informative and provided great advice on managing my savings. He helped me choose the best investment plan based on my comfort level and desired outcome.",
       rating: 5
     },
     {
-      name: "Linda Rodriguez",
-      role: "Medical Professional",
-      content: "Their regulated advice gave us peace of mind during market volatility. The ongoing monitoring and adjustments have kept our portfolio on track.",
+      name: "ISA Client",
+      role: "Young Professional",
+      content: "Chris explained the Lifetime ISA perfectly, talked me through the process, and set everything up. He made sure I understood all the risks and next steps clearly.",
       rating: 5
     }
   ];

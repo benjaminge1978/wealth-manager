@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 
-export function WhyWealthMasterSection() {
+export function WhyNetfinSection() {
   const features = [
     {
       iconType: "gift" as const,
@@ -23,8 +23,8 @@ export function WhyWealthMasterSection() {
     },
     {
       iconType: "shield" as const,
-      title: "Trusted by thousands",
-      description: "Join over 5,000 families who've achieved their financial goals with our proven strategies and expertise.",
+      title: "Trusted by many",
+      description: "Join the families, businesses, and individuals our advisers have supported in working towards their financial goals.",
       cardStyle: { background: 'linear-gradient(to bottom right, #f5f3ff, #ede9fe)' },
       iconBackground: "bg-violet-100 group-hover:bg-violet-200",
       circleColor: "bg-violet-300/60",
@@ -36,9 +36,9 @@ export function WhyWealthMasterSection() {
     <section className="py-20 bg-gradient-to-b from-white to-background">
       <div className="container mx-auto px-4">
         <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl lg:text-4xl font-medium">Why WealthMaster?</h2>
+          <h2 className="text-3xl lg:text-4xl font-medium">Why Netfin?</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Experience the difference of personalized wealth management
+            Experience the true power of Personalised Financial Planning
           </p>
         </div>
 

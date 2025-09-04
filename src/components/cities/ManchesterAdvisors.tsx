@@ -10,7 +10,7 @@ export function ManchesterAdvisors() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Financial Advisors in Manchester - WealthMaster",
+    "name": "Financial Advisors in Manchester - Netfin",
     "description": "Find vetted, qualified financial advisors and wealth managers in Manchester. Compare fees, credentials, and local expertise.",
     "address": {
       "@type": "PostalAddress",

@@ -10,7 +10,7 @@ export function EdinburghAdvisors() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Financial Advisors in Edinburgh - WealthMaster",
+    "name": "Financial Advisors in Edinburgh - Netfin",
     "description": "Find vetted, qualified financial advisors and wealth managers in Edinburgh. Expert Scottish financial planning with international perspective.",
     "address": {
       "@type": "PostalAddress",

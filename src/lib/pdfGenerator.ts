@@ -4,7 +4,7 @@
 export function generateChecklistPDF(): Blob {
   const content = `
 Financial Advisor Selection Checklist
-WealthMaster - Your Guide to Finding the Perfect Financial Advisor
+Netfin - Your Guide to Finding the Perfect Financial Advisor
 
 CREDENTIALS & QUALIFICATIONS
 ☐ FCA registered and authorized
@@ -87,7 +87,7 @@ QUESTIONS TO ASK:
 Remember: Take your time, ask questions, and choose an advisor you trust completely with your financial future.
 
 ---
-© 2025 WealthMaster - Find Your Perfect Financial Advisor
+© 2025 Netfin - Find Your Perfect Financial Advisor
 Visit us at: https://wealthmaster.co.uk
   `;
 
@@ -97,7 +97,7 @@ Visit us at: https://wealthmaster.co.uk
 export function generateInterviewQuestionsPDF(): Blob {
   const content = `
 50 Essential Financial Advisor Interview Questions
-WealthMaster - Your Guide to Choosing the Right Financial Advisor
+Netfin - Your Guide to Choosing the Right Financial Advisor
 
 ESSENTIAL OPENING QUESTIONS
 1. Are you a fiduciary 100% of the time when providing advice?
@@ -202,7 +202,7 @@ GOOD SIGNS:
 Remember: The right advisor should welcome your questions and provide clear, honest answers. If they seem bothered by your due diligence, find someone else.
 
 ---
-© 2025 WealthMaster - Find Your Perfect Financial Advisor
+© 2025 Netfin - Find Your Perfect Financial Advisor
 Visit us at: https://wealthmaster.co.uk
   `;
 

@@ -14,7 +14,7 @@ export function FeeOnlyVsCommissionGuide() {
     "description": "Comprehensive comparison of fee-only and commission-based financial advisors, including costs, conflicts of interest, and which type is best for different situations.",
     "author": {
       "@type": "Organization",
-      "name": "WealthMaster"
+      "name": "Netfin"
     },
     "datePublished": "2025-01-01",
     "dateModified": "2025-01-01"

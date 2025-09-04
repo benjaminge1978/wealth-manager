@@ -27,8 +27,8 @@ export function HandDrawnIcon({ type, size = 32, className = '', color = 'curren
     svg.innerHTML = '';
 
     const strokeWidth = Math.max(1.5, size / 20);
-    const roughness = 1.2;
-    const bowing = 1;
+    const roughness = 0.3;
+    const bowing = 0.2;
 
     switch (type) {
       case 'gift':

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Separator } from "./ui/separator";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
-import netfinLogo from "../assets/netfin-logo.svg";
+import wealthMasterLogo from "../assets/wealth_master_logo.svg";
 
 export function Footer() {
   return (
@@ -11,8 +11,8 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center">
               <img 
-                src={netfinLogo} 
-                alt="Netfin Logo" 
+                src={wealthMasterLogo} 
+                alt="Wealth Master Logo" 
                 className="h-10 w-auto"
                 style={{ filter: 'brightness(0) invert(1)' }}
               />
@@ -48,16 +48,8 @@ export function Footer() {
             <h4 className="font-medium">Contact</h4>
             <div className="space-y-3 text-sm text-primary-foreground/80">
               <div className="flex items-center space-x-2">
-                <HandDrawnIcon type="phone" size={16} />
-                <span>(555) 123-4567</span>
-              </div>
-              <div className="flex items-center space-x-2">
                 <HandDrawnIcon type="mail" size={16} />
-                <span>info@wealthmaster.com</span>
-              </div>
-              <div className="flex items-start space-x-2">
-                <HandDrawnIcon type="map-pin" size={16} className="mt-0.5 flex-shrink-0" />
-                <span>123 Financial District, Suite 500<br />New York, NY 10004</span>
+                <span>info@netfin.com</span>
               </div>
             </div>
           </div>
@@ -67,10 +59,10 @@ export function Footer() {
         
         <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="text-sm text-primary-foreground/60">
-            © 2025 WealthMaster Financial Advisers. All rights reserved.
+            © 2025 Netfin Financial Advisers. All rights reserved.
           </div>
           <div className="text-xs text-primary-foreground/60 text-center md:text-right">
-            Investment advisory services offered through WealthMaster Financial Advisers, a registered investment adviser.
+            Investment advisory services offered through Netfin Financial Advisers, a registered investment adviser.
             <br />
             Securities and insurance products are not FDIC insured and may lose value.
           </div>

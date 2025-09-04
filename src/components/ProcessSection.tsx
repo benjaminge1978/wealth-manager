@@ -14,8 +14,8 @@ function RoughCircleBackground({ color, size }: { color: string, size: number })
     const rc = rough.svg(svg);
 
     const strokeWidth = 1.5;
-    const roughness = 0.8;
-    const bowing = 0.5;
+    const roughness = 0.3;
+    const bowing = 0.2;
 
     // Only draw once
     svg.appendChild(rc.circle(size / 2, size / 2, size * 0.85, {
@@ -68,8 +68,8 @@ function RoughNumber({
     const rc = rough.svg(svg);
 
     const strokeWidth = Math.max(2, size / 20);
-    const roughness = 0.8;
-    const bowing = 0.5;
+    const roughness = 0.3;
+    const bowing = 0.2;
 
     // Only draw once
     switch (number) {
@@ -215,26 +215,26 @@ export function ProcessSection() {
     {
       step: "01",
       iconType: "message-square" as const,
-      title: "Discovery & Consultation",
-      description: "We start with an in-depth consultation to understand your current financial situation, goals, and concerns. This forms the foundation of your personalized strategy."
+      title: "Initial Consultation",
+      description: "We begin our free, no-obligation consultation process to introduce our services and understand how we may be able to help, while getting to know you better."
     },
     {
       step: "02",
       iconType: "target" as const,
-      title: "Goals-Based Planning",
-      description: "We create a comprehensive financial plan that aligns with your specific goals, whether it's retirement, education funding, or wealth preservation."
+      title: "Fact Find Meeting",
+      description: "When you're ready to move on we gather detailed information about your financial situation to build a clear picture of where you are now and how best to move forward."
     },
     {
       step: "03",
       iconType: "check-circle" as const,
-      title: "Implementation",
-      description: "We execute your personalized strategy with regulated investment advice and ongoing portfolio management to keep you on track."
+      title: "Presentation Meeting",
+      description: "We present a tailored financial plan with personalised recommendations designed to help you achieve your goals, and answer any questions so you feel confident moving forward."
     },
     {
       step: "04",
       iconType: "trending-up" as const,
-      title: "Monitoring & Adjusting",
-      description: "We continuously monitor your progress and adjust your strategy as your life circumstances and market conditions change."
+      title: "Ongoing Monitoring & Adjusting",
+      description: "We'll continue to review your plan regularly, making adjustments as your circumstances or market conditions change, to help keep you on track."
     }
   ];
 
@@ -244,7 +244,7 @@ export function ProcessSection() {
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl lg:text-4xl font-medium">Our Process</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            A proven, systematic approach to achieving your financial goals through personalized planning and expert guidance.
+            A simple, step-by-step approach to ensure you get the right advice tailored to your needs — available either face-to-face or via video call.
           </p>
         </div>
 

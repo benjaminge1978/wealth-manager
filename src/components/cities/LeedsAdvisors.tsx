@@ -9,7 +9,7 @@ export function LeedsAdvisors() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Financial Advisors in Leeds - WealthMaster",
+    "name": "Financial Advisors in Leeds - Netfin",
     "description": "Find vetted, qualified financial advisors and wealth managers in Leeds. Expert Yorkshire financial planning with regional expertise.",
     "address": {
       "@type": "PostalAddress",

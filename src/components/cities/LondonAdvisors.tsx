@@ -10,7 +10,7 @@ export function LondonAdvisors() {
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "name": "Financial Advisors in London - WealthMaster",
+    "name": "Financial Advisors in London - Netfin",
     "description": "Find vetted, qualified financial advisors and wealth managers in London. Compare fees, credentials, and specializations.",
     "address": {
       "@type": "PostalAddress",

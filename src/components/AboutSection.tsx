@@ -34,13 +34,13 @@ export function AboutSection() {
           <div className="space-y-8">
             <div className="space-y-6">
               <h2 className="text-3xl lg:text-4xl font-medium">
-                Trusted Financial Guidance Since 2009
+                Trusted Financial Guidance
               </h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                We are a team of experienced financial advisers dedicated to helping individuals and families achieve their financial dreams. Our approach combines deep market expertise with personalized service to create comprehensive wealth management strategies.
+                For almost 2 decades, we've been helping individuals, families, and businesses make confident financial decisions. Our network of advisers combine expert knowledge with a personal approach, creating strategies designed to support your goals at every stage of life.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                As regulated financial advisers, we provide transparent, goals-based planning that puts your interests first. Every recommendation is backed by thorough analysis and aligned with your unique circumstances and objectives.
+                All of the Financial Advisers we work with are fully qualified as well as being authorised and regulated by the Financial Conduct Authority. Every recommendation we make is based on a clear understanding of your circumstances and backed by thorough research and analysis.
               </p>
             </div>
 
@@ -49,19 +49,15 @@ export function AboutSection() {
               <ul className="space-y-3">
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-muted-foreground">Regulated advice you can trust</span>
+                  <span className="text-muted-foreground">Clear, regulated advice you can rely on</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-muted-foreground">Transparent fee structure with no hidden costs</span>
+                  <span className="text-muted-foreground">Ongoing support and regular reviews</span>
                 </li>
                 <li className="flex items-start space-x-3">
                   <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-muted-foreground">Ongoing support and portfolio monitoring</span>
-                </li>
-                <li className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                  <span className="text-muted-foreground">Goals-based approach to financial planning</span>
+                  <span className="text-muted-foreground">A personalised, goals-based approach to financial planning</span>
                 </li>
               </ul>
             </div>

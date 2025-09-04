@@ -1,49 +1,40 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Input } from "./ui/input";
-import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
 import { Checkbox } from "./ui/checkbox";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
+import topRightScribble from "../assets/top-right-scribble.svg";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
+    name: '',
     phone: '',
+    advisorType: '',
     message: '',
     gdprConsent: false
   });
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const validateForm = () => {
-    const newErrors = {};
+    const newErrors: Record<string, string> = {};
     
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
-    }
-    
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
     }
     
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
     }
     
-    if (!formData.message.trim()) {
-      newErrors.message = 'Please tell us about your goals';
+    if (!formData.advisorType) {
+      newErrors.advisorType = 'Please select an advisor type';
     }
     
     if (!formData.gdprConsent) {
@@ -54,7 +45,7 @@ export function ContactSection() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!validateForm()) {
@@ -63,11 +54,11 @@ export function ContactSection() {
     
     setIsSubmitting(true);
     
-    // Simulate form submission
     try {
+      // Simulate form submission
       await new Promise(resolve => setTimeout(resolve, 1000));
-      alert('Thank you for your interest! We will contact you within 24 hours to schedule your consultation.');
-      setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '', gdprConsent: false });
+      setIsSubmitted(true);
+      setFormData({ name: '', phone: '', advisorType: '', message: '', gdprConsent: false });
       setErrors({});
     } catch (error) {
       alert('Something went wrong. Please try again or call us directly.');
@@ -76,121 +67,144 @@ export function ContactSection() {
     }
   };
 
-  const handleInputChange = (field, value) => {
+  const handleInputChange = (field: string, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
   };
-  const contactInfo = [
-    {
-      icon: <HandDrawnIcon type="phone" size={20} className="text-primary" />,
-      label: "Phone",
-      value: "(555) 123-4567"
-    },
-    {
-      icon: <HandDrawnIcon type="mail" size={20} className="text-primary" />,
-      label: "Email",
-      value: "info@wealthmaster.com"
-    },
-    {
-      icon: <HandDrawnIcon type="map-pin" size={20} className="text-primary" />,
-      label: "Office",
-      value: "123 Financial District, Suite 500\nNew York, NY 10004"
-    },
-    {
-      icon: <HandDrawnIcon type="clock" size={20} className="text-primary" />,
-      label: "Hours",
-      value: "Monday - Friday: 9:00 AM - 6:00 PM\nSaturday: 10:00 AM - 2:00 PM"
-    }
+
+  const benefits = [
+    "FREE consultations with certified advisors",
+    "We call you within one hour guaranteed", 
+    "Personalized wealth strategy in 30 minutes"
   ];
 
-  return (
-    <section id="contact" className="py-20 bg-gradient-to-b from-background to-secondary/30">
-      <div className="container mx-auto px-4">
-        <div className="text-center space-y-4 mb-16">
-          <h2 className="text-3xl lg:text-4xl font-medium">Get Started Today</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Ready to take control of your financial future? Schedule a consultation to discuss your goals and learn how we can help.
-          </p>
-        </div>
+  const advisorTypes = [
+    { value: "pensions", label: "Pensions Advisor" },
+    { value: "financial", label: "Financial Advisor" },
+    { value: "mortgage", label: "Mortgage Broker" },
+    { value: "insurance", label: "Insurance Broker" }
+  ];
 
-        <div className="grid lg:grid-cols-2 gap-12">
+  if (isSubmitted) {
+    return (
+      <section id="contact" className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
+        <div className="container mx-auto px-4">
+          <div className="max-w-2xl mx-auto text-center space-y-8">
+            <div className="space-y-6">
+              <HandDrawnIcon type="check-circle" size={80} color="#0065ff" className="mx-auto text-primary" />
+              <h2 className="text-4xl lg:text-5xl font-medium leading-tight">
+                Thank You!
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                Thank you for contacting us. We'll be with you within the hour.
+              </p>
+              <p className="text-lg text-muted-foreground">
+                One of our certified advisors will contact you at <span className="font-medium text-foreground">{formData.phone}</span> to discuss your financial goals.
+              </p>
+            </div>
+            <div className="pt-8">
+              <Button 
+                onClick={() => setIsSubmitted(false)}
+                variant="outline"
+                size="lg"
+              >
+                Submit Another Request
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="contact" className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
+      <div className="container mx-auto px-4">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left Content */}
           <div className="space-y-8">
-            <Card>
+            <div className="space-y-6">
+              <h2 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
+                Get Your <span className="text-primary">FREE</span> Financial Consultation
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-lg">
+                Speak with a regulated advisor within one hour - no obligation required
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              {benefits.map((benefit, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <HandDrawnIcon type="check-circle" size={24} color="#0065ff" className="text-primary flex-shrink-0" />
+                  <p className="text-lg font-medium">{benefit}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="pt-6 border-t">
+              <div className="flex items-center gap-3">
+                <HandDrawnIcon type="mail" size={24} className="text-primary" />
+                <div>
+                  <p className="text-sm text-muted-foreground">Email us directly</p>
+                  <a href="mailto:contact@netfin.co.uk" className="text-lg font-medium text-primary hover:underline">
+                    contact@netfin.co.uk
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card/50 backdrop-blur border rounded-lg p-6">
+              <div className="flex items-start gap-4">
+                <HandDrawnIcon type="award" size={32} className="text-primary flex-shrink-0" />
+                <div>
+                  <h3 className="font-medium mb-2">Trusted by 500+ Families</h3>
+                  <p className="text-sm text-muted-foreground">
+                    "Professional, knowledgeable, and always puts our needs first. Highly recommended!"
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-2">- Sarah M., London</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Form */}
+          <div className="relative">
+            <Card className="shadow-2xl relative z-10">
               <CardHeader>
-                <CardTitle>Schedule a Consultation</CardTitle>
-                <CardDescription>
-                  Fill out the form below and we'll contact you within 24 hours to schedule your complimentary consultation.
-                </CardDescription>
+                <CardTitle className="text-2xl">Schedule Your FREE Consultation</CardTitle>
+                <p className="text-muted-foreground">
+                  We'll contact you within one hour to schedule your complimentary consultation.
+                </p>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name <span className="text-red-500" aria-label="required">*</span></Label>
-                      <Input 
-                        id="firstName" 
-                        placeholder="John"
-                        value={formData.firstName}
-                        onChange={(e) => handleInputChange('firstName', e.target.value)}
-                        required
-                        aria-invalid={!!errors.firstName}
-                        aria-describedby={errors.firstName ? "firstName-error" : undefined}
-                        className={errors.firstName ? "border-red-500 focus:ring-red-500" : ""}
-                      />
-                      {errors.firstName && (
-                        <p id="firstName-error" className="text-red-500 text-sm" role="alert">
-                          {errors.firstName}
-                        </p>
-                      )}
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name <span className="text-red-500" aria-label="required">*</span></Label>
-                      <Input 
-                        id="lastName" 
-                        placeholder="Doe"
-                        value={formData.lastName}
-                        onChange={(e) => handleInputChange('lastName', e.target.value)}
-                        required
-                        aria-invalid={!!errors.lastName}
-                        aria-describedby={errors.lastName ? "lastName-error" : undefined}
-                        className={errors.lastName ? "border-red-500 focus:ring-red-500" : ""}
-                      />
-                      {errors.lastName && (
-                        <p id="lastName-error" className="text-red-500 text-sm" role="alert">
-                          {errors.lastName}
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                  
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Label htmlFor="name">Your Name <span className="text-red-500" aria-label="required">*</span></Label>
                     <Input 
-                      id="email" 
-                      type="email" 
-                      placeholder="john@example.com"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
+                      id="name" 
+                      placeholder="John Smith"
+                      value={formData.name}
+                      onChange={(e) => handleInputChange('name', e.target.value)}
                       required
-                      aria-invalid={!!errors.email}
-                      aria-describedby={errors.email ? "email-error" : undefined}
-                      className={errors.email ? "border-red-500 focus:ring-red-500" : ""}
+                      aria-invalid={!!errors.name}
+                      aria-describedby={errors.name ? "name-error" : undefined}
+                      className={errors.name ? "border-red-500 focus:ring-red-500" : ""}
                     />
-                    {errors.email && (
-                      <p id="email-error" className="text-red-500 text-sm" role="alert">
-                        {errors.email}
+                    {errors.name && (
+                      <p id="name-error" className="text-red-500 text-sm" role="alert">
+                        {errors.name}
                       </p>
                     )}
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="phone">Phone <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Label htmlFor="phone">Best Phone Number <span className="text-red-500" aria-label="required">*</span></Label>
                     <Input 
                       id="phone" 
                       type="tel" 
-                      placeholder="(555) 123-4567"
+                      placeholder="020 7123 4567"
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
                       required
@@ -204,38 +218,47 @@ export function ContactSection() {
                       </p>
                     )}
                   </div>
-                  
+
                   <div className="space-y-2">
-                    <Label htmlFor="message">Tell us about your goals <span className="text-red-500" aria-label="required">*</span></Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="I'm interested in retirement planning and would like to discuss my investment strategy..."
-                      className={`min-h-[120px] ${errors.message ? "border-red-500 focus:ring-red-500" : ""}`}
-                      value={formData.message}
-                      onChange={(e) => handleInputChange('message', e.target.value)}
-                      required
-                      aria-invalid={!!errors.message}
-                      aria-describedby={errors.message ? "message-error" : undefined}
-                    />
-                    {errors.message && (
-                      <p id="message-error" className="text-red-500 text-sm" role="alert">
-                        {errors.message}
+                    <Label htmlFor="advisorType">Which advisor can help you most? <span className="text-red-500" aria-label="required">*</span></Label>
+                    <Select 
+                      value={formData.advisorType} 
+                      onValueChange={(value) => handleInputChange('advisorType', value)}
+                    >
+                      <SelectTrigger 
+                        className={errors.advisorType ? "border-red-500 focus:ring-red-500" : ""}
+                        aria-invalid={!!errors.advisorType}
+                        aria-describedby={errors.advisorType ? "advisorType-error" : undefined}
+                      >
+                        <SelectValue placeholder="Select an advisor type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {advisorTypes.map((advisor) => (
+                          <SelectItem key={advisor.value} value={advisor.value}>
+                            {advisor.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.advisorType && (
+                      <p id="advisorType-error" className="text-red-500 text-sm" role="alert">
+                        {errors.advisorType}
                       </p>
                     )}
                   </div>
                   
                   <div className="flex items-start space-x-2">
                     <Checkbox 
-                      id="gdpr-consent" 
+                      id="gdpr-consent-contact" 
                       checked={formData.gdprConsent}
-                      onCheckedChange={(checked) => handleInputChange('gdprConsent', checked)}
+                      onCheckedChange={(checked: boolean) => handleInputChange('gdprConsent', checked)}
                       className="mt-1"
                       aria-invalid={!!errors.gdprConsent}
                       aria-describedby={errors.gdprConsent ? "gdpr-consent-error" : undefined}
                     />
                     <div className="space-y-1">
                       <Label 
-                        htmlFor="gdpr-consent" 
+                        htmlFor="gdpr-consent-contact" 
                         className="text-sm font-normal cursor-pointer"
                       >
                         I agree to the processing of my personal data in accordance with the{" "}
@@ -257,51 +280,47 @@ export function ContactSection() {
                     className="w-full" 
                     size="lg" 
                     disabled={isSubmitting}
-                    aria-label={isSubmitting ? "Submitting consultation request..." : "Schedule consultation"}
+                    aria-label={isSubmitting ? "Scheduling consultation..." : "Get my free consultation"}
                   >
-                    {isSubmitting ? "Scheduling..." : "Schedule Consultation"}
+                    {isSubmitting ? "Scheduling..." : "Get My FREE Consultation"}
                   </Button>
+
+                  <p className="text-xs text-center text-muted-foreground">
+                    100% confidential • No obligation • Usually responds within 1 hour
+                  </p>
                 </form>
               </CardContent>
             </Card>
-          </div>
-
-          <div className="space-y-8">
-            <div className="relative">
-              <ImageWithFallback 
-                src="https://images.unsplash.com/photo-1568649704650-a6ab20e84311?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjBvZmZpY2UlMjBmaW5hbmNpYWx8ZW58MXx8fHwxNzU2NTI4OTM2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                alt="Modern office financial district" 
-                className="w-full h-[300px] object-cover rounded-lg"
+            {/* Bottom left scribble */}
+            <div className="absolute -bottom-4 w-40 h-12" style={{ left: '-2rem' }}>
+              <img 
+                src={bottomLeftScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(89%) sepia(43%) saturate(463%) hue-rotate(320deg) brightness(101%) contrast(97%)',
+                  opacity: 0.8,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/40 via-primary/10 to-transparent rounded-lg"></div>
-              <div className="absolute bottom-6 left-6 text-white">
-                <h3 className="text-xl font-medium mb-2">Visit Our Office</h3>
-                <p className="text-white/90">Located in the heart of the financial district</p>
-              </div>
             </div>
-
-            <div className="grid gap-6">
-              {contactInfo.map((info, index) => (
-                <div key={index} className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 p-2 bg-gradient-to-br from-primary/10 to-accent/20 rounded-lg">
-                    {info.icon}
-                  </div>
-                  <div>
-                    <div className="font-medium mb-1">{info.label}</div>
-                    <div className="text-muted-foreground whitespace-pre-line">{info.value}</div>
-                  </div>
-                </div>
-              ))}
+            {/* Top right scribble */}
+            <div className="absolute -top-4 w-40 h-12" style={{ right: 'calc(-2rem - 30px)' }}>
+              <img 
+                src={topRightScribble} 
+                alt="" 
+                className="w-full h-full object-contain"
+                style={{
+                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
+                  opacity: 0.7,
+                  transform: 'rotate(45deg)'
+                }}
+                role="presentation"
+                aria-hidden="true"
+              />
             </div>
-
-            <Card className="bg-primary text-primary-foreground">
-              <CardContent className="p-6">
-                <h4 className="font-medium mb-2">Complimentary Consultation</h4>
-                <p className="text-primary-foreground/90 text-sm">
-                  Your first consultation is always complimentary. We'll review your current situation and discuss how our goals-based approach can help you achieve financial success.
-                </p>
-              </CardContent>
-            </Card>
           </div>
         </div>
       </div>

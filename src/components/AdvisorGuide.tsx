@@ -11,7 +11,7 @@ export function AdvisorGuide() {
     "description": "Comprehensive guide covering everything you need to know about selecting, vetting, and working with a financial advisor or wealth manager.",
     "author": {
       "@type": "Organization",
-      "name": "WealthMaster"
+      "name": "Netfin"
     },
     "datePublished": "2025-01-01",
     "dateModified": "2025-01-01"

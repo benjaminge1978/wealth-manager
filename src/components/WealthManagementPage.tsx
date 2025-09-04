@@ -19,8 +19,8 @@ function RoughCircleBackground({ color, size }: { color: string, size: number })
     const rc = rough.svg(svg);
 
     const strokeWidth = 1.5;
-    const roughness = 0.8;
-    const bowing = 0.5;
+    const roughness = 0.3;
+    const bowing = 0.2;
 
     svg.appendChild(rc.circle(size / 2, size / 2, size * 0.85, {
       stroke: color,
@@ -158,7 +158,7 @@ function WealthBenefitsSection() {
       cardStyle: { background: 'linear-gradient(to bottom right, #f5f3ff, #ede9fe)' }
     },
     {
-      icon: "trending-up" as const,
+      icon: "credit-card" as const,
       title: "Generate £100k+ Annual Passive Income",
       description: "Build dividend-paying portfolios and investment properties that generate substantial passive income streams.",
       example: "Average client: £127k annual passive income by year 15",
@@ -285,7 +285,7 @@ function WealthKnowledgeSection() {
       bgColor: "bg-red-50"
     },
     {
-      icon: "trending-up" as const,
+      icon: "alert-triangle" as const,
       title: "Why DIY Investing Fails",
       insight: "Studies show DIY investors underperform the market by 3-4% annually due to emotional decisions, poor timing, and lack of diversification.",
       action: "Professional wealth management removes emotion from investing and provides access to institutional-grade strategies and alternative investments.",
@@ -730,7 +730,7 @@ function WealthSocialProofSection() {
                   <div>
                     <h3 className="text-2xl font-semibold mb-2">{study.title}</h3>
                     <div className="text-sm text-muted-foreground mb-4">
-                      {study.client} • {study.timeframe} with WealthMaster
+                      {study.client} • {study.timeframe} with Netfin
                     </div>
                   </div>
 
@@ -1040,9 +1040,17 @@ function WealthFAQSection() {
                 key={index} 
                 className="border-border/50 hover:border-primary/20 transition-colors overflow-hidden"
               >
-                <button
+                <div
                   onClick={() => toggleFAQ(index)}
-                  className="w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset"
+                  className="w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-inset cursor-pointer"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      toggleFAQ(index);
+                    }
+                  }}
                   aria-expanded={openIndex === index}
                   aria-controls={`faq-answer-${index}`}
                 >
@@ -1065,19 +1073,19 @@ function WealthFAQSection() {
                       className="flex-shrink-0 transition-transform duration-200"
                     />
                   </div>
-                </button>
-                <div 
-                  id={`faq-answer-${index}`}
-                  className={`transition-all duration-300 ease-in-out overflow-hidden ${
-                    openIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-                  }`}
-                >
-                  <div className="px-6 pb-6">
-                    <p className="text-muted-foreground leading-relaxed pl-7">
-                      {faq.answer}
-                    </p>
-                  </div>
                 </div>
+                {openIndex === index && (
+                  <div 
+                    id={`faq-answer-${index}`}
+                    className="animate-in slide-in-from-top-2 duration-300"
+                  >
+                    <div className="px-6 pb-6">
+                      <p className="text-muted-foreground leading-relaxed pl-7">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                )}
               </Card>
             ))}
           </div>

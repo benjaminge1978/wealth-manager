@@ -15,8 +15,8 @@ function RoughCircleBackground({ color, size }: { color: string, size: number })
     const rc = rough.svg(svg);
 
     const strokeWidth = 1.5;
-    const roughness = 0.8;
-    const bowing = 0.5;
+    const roughness = 0.3;
+    const bowing = 0.2;
 
     // Only draw once
     svg.appendChild(rc.circle(size / 2, size / 2, size * 0.85, {
@@ -85,8 +85,8 @@ export function ServicesSection() {
     },
     {
       icon: "Shield",
-      title: "Risk Management",
-      description: "Protect your wealth with strategic insurance planning and risk assessment tailored to your unique situation.",
+      title: "Protection",
+      description: "Whatever matters most — your family, business, or income — we'll ensure it's properly protected with the right life, health and income plans.",
       order: 3,
       iconColor: "#059669", // Emerald
       pastelColor: "#86efac", // Light emerald
@@ -95,8 +95,8 @@ export function ServicesSection() {
     },
     {
       icon: "TrendingUp",
-      title: "Investment Advisory",
-      description: "Regulated investment advice with ongoing portfolio monitoring and strategic adjustments as markets evolve.",
+      title: "Mortgage Advice",
+      description: "Access experienced mortgage advisers who provide clear, regulated guidance for first-time buyers, remortgaging or buy-to-let solutions.",
       order: 4,
       iconColor: "#dc2626", // Red
       pastelColor: "#fca5a5", // Light red
@@ -133,7 +133,7 @@ export function ServicesSection() {
         <div className="text-center space-y-4 mb-16">
           <h2 className="text-3xl lg:text-4xl font-medium">Our Services</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive financial services designed to help you build, protect, and transfer wealth effectively.
+            Whatever your financial goals, we'll connect you with an adviser who can help you move forward with the confidence you need to build, protect and transfer wealth effectively.
           </p>
         </div>
 
