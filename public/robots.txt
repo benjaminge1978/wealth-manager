@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://wealth-management-app.netlify.app/sitemap.xml
+Sitemap: https://netfin.co.uk/sitemap.xml
 
 # Block common bot directories
 Disallow: /api/
@@ -13,8 +13,8 @@ Disallow: /src/
 
 # Allow specific pages
 Allow: /
-Allow: /blog
-Allow: /blog/*
+Allow: /insights
+Allow: /insights/*
 
 # Crawl-delay for respectful crawling
 Crawl-delay: 1
