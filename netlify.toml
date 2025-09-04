@@ -5,6 +5,23 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# 301 redirects for blog to insights migration
+[[redirects]]
+  from = "/blog"
+  to = "/insights"
+  status = 301
+
+[[redirects]]
+  from = "/blog/*"
+  to = "/insights/:splat"
+  status = 301
+
+# 301 redirect for updated blog post slug
+[[redirects]]
+  from = "/insights/maximizing-your-retirement-savings-2024"
+  to = "/insights/maximizing-your-retirement-savings-2025"
+  status = 301
+
 [[redirects]]
   from = "/*"
   to = "/index.html"

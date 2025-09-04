@@ -785,7 +785,7 @@ function WealthSocialProofSection() {
               Start Your Success Story Today
               <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Button>
-            <p className="text-sm text-muted-foreground mt-3">
+            <p className="text-sm text-muted-foreground mt-9">
               Free consultation • Personalized strategy • No obligation • Results-focused approach
             </p>
           </div>

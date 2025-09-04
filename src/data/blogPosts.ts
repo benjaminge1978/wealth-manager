@@ -3,17 +3,17 @@ import { BlogPost, BLOG_CATEGORIES } from '../types/blog';
 export const blogPosts: BlogPost[] = [
   {
     id: '1',
-    slug: 'maximizing-your-retirement-savings-2024',
-    title: 'Maximizing Your Retirement Savings in 2024: A Comprehensive Guide',
+    slug: 'maximizing-your-retirement-savings-2025',
+    title: 'Maximizing Your Retirement Savings in 2025: A Comprehensive Guide',
     excerpt: 'Discover the latest strategies for optimizing your retirement contributions, including changes to contribution limits and new tax advantages for the current year.',
     content: `
-# Maximizing Your Retirement Savings in 2024: A Comprehensive Guide
+# Maximizing Your Retirement Savings in 2025: A Comprehensive Guide
 
-Retirement planning has never been more critical, and 2024 brings new opportunities and challenges for those looking to secure their financial future. With updated contribution limits and evolving tax regulations, it's essential to stay informed and make strategic decisions about your retirement savings.
+Retirement planning has never been more critical, and 2025 brings new opportunities and challenges for those looking to secure their financial future. With updated contribution limits and evolving tax regulations, it's essential to stay informed and make strategic decisions about your retirement savings.
 
 ## Understanding the New Contribution Limits
 
-The IRS has announced increased contribution limits for 2024, providing savers with more opportunities to build their retirement nest eggs:
+The IRS has announced increased contribution limits for 2025, providing savers with more opportunities to build their retirement nest eggs:
 
 - **401(k) Contributions**: The limit has increased to $23,000 for those under 50
 - **IRA Contributions**: Traditional and Roth IRA limits have risen to $7,000
@@ -63,7 +63,7 @@ Your retirement strategy shouldn't be set in stone. Regular reviews help ensure 
 
 ## Conclusion
 
-Maximizing your retirement savings requires a combination of strategic planning, disciplined saving, and regular review. By taking advantage of the opportunities available in 2024 and maintaining a long-term perspective, you can build a secure financial foundation for your retirement years.
+Maximizing your retirement savings requires a combination of strategic planning, disciplined saving, and regular review. By taking advantage of the opportunities available in 2025 and maintaining a long-term perspective, you can build a secure financial foundation for your retirement years.
 
 Remember, everyone's financial situation is unique. Consider consulting with a qualified financial advisor to develop a personalized retirement strategy that aligns with your goals and circumstances.
     `,
@@ -72,7 +72,7 @@ Remember, everyone's financial situation is unique. Consider consulting with a q
       role: 'Senior Financial Advisor',
       avatar: 'https://ui-avatars.com/api/?name=Michael+Richardson&background=0ea5e9&color=fff'
     },
-    publishedDate: '2024-03-15',
+    publishedDate: '2025-03-15',
     readTime: 8,
     category: BLOG_CATEGORIES[1],
     tags: ['retirement', '401k', 'IRA', 'tax planning', 'investment'],
@@ -158,7 +158,7 @@ Market volatility is an inherent part of investing, not something to be feared. 
       role: 'Portfolio Manager',
       avatar: 'https://ui-avatars.com/api/?name=Sarah+Chen&background=10b981&color=fff'
     },
-    publishedDate: '2024-03-12',
+    publishedDate: '2025-03-12',
     readTime: 6,
     category: BLOG_CATEGORIES[3],
     tags: ['market analysis', 'volatility', 'investment strategy', 'risk management'],
@@ -247,7 +247,7 @@ Proper estate planning provides peace of mind and protects your loved ones. Star
       role: 'Estate Planning Specialist',
       avatar: 'https://ui-avatars.com/api/?name=David+Martinez&background=7c3aed&color=fff'
     },
-    publishedDate: '2024-03-10',
+    publishedDate: '2025-03-10',
     readTime: 7,
     category: BLOG_CATEGORIES[4],
     tags: ['estate planning', 'trusts', 'wills', 'tax planning', 'legacy'],
@@ -334,7 +334,7 @@ Tax-efficient investing requires ongoing attention and strategic planning. Work 
       role: 'Tax Strategy Advisor',
       avatar: 'https://ui-avatars.com/api/?name=Jennifer+Walsh&background=dc2626&color=fff'
     },
-    publishedDate: '2024-03-08',
+    publishedDate: '2025-03-08',
     readTime: 9,
     category: BLOG_CATEGORIES[2],
     tags: ['tax planning', 'investment', 'high earners', 'tax efficiency'],
@@ -431,7 +431,7 @@ Building generational wealth is a marathon, not a sprint. It requires dedication
       role: 'Wealth Management Director',
       avatar: 'https://ui-avatars.com/api/?name=Robert+Thompson&background=059669&color=fff'
     },
-    publishedDate: '2024-03-05',
+    publishedDate: '2025-03-05',
     readTime: 10,
     category: BLOG_CATEGORIES[5],
     tags: ['generational wealth', 'family', 'legacy planning', 'education'],
@@ -533,7 +533,7 @@ While inflation presents challenges, a well-thought-out investment strategy can 
       role: 'Economic Strategist',
       avatar: 'https://ui-avatars.com/api/?name=Amanda+Foster&background=f59e0b&color=fff'
     },
-    publishedDate: '2024-03-03',
+    publishedDate: '2025-03-03',
     readTime: 8,
     category: BLOG_CATEGORIES[0],
     tags: ['inflation', 'investment strategy', 'asset allocation', 'economic trends'],
@@ -625,7 +625,7 @@ Sustainable investing offers the opportunity to align your investment portfolio 
       role: 'ESG Investment Specialist',
       avatar: 'https://ui-avatars.com/api/?name=Lisa+Green&background=22c55e&color=fff'
     },
-    publishedDate: '2024-02-28',
+    publishedDate: '2025-02-28',
     readTime: 7,
     category: BLOG_CATEGORIES[0],
     tags: ['ESG', 'sustainable investing', 'impact investing', 'values-based investing'],
@@ -732,7 +732,7 @@ Cryptocurrency can play a role in a diversified portfolio, but it requires caref
       role: 'Digital Asset Strategist',
       avatar: 'https://ui-avatars.com/api/?name=Mark+Davis&background=6366f1&color=fff'
     },
-    publishedDate: '2024-02-25',
+    publishedDate: '2025-02-25',
     readTime: 9,
     category: BLOG_CATEGORIES[0],
     tags: ['cryptocurrency', 'bitcoin', 'blockchain', 'digital assets', 'portfolio allocation'],
@@ -836,7 +836,7 @@ Healthcare costs in retirement require careful planning and consideration. Start
       role: 'Healthcare Planning Advisor',
       avatar: 'https://ui-avatars.com/api/?name=Patricia+Brown&background=ec4899&color=fff'
     },
-    publishedDate: '2024-02-22',
+    publishedDate: '2025-02-22',
     readTime: 8,
     category: BLOG_CATEGORIES[1],
     tags: ['healthcare', 'retirement', 'Medicare', 'long-term care', 'HSA'],
@@ -957,7 +957,7 @@ Despite unique challenges, millennials have tremendous opportunities to build we
       role: 'Financial Planning Consultant',
       avatar: 'https://ui-avatars.com/api/?name=Jason+Kim&background=3b82f6&color=fff'
     },
-    publishedDate: '2024-02-20',
+    publishedDate: '2025-02-20',
     readTime: 7,
     category: BLOG_CATEGORIES[5],
     tags: ['millennials', 'financial planning', 'debt management', 'investing basics'],

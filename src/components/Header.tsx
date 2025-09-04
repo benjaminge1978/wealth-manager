@@ -115,11 +115,11 @@ export function Header() {
               Our Process
             </button>
             <Link 
-              to="/blog" 
+              to="/insights" 
               className="text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-1"
-              aria-label="View our blog posts"
+              aria-label="View our insights and resources"
             >
-              Blog
+              Insights
             </Link>
             <Link 
               to="/contact" 
@@ -211,12 +211,12 @@ export function Header() {
                 Our Process
               </button>
               <Link 
-                to="/blog" 
+                to="/insights" 
                 className="block text-muted-foreground hover:text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-md px-2 py-2"
                 onClick={() => setMobileMenuOpen(false)}
-                aria-label="View our blog posts and close menu"
+                aria-label="View our insights and resources and close menu"
               >
-                Blog
+                Insights
               </Link>
               <Link 
                 to="/contact"

@@ -43,7 +43,7 @@ export function BlogCard({ post }: BlogCardProps) {
         </div>
         
         <h3 className="text-xl font-semibold line-clamp-2 group-hover:text-primary transition-colors">
-          <Link to={`/blog/${post.slug}`}>
+          <Link to={`/insights/${post.slug}`}>
             {post.title}
           </Link>
         </h3>
@@ -80,7 +80,7 @@ export function BlogCard({ post }: BlogCardProps) {
           </div>
           
           <Link
-            to={`/blog/${post.slug}`}
+            to={`/insights/${post.slug}`}
             className="text-primary hover:text-primary/80 transition-colors inline-flex items-center"
           >
             <span className="text-lg transition-transform duration-200 hover:translate-x-0.5">→</span>

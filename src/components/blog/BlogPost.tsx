@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { BlogSidebar } from './BlogSidebar';
+import { BlogFAQ } from './BlogFAQ';
 import { Badge } from '../ui/badge';
 import { Button } from '../ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -32,8 +33,8 @@ export function BlogPost() {
         <div className="text-center space-y-4">
           <h1 className="text-4xl font-medium">Article Not Found</h1>
           <p className="text-muted-foreground">The article you're looking for doesn't exist.</p>
-          <Button onClick={() => navigate('/blog')}>
-            Back to Blog
+          <Button onClick={() => navigate('/insights')}>
+            Back to Insights
           </Button>
         </div>
       </div>
@@ -95,11 +96,11 @@ export function BlogPost() {
         >
             <Button
               variant="ghost"
-              onClick={() => navigate('/blog')}
+              onClick={() => navigate('/insights')}
               className="mb-6"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Blog
+              Back to Insights
             </Button>
             
             <div className="space-y-4">
@@ -167,6 +168,9 @@ export function BlogPost() {
                 <ReactMarkdown>{post.content}</ReactMarkdown>
               </div>
               
+              {/* FAQ Section */}
+              <BlogFAQ post={post} maxFAQs={6} />
+              
               {/* Tags */}
               <div className="mt-8 pt-8 border-t">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -225,7 +229,7 @@ export function BlogPost() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   {prevPost ? (
                     <Link
-                      to={`/blog/${prevPost.slug}`}
+                      to={`/insights/${prevPost.slug}`}
                       className="group flex items-center gap-2 p-4 rounded-lg border hover:border-primary transition-colors"
                     >
                       <ChevronLeft className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
@@ -242,7 +246,7 @@ export function BlogPost() {
                   
                   {nextPost ? (
                     <Link
-                      to={`/blog/${nextPost.slug}`}
+                      to={`/insights/${nextPost.slug}`}
                       className="group flex items-center gap-2 p-4 rounded-lg border hover:border-primary transition-colors justify-end text-right"
                     >
                       <div>
@@ -259,38 +263,49 @@ export function BlogPost() {
                 </div>
               </div>
               
-              {/* Related Posts */}
-              {relatedPosts.length > 0 && (
-                <div className="mt-12 pt-8 border-t">
-                  <h2 className="text-2xl font-semibold mb-6">Related Articles</h2>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {relatedPosts.map(relatedPost => (
-                      <Link
-                        key={relatedPost.id}
-                        to={`/blog/${relatedPost.slug}`}
-                        className="group"
-                      >
-                        <div className="space-y-2">
-                          <div className="relative h-32 rounded-lg overflow-hidden">
-                            <ImageWithFallback
-                              src={relatedPost.featuredImage}
-                              alt={relatedPost.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                            />
-                          </div>
-                          <h3 className="font-medium line-clamp-2 group-hover:text-primary transition-colors">
-                            {relatedPost.title}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {relatedPost.readTime} min read
-                          </p>
-                        </div>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
             </article>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <BlogFAQ post={post} maxFAQs={6} />
+
+      {/* Related Posts Section */}
+      <section className="py-8">
+        <div 
+          className="mx-auto px-4"
+          style={{ maxWidth: '50rem' }}
+        >
+          {relatedPosts.length > 0 && (
+            <div>
+              <h2 className="text-2xl font-semibold mb-6">Related Articles</h2>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {relatedPosts.map(relatedPost => (
+                  <Link
+                    key={relatedPost.id}
+                    to={`/insights/${relatedPost.slug}`}
+                    className="group"
+                  >
+                    <div className="space-y-2">
+                      <div className="relative h-32 rounded-lg overflow-hidden">
+                        <ImageWithFallback
+                          src={relatedPost.featuredImage}
+                          alt={relatedPost.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                      </div>
+                      <h3 className="font-medium line-clamp-2 group-hover:text-primary transition-colors">
+                        {relatedPost.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {relatedPost.readTime} min read
+                      </p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </div>

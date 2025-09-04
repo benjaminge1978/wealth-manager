@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export function PrivacyPolicy() {
-  const lastUpdated = "3 September 2024";
+  const lastUpdated = "3 September 2025";
   const companyName = "Netfin Wealth Management";
   const companyEmail = "contact@netfin.co.uk";
   const companyPhone = "020 7123 4567";

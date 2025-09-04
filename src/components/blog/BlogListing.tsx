@@ -101,8 +101,7 @@ export function BlogListing() {
               <HandDrawnIcon 
                 type="search"
                 size={16}
-                className="absolute top-1/2 transform -translate-y-1/2 text-muted-foreground"
-                style={{ left: '16px' }}
+                className="absolute top-1/2 left-13 transform -translate-y-1/2 text-muted-foreground"
               />
               <Input
                 type="text"
@@ -112,7 +111,7 @@ export function BlogListing() {
                 className="border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20"
                 style={{
                   backgroundColor: 'white',
-                  paddingLeft: '48px',
+                  paddingLeft: '80px',
                   paddingRight: '16px',
                   paddingTop: '12px',
                   paddingBottom: '12px',

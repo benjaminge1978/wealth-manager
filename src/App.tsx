@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Suspense, lazy } from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { ScrollToTop } from "./components/ScrollToTop";
 import { HomePage } from "./components/HomePage";
 import { ContactPage } from "./components/ContactPage";
 import { PrivacyPolicy } from "./components/PrivacyPolicy";
@@ -23,6 +24,7 @@ const BlogPost = lazy(() => import("./components/blog/BlogPost").then(module => 
 export default function App() {
   return (
     <div className="min-h-screen bg-background">
+      <ScrollToTop />
       <Header />
       <Suspense fallback={
         <div className="min-h-screen flex items-center justify-center">
@@ -38,8 +40,8 @@ export default function App() {
           <Route path="/how-to-choose-financial-advisor" element={<AdvisorGuide />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/blog" element={<BlogListing />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/insights" element={<BlogListing />} />
+          <Route path="/insights/:slug" element={<BlogPost />} />
           <Route path="/financial-advisors-london" element={<LondonAdvisors />} />
           <Route path="/financial-advisors-manchester" element={<ManchesterAdvisors />} />
           <Route path="/financial-advisors-edinburgh" element={<EdinburghAdvisors />} />

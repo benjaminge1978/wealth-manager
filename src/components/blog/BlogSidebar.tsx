@@ -70,7 +70,7 @@ export function BlogSidebar({ recentPosts, onCategoryClick, selectedCategory }: 
             {recentPosts.map((post) => (
               <div key={post.id} className="group">
                 <Link 
-                  to={`/blog/${post.slug}`}
+                  to={`/insights/${post.slug}`}
                   className="block space-y-1"
                 >
                   <h4 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">
