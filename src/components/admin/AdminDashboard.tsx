@@ -41,7 +41,7 @@ export function AdminDashboard({ serverUrl }: AdminDashboardProps) {
   // Detect environment and set appropriate server URL
   const defaultServerUrl = window.location.hostname === 'localhost' 
     ? 'http://localhost:3001' 
-    : null; // No server available in production yet
+    : 'https://netfin-automation.railway.app'; // Will be updated with actual Railway URL
   
   const finalServerUrl = serverUrl || defaultServerUrl;
   const [status, setStatus] = useState<SystemStatus | null>(null);

@@ -21,7 +21,14 @@ const sanity = new SanityIntegration();
 const newsAggregator = new NewsAggregator();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:3000',
+    'https://netfin.co.uk',
+    'https://www.netfin.co.uk'
+  ],
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.static('public'));
 
