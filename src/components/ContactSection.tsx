@@ -194,6 +194,7 @@ export function ContactSection() {
                 <form onSubmit={handleSubmit} className="space-y-6" noValidate name="contact-consultation" method="POST" data-netlify="true">
                   <input type="hidden" name="form-name" value="contact-consultation" />
                   <input type="hidden" name="subject" value={`New consultation request from ${formData.name}`} />
+                  <input type="hidden" name="gdprConsent" value={formData.gdprConsent ? 'true' : 'false'} />
                   <div className="space-y-2">
                     <Label htmlFor="name">Your Name <span className="text-red-500" aria-label="required">*</span></Label>
                     <Input 

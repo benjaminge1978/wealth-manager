@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Netlify Forms Detection</title>
+</head>
+<body style="display: none;">
+  <!-- Hidden forms for Netlify build-time detection only -->
+  <!-- Users will never see this page -->
+  
+  <form name="contact-consultation" method="POST" data-netlify="true">
+    <input type="hidden" name="form-name" value="contact-consultation" />
+    <input type="text" name="name" />
+    <input type="tel" name="phone" />
+    <input type="hidden" name="subject" />
+    <select name="advisorType">
+      <option value="">Select an advisor type</option>
+      <option value="pensions">Pensions Advisor</option>
+      <option value="financial">Financial Advisor</option>
+      <option value="mortgage">Mortgage Broker</option>
+      <option value="insurance">Insurance Broker</option>
+    </select>
+    <textarea name="message"></textarea>
+    <input type="checkbox" name="gdprConsent" value="true" />
+  </form>
+
+  <form name="contact-page" method="POST" data-netlify="true">
+    <input type="hidden" name="form-name" value="contact-page" />
+    <input type="text" name="name" />
+    <input type="tel" name="phone" />
+    <input type="hidden" name="subject" />
+    <select name="advisorType">
+      <option value="">Select an advisor type</option>
+      <option value="pensions">Pensions Advisor</option>
+      <option value="financial">Financial Advisor</option>
+      <option value="mortgage">Mortgage Broker</option>
+      <option value="insurance">Insurance Broker</option>
+    </select>
+    <textarea name="message"></textarea>
+    <input type="checkbox" name="gdprConsent" value="true" />
+  </form>
+</body>
+</html>
