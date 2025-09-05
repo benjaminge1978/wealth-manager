@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useState } from "react";
-import topRightScribble from "../assets/top-right-scribble.svg";
+import netfinLogo from "../assets/netfin-logo.svg";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,9 +41,9 @@ export function Header() {
             aria-label="Netfin home page"
           >
             <img 
-              src={topRightScribble} 
+              src={netfinLogo} 
               alt="Netfin Logo" 
-              className="h-10 w-auto"
+              className="h-8 w-auto"
             />
           </Link>
           
