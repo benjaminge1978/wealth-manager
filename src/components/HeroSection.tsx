@@ -131,20 +131,6 @@ export function HeroSection() {
                 aria-hidden="true"
               />
             </div>
-            <div className="absolute -top-4 w-52 h-16" style={{ right: '-6.25rem' }}>
-              <img 
-                src={topRightScribble} 
-                alt="" 
-                className="w-full h-full object-contain"
-                style={{
-                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
-                  opacity: 0.7,
-                  transform: 'rotate(45deg)'
-                }}
-                role="presentation"
-                aria-hidden="true"
-              />
-            </div>
           </div>
         </div>
       </div>
