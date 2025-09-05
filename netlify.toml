@@ -37,7 +37,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://uvt95dbx.apicdn.sanity.io; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https: https://images.unsplash.com https://uvt95dbx.apicdn.sanity.io https://cdn.sanity.io; connect-src 'self' https://uvt95dbx.apicdn.sanity.io https://uvt95dbx.api.sanity.io https://web-production-7aa44.up.railway.app; frame-ancestors 'none';"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://uvt95dbx.apicdn.sanity.io https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https: https://images.unsplash.com https://uvt95dbx.apicdn.sanity.io https://cdn.sanity.io; connect-src 'self' https://uvt95dbx.apicdn.sanity.io https://uvt95dbx.api.sanity.io https://web-production-7aa44.up.railway.app https://www.google-analytics.com https://analytics.google.com; frame-ancestors 'none';"
 
 # Admin route security - extra protection for admin dashboard
 [[headers]]
