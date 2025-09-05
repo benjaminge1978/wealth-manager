@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useServicesData } from "../hooks/useSanityData";
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import rough from 'roughjs';
 
 function RoughCircleBackground({ color, size }: { color: string, size: number }) {
@@ -48,7 +48,7 @@ function RoughCircleBackground({ color, size }: { color: string, size: number })
   );
 }
 
-export function ServicesSection() {
+const ServicesSection = memo(function ServicesSection() {
   const { data: servicesData, loading, error } = useServicesData();
 
   // Icon mapping for hand-drawn icons
@@ -177,4 +177,6 @@ export function ServicesSection() {
       </div>
     </section>
   );
-}
+});
+
+export { ServicesSection };

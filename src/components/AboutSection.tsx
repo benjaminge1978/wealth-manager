@@ -2,8 +2,9 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { Card, CardContent } from "./ui/card";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import aboutImage from "../assets/financial-advive-couple.jpg";
+import { memo } from "react";
 
-export function AboutSection() {
+const AboutSection = memo(function AboutSection() {
   const stats = [
     {
       icon: <HandDrawnIcon type="users" size={24} className="text-primary" />,
@@ -91,4 +92,6 @@ export function AboutSection() {
       </div>
     </section>
   );
-}
+});
+
+export { AboutSection };

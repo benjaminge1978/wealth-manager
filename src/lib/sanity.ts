@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 export const client = createClient({
   projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'uvt95dbx',
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
-  useCdn: false, // Disabled CDN to fix slow loading and stale data issues
+  useCdn: import.meta.env.PROD, // Enable CDN in production for better performance, disable in dev to avoid CORS issues
   apiVersion: import.meta.env.VITE_SANITY_API_VERSION || '2023-05-03',
   perspective: 'published',
   stega: {
@@ -19,7 +19,7 @@ const builder = imageUrlBuilder(client)
 export const urlFor = (source: any) => builder.image(source)
 
 // Helper function to get optimized image URL
-export const getImageUrl = (source: any, width?: number, height?: number) => {
+export const getImageUrl = (source: any, width?: number, height?: number, format?: 'webp' | 'avif' | 'auto') => {
   let imageBuilder = urlFor(source)
   
   if (width) {
@@ -30,7 +30,28 @@ export const getImageUrl = (source: any, width?: number, height?: number) => {
     imageBuilder = imageBuilder.height(height)
   }
   
+  // Add format optimization
+  if (format === 'webp') {
+    imageBuilder = imageBuilder.format('webp')
+  } else if (format === 'avif') {
+    imageBuilder = imageBuilder.format('avif')
+  } else if (format === 'auto') {
+    // Let Sanity decide the best format
+    imageBuilder = imageBuilder.auto('format')
+  }
+  
+  // Add quality optimization
+  imageBuilder = imageBuilder.quality(85)
+  
   return imageBuilder.url()
+}
+
+// Helper to get responsive image URLs
+export const getResponsiveImageUrls = (source: any, sizes: number[], format?: 'webp' | 'avif' | 'auto') => {
+  return sizes.map(size => ({
+    url: getImageUrl(source, size, undefined, format),
+    width: size
+  }))
 }
 
 // GROQ queries for fetching content

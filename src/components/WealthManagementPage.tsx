@@ -8,7 +8,7 @@ import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useEffect, useRef, useState } from 'react';
 import rough from 'roughjs';
-import heroImage from "../assets/wealth-managemt.webp";
+import heroImage from "../assets/wealth-management-happy-family.jpg";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
 import topRightScribble from "../assets/top-right-scribble.svg";
 

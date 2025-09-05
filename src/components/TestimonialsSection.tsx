@@ -1,7 +1,8 @@
 import { Card, CardContent } from "./ui/card";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
+import { memo } from "react";
 
-export function TestimonialsSection() {
+const TestimonialsSection = memo(function TestimonialsSection() {
   const testimonials = [
     {
       name: "Chris's Client",
@@ -58,4 +59,6 @@ export function TestimonialsSection() {
       </div>
     </section>
   );
-}
+});
+
+export { TestimonialsSection };

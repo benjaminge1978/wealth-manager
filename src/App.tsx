@@ -7,23 +7,29 @@ import { CookieConsentBanner } from "./components/CookieConsentBanner";
 import { initializeCookieConsent, hasConsentFor } from "./lib/cookieConsent";
 import { initializeAnalytics } from "./lib/analytics";
 import { useAnalytics } from "./hooks/useAnalytics";
-import { HomePage } from "./components/HomePage";
-import { ContactPage } from "./components/ContactPage";
-import { PrivacyPolicy } from "./components/PrivacyPolicy";
-import { CookiePolicy } from "./components/CookiePolicy";
-import { WealthManagementPage } from "./components/WealthManagementPage";
-import { AdvisorGuide } from "./components/AdvisorGuide";
-import { LondonAdvisors } from "./components/cities/LondonAdvisors";
-import { ManchesterAdvisors } from "./components/cities/ManchesterAdvisors";
-import { EdinburghAdvisors } from "./components/cities/EdinburghAdvisors";
-import { BirminghamAdvisors } from "./components/cities/BirminghamAdvisors";
-import { LeedsAdvisors } from "./components/cities/LeedsAdvisors";
-import { AdvisorSelectionChecklist } from "./components/guides/AdvisorSelectionChecklist";
-import { AdvisorInterviewQuestions } from "./components/guides/AdvisorInterviewQuestions";
-import { FeeOnlyVsCommissionGuide } from "./components/guides/FeeOnlyVsCommissionGuide";
-import { AdminDashboard } from "./components/admin/AdminDashboard";
+import { HomePage } from "./components/HomePage"; // Keep HomePage eager for initial load
 
-// Lazy load blog components for code splitting
+// Lazy load all route components for better code splitting
+const ContactPage = lazy(() => import("./components/ContactPage").then(module => ({ default: module.ContactPage })));
+const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy").then(module => ({ default: module.PrivacyPolicy })));
+const CookiePolicy = lazy(() => import("./components/CookiePolicy").then(module => ({ default: module.CookiePolicy })));
+const WealthManagementPage = lazy(() => import("./components/WealthManagementPage").then(module => ({ default: module.WealthManagementPage })));
+const AdvisorGuide = lazy(() => import("./components/AdvisorGuide").then(module => ({ default: module.AdvisorGuide })));
+
+// Lazy load city advisor pages
+const LondonAdvisors = lazy(() => import("./components/cities/LondonAdvisors").then(module => ({ default: module.LondonAdvisors })));
+const ManchesterAdvisors = lazy(() => import("./components/cities/ManchesterAdvisors").then(module => ({ default: module.ManchesterAdvisors })));
+const EdinburghAdvisors = lazy(() => import("./components/cities/EdinburghAdvisors").then(module => ({ default: module.EdinburghAdvisors })));
+const BirminghamAdvisors = lazy(() => import("./components/cities/BirminghamAdvisors").then(module => ({ default: module.BirminghamAdvisors })));
+const LeedsAdvisors = lazy(() => import("./components/cities/LeedsAdvisors").then(module => ({ default: module.LeedsAdvisors })));
+
+// Lazy load guide pages
+const AdvisorSelectionChecklist = lazy(() => import("./components/guides/AdvisorSelectionChecklist").then(module => ({ default: module.AdvisorSelectionChecklist })));
+const AdvisorInterviewQuestions = lazy(() => import("./components/guides/AdvisorInterviewQuestions").then(module => ({ default: module.AdvisorInterviewQuestions })));
+const FeeOnlyVsCommissionGuide = lazy(() => import("./components/guides/FeeOnlyVsCommissionGuide").then(module => ({ default: module.FeeOnlyVsCommissionGuide })));
+
+// Lazy load admin and blog components
+const AdminDashboard = lazy(() => import("./components/admin/AdminDashboard").then(module => ({ default: module.AdminDashboard })));
 const BlogListing = lazy(() => import("./components/blog/BlogListing").then(module => ({ default: module.BlogListing })));
 const BlogPost = lazy(() => import("./components/blog/BlogPost").then(module => ({ default: module.BlogPost })));
 
@@ -63,10 +69,13 @@ export default function App() {
       <Header />
       <CookieConsentBanner />
       <Suspense fallback={
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Loading...</p>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-secondary/10 to-accent/20">
+          <div className="text-center space-y-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mx-auto"></div>
+            <div className="space-y-2">
+              <p className="text-lg font-medium text-foreground">Loading page...</p>
+              <p className="text-sm text-muted-foreground">Please wait while we prepare your content</p>
+            </div>
           </div>
         </div>
       }>
