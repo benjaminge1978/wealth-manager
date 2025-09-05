@@ -1,4 +1,5 @@
 import { FAQ } from '../data/blogFAQs';
+import { hasConsentFor } from '../lib/cookieConsent';
 
 // FAQ Analytics and Optimization Utilities
 
@@ -21,6 +22,11 @@ export interface FAQPerformanceMetrics {
 
 // Track FAQ interactions for analytics
 export function trackFAQView(faq: FAQ, categoryId: string): void {
+  // Check for analytics consent before tracking
+  if (!hasConsentFor('analytics')) {
+    return;
+  }
+
   // In a real implementation, this would send data to your analytics service
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'faq_view', {
@@ -54,6 +60,11 @@ export function trackFAQView(faq: FAQ, categoryId: string): void {
 }
 
 export function trackFAQExpansion(faq: FAQ, categoryId: string): void {
+  // Check for analytics consent before tracking
+  if (!hasConsentFor('analytics')) {
+    return;
+  }
+
   // Analytics tracking
   if (typeof window !== 'undefined' && window.gtag) {
     window.gtag('event', 'faq_expand', {

@@ -125,9 +125,42 @@ export function PrivacyPolicy() {
                 </section>
 
                 <section>
-                  <h2 className="text-2xl font-medium mb-4">10. Cookies</h2>
+                  <h2 className="text-2xl font-medium mb-4">10. Cookies and Similar Technologies</h2>
+                  <p className="text-muted-foreground mb-4">
+                    Our website uses cookies and similar technologies to enhance your browsing experience, 
+                    analyze website traffic, and provide personalized content. We obtain your consent before 
+                    setting any non-essential cookies in accordance with UK GDPR and PECR regulations.
+                  </p>
+                  
+                  <div className="bg-secondary/30 p-4 rounded-lg mb-4">
+                    <h3 className="font-medium mb-2">Cookie Management</h3>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      You have full control over which cookies we use. You can:
+                    </p>
+                    <ul className="text-sm text-muted-foreground space-y-1 ml-4">
+                      <li>• Manage your preferences through our cookie consent banner</li>
+                      <li>• Change your settings anytime using the "Cookie Settings" link in our footer</li>
+                      <li>• Withdraw consent for non-essential cookies at any time</li>
+                      <li>• Request deletion of all stored cookie data</li>
+                    </ul>
+                  </div>
+
+                  <p className="text-muted-foreground mb-4">
+                    <strong>Types of cookies we use:</strong>
+                  </p>
+                  <ul className="list-disc pl-6 space-y-2 text-muted-foreground mb-4">
+                    <li><strong>Strictly Necessary:</strong> Essential for website functionality (always active)</li>
+                    <li><strong>Analytics:</strong> Help us understand website usage and improve our services</li>
+                    <li><strong>Functional:</strong> Enable enhanced features and personalization</li>
+                    <li><strong>Third-Party:</strong> Set by external services we use (e.g., Sanity CMS, Google Fonts)</li>
+                  </ul>
+
                   <p className="text-muted-foreground">
-                    Our website uses cookies to enhance your browsing experience. Cookies are small text files stored on your device that help us analyse web traffic and improve our website. You can control cookies through your browser settings. For more information, please see our Cookie Policy.
+                    For detailed information about specific cookies, purposes, and retention periods, 
+                    please see our comprehensive{' '}
+                    <a href="/cookies" className="text-primary hover:underline font-medium">
+                      Cookie Policy
+                    </a>.
                   </p>
                 </section>
 

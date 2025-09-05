@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Separator } from "./ui/separator";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
+import { CookiePreferences } from "./CookiePreferences";
 import wealthMasterLogo from "../assets/wealth_master_logo.svg";
 
 export function Footer() {
+  const [showCookiePreferences, setShowCookiePreferences] = useState(false);
+
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 py-12">
@@ -39,6 +43,15 @@ export function Footer() {
               <li><a href="#about" className="hover:text-primary-foreground transition-colors">About Us</a></li>
               <li><a href="#process" className="hover:text-primary-foreground transition-colors">Our Process</a></li>
               <li><Link to="/privacy" className="hover:text-primary-foreground transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/cookies" className="hover:text-primary-foreground transition-colors">Cookie Policy</Link></li>
+              <li>
+                <button
+                  onClick={() => setShowCookiePreferences(true)}
+                  className="hover:text-primary-foreground transition-colors text-left"
+                >
+                  Cookie Settings
+                </button>
+              </li>
               <li><a href="#" className="hover:text-primary-foreground transition-colors">Terms of Service</a></li>
               <li><a href="#" className="hover:text-primary-foreground transition-colors">Regulatory Information</a></li>
             </ul>
@@ -68,6 +81,11 @@ export function Footer() {
           </div>
         </div>
       </div>
+      
+      <CookiePreferences
+        isOpen={showCookiePreferences}
+        onClose={() => setShowCookiePreferences(false)}
+      />
     </footer>
   );
 }

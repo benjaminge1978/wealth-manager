@@ -1,11 +1,14 @@
 import { Routes, Route } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { CookieConsentBanner } from "./components/CookieConsentBanner";
+import { initializeCookieConsent } from "./lib/cookieConsent";
 import { HomePage } from "./components/HomePage";
 import { ContactPage } from "./components/ContactPage";
 import { PrivacyPolicy } from "./components/PrivacyPolicy";
+import { CookiePolicy } from "./components/CookiePolicy";
 import { WealthManagementPage } from "./components/WealthManagementPage";
 import { AdvisorGuide } from "./components/AdvisorGuide";
 import { LondonAdvisors } from "./components/cities/LondonAdvisors";
@@ -22,10 +25,16 @@ const BlogListing = lazy(() => import("./components/blog/BlogListing").then(modu
 const BlogPost = lazy(() => import("./components/blog/BlogPost").then(module => ({ default: module.BlogPost })));
 
 export default function App() {
+  useEffect(() => {
+    // Initialize cookie consent system on app load
+    initializeCookieConsent();
+  }, []);
+
   return (
     <div className="min-h-screen bg-background">
       <ScrollToTop />
       <Header />
+      <CookieConsentBanner />
       <Suspense fallback={
         <div className="min-h-screen flex items-center justify-center">
           <div className="text-center">
@@ -40,6 +49,7 @@ export default function App() {
           <Route path="/how-to-choose-financial-advisor" element={<AdvisorGuide />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/cookies" element={<CookiePolicy />} />
           <Route path="/insights" element={<BlogListing />} />
           <Route path="/insights/:slug" element={<BlogPost />} />
           <Route path="/financial-advisors-london" element={<LondonAdvisors />} />

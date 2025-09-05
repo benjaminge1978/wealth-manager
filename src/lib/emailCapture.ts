@@ -1,5 +1,6 @@
 // Email capture utilities and API integration
 import { generateChecklistPDF, generateInterviewQuestionsPDF } from './pdfGenerator';
+import { hasConsentFor } from './cookieConsent';
 
 export interface EmailCaptureData {
   email: string;
@@ -33,13 +34,15 @@ export async function captureEmail(data: EmailCaptureData): Promise<EmailCapture
       // Fallback: store locally and show success
       console.log('Email capture (development):', data);
       
-      // Store in localStorage for development
-      const captures = JSON.parse(localStorage.getItem('emailCaptures') || '[]');
-      captures.push({
-        ...data,
-        timestamp: new Date().toISOString(),
-      });
-      localStorage.setItem('emailCaptures', JSON.stringify(captures));
+      // Store in localStorage for development (only if functional consent given)
+      if (hasConsentFor('functional')) {
+        const captures = JSON.parse(localStorage.getItem('emailCaptures') || '[]');
+        captures.push({
+          ...data,
+          timestamp: new Date().toISOString(),
+        });
+        localStorage.setItem('emailCaptures', JSON.stringify(captures));
+      }
       
       return {
         success: true,
