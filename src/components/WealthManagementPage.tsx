@@ -7,6 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
 // TODO: Replace with actual wealth-freedom-hammock.jpg image
 // For now using family image as placeholder
@@ -79,11 +80,11 @@ function WealthHeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="group">
+              <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 Get Your Free Wealth Assessment
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={() => navigate('/contact')}>
                 See Our Client Success Stories
               </Button>
             </div>
@@ -250,7 +251,7 @@ function WealthBenefitsSection() {
                   <p className="text-sm font-medium text-primary">{benefit.example}</p>
                 </div>
                 <div className="pt-2">
-                  <Button variant="outline" size="sm" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <Button variant="outline" size="sm" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors" onClick={() => navigate('/contact')}>
                     Learn How
                     <span className="ml-1 text-sm transition-transform duration-200 group-hover:translate-x-0.5">→</span>
                   </Button>
@@ -261,7 +262,7 @@ function WealthBenefitsSection() {
         </div>
 
         <div className="text-center mt-12">
-          <Button size="lg" className="group">
+          <Button size="lg" className="group" onClick={() => navigate('/contact')}>
             Get Your Personal Wealth Strategy
             <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
           </Button>
@@ -613,11 +614,11 @@ function WealthProcessSection() {
               Most clients see measurable results within the first 6 months and significant wealth growth within 2 years. The sooner you start, the more wealth you'll build.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="group">
+              <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 Begin Your Wealth Analysis
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>
-              <Button variant="outline" size="lg">
+              <Button variant="outline" size="lg" onClick={() => navigate('/contact')}>
                 Schedule a Call
               </Button>
             </div>
@@ -784,7 +785,7 @@ function WealthSocialProofSection() {
             <p className="text-lg text-muted-foreground mb-6">
               Join thousands of clients who have transformed their financial future through professional wealth management. Your results will vary, but our process is proven.
             </p>
-            <Button size="lg" className="group">
+            <Button size="lg" className="group" onClick={() => navigate('/contact')}>
               Start Your Success Story Today
               <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
             </Button>
@@ -1252,7 +1253,7 @@ function WealthFAQSection() {
               <p className="text-muted-foreground mb-6">
                 Our vetted wealth management professionals can answer your specific questions and help you make the right financial decisions.
               </p>
-              <Button size="lg" className="group">
+              <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 Speak to a Qualified Advisor
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>
@@ -1268,6 +1269,7 @@ function WealthFAQSection() {
 }
 
 export function WealthManagementPage() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background" id="main-content">
       <WealthHeroSection />

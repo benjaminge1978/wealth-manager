@@ -3,6 +3,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useHeroData } from "../hooks/useSanityData";
 import { getImageUrl } from "../lib/sanity";
+import { useNavigate } from "react-router-dom";
 import heroImage from "../assets/wealth-management-happy-family.jpg";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
 import topRightScribble from "../assets/top-right-scribble.svg";
@@ -17,6 +18,7 @@ const iconMap = {
 
 export function HeroSection() {
   const { data: heroData, loading, error } = useHeroData();
+  const navigate = useNavigate();
 
   // Fallback data when CMS data is not available
   const fallbackData: HeroData = {
@@ -80,12 +82,12 @@ export function HeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="group" onClick={() => displayData.primaryButtonLink && window.open(displayData.primaryButtonLink)}>
+              <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 {displayData.primaryButtonText}
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>
               {displayData.secondaryButtonText && (
-                <Button variant="outline" size="lg" onClick={() => displayData.secondaryButtonLink && window.open(displayData.secondaryButtonLink)}>
+                <Button variant="outline" size="lg" onClick={() => navigate('/how-to-choose-financial-advisor')}>
                   {displayData.secondaryButtonText}
                 </Button>
               )}
