@@ -56,12 +56,24 @@ export function ContactPage() {
     setIsSubmitting(true);
     
     try {
-      // Simulate form submission
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setIsSubmitted(true);
-      setFormData({ name: '', phone: '', advisorType: '', message: '', gdprConsent: false });
-      setErrors({});
+      const form = e.target as HTMLFormElement;
+      const formData = new FormData(form);
+      
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+      
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({ name: '', phone: '', advisorType: '', message: '', gdprConsent: false });
+        setErrors({});
+      } else {
+        throw new Error('Form submission failed');
+      }
     } catch (error) {
+      console.error('Form submission error:', error);
       alert('Something went wrong. Please try again or call us directly.');
     } finally {
       setIsSubmitting(false);
@@ -180,11 +192,14 @@ export function ContactPage() {
                 </p>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                <form onSubmit={handleSubmit} className="space-y-6" noValidate name="contact-page" method="POST" data-netlify="true">
+                  <input type="hidden" name="form-name" value="contact-page" />
+                  <input type="hidden" name="subject" value={`New consultation request from ${formData.name}`} />
                   <div className="space-y-2">
                     <Label htmlFor="name">Your Name <span className="text-red-500" aria-label="required">*</span></Label>
                     <Input 
                       id="name" 
+                      name="name"
                       placeholder="John Smith"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
@@ -204,6 +219,7 @@ export function ContactPage() {
                     <Label htmlFor="phone">Best Phone Number <span className="text-red-500" aria-label="required">*</span></Label>
                     <Input 
                       id="phone" 
+                      name="phone"
                       type="tel" 
                       placeholder="020 7123 4567"
                       value={formData.phone}
@@ -222,25 +238,22 @@ export function ContactPage() {
 
                   <div className="space-y-2">
                     <Label htmlFor="advisorType">Which advisor can help you most? <span className="text-red-500" aria-label="required">*</span></Label>
-                    <Select 
-                      value={formData.advisorType} 
-                      onValueChange={(value) => handleInputChange('advisorType', value)}
+                    <select
+                      name="advisorType"
+                      value={formData.advisorType}
+                      onChange={(e) => handleInputChange('advisorType', e.target.value)}
+                      required
+                      className={`flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${errors.advisorType ? 'border-red-500 focus:ring-red-500' : ''}`}
+                      aria-invalid={!!errors.advisorType}
+                      aria-describedby={errors.advisorType ? "advisorType-error" : undefined}
                     >
-                      <SelectTrigger 
-                        className={errors.advisorType ? "border-red-500 focus:ring-red-500" : ""}
-                        aria-invalid={!!errors.advisorType}
-                        aria-describedby={errors.advisorType ? "advisorType-error" : undefined}
-                      >
-                        <SelectValue placeholder="Select an advisor type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {advisorTypes.map((advisor) => (
-                          <SelectItem key={advisor.value} value={advisor.value}>
-                            {advisor.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                      <option value="">Select an advisor type</option>
+                      {advisorTypes.map((advisor) => (
+                        <option key={advisor.value} value={advisor.value}>
+                          {advisor.label}
+                        </option>
+                      ))}
+                    </select>
                     {errors.advisorType && (
                       <p id="advisorType-error" className="text-red-500 text-sm" role="alert">
                         {errors.advisorType}
