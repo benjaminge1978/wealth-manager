@@ -8,7 +8,7 @@ import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useEffect, useRef, useState } from 'react';
 import rough from 'roughjs';
-import heroImage from "../assets/wealth-management-happy-family.jpg";
+import heroImage from "../assets/wealth-management-london.webp";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
 import topRightScribble from "../assets/top-right-scribble.svg";
 
@@ -103,14 +103,16 @@ function WealthHeroSection() {
           </div>
 
           <div className="relative lg:order-2 order-1">
-            <div className="relative z-10">
+            <div className="relative z-10 w-full aspect-[8/5] overflow-hidden rounded-lg shadow-2xl">
               <ImageWithFallback 
                 src={heroImage}
                 alt="Woman enjoying financial freedom and relaxation" 
-                className="w-full h-[500px] object-cover rounded-lg shadow-2xl"
+                className="w-full h-full object-cover"
                 priority={true}
                 width={800}
                 height={500}
+                loading="eager"
+                style={{ aspectRatio: '8/5' }}
               />
             </div>
             <div className="absolute -bottom-4 w-52 h-16" style={{ left: '-6.25rem' }}>
