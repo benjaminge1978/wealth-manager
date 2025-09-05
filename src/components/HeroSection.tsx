@@ -20,9 +20,9 @@ export function HeroSection() {
 
   // Fallback data when CMS data is not available
   const fallbackData: HeroData = {
-    headline: "Find the right financial advisor for you",
-    highlightedText: "right financial advisor",
-    subheadline: "We help you achieve financial success through personalized, goals-based planning and regulated investment advice. Build the wealth you need for the life you want.",
+    headline: "Build the wealth plan you need for the life that you want",
+    highlightedText: "",
+    subheadline: "We help you achieve financial success through personalized, goals-based planning and regulated investment advice.",
     primaryButtonText: "Schedule Consultation",
     secondaryButtonText: "Learn Our Process",
     heroImage: null as any,
