@@ -37,7 +37,13 @@ interface BlogPost {
   author: { name: string };
 }
 
-export function AdminDashboard({ serverUrl = 'http://localhost:3001' }: AdminDashboardProps) {
+export function AdminDashboard({ serverUrl }: AdminDashboardProps) {
+  // Detect environment and set appropriate server URL
+  const defaultServerUrl = window.location.hostname === 'localhost' 
+    ? 'http://localhost:3001' 
+    : null; // No server available in production yet
+  
+  const finalServerUrl = serverUrl || defaultServerUrl;
   const [status, setStatus] = useState<SystemStatus | null>(null);
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
@@ -88,7 +94,11 @@ export function AdminDashboard({ serverUrl = 'http://localhost:3001' }: AdminDas
   const authHeader = `Basic ${btoa(`${credentials.username}:${credentials.password}`)}`;
 
   const apiCall = async (endpoint: string, options: RequestInit = {}) => {
-    const response = await fetch(`${serverUrl}${endpoint}`, {
+    if (!finalServerUrl) {
+      throw new Error('Server not available in production');
+    }
+    
+    const response = await fetch(`${finalServerUrl}${endpoint}`, {
       ...options,
       headers: {
         'Authorization': authHeader,
@@ -227,8 +237,60 @@ export function AdminDashboard({ serverUrl = 'http://localhost:3001' }: AdminDas
   // Initialize component state
   useEffect(() => {
     console.log('AdminDashboard initialized');
+    console.log('Server URL:', finalServerUrl);
     setLoading(false);
   }, []);
+
+  // Show production notice if no server available
+  if (!finalServerUrl) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center p-4">
+        <Card className="w-full max-w-2xl p-8 text-center">
+          <HandDrawnIcon type="server" size={64} className="mx-auto mb-6 text-muted-foreground" />
+          <h1 className="text-3xl font-bold mb-4">Content Automation Dashboard</h1>
+          <p className="text-lg text-muted-foreground mb-6">
+            The admin dashboard is currently available in development mode only.
+          </p>
+          
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6 text-left">
+            <h3 className="font-semibold mb-3">🚀 To deploy the automation system:</h3>
+            <ol className="space-y-2 text-sm">
+              <li><strong>1.</strong> Deploy the server to Railway, Render, or similar service</li>
+              <li><strong>2.</strong> Set environment variables (ANTHROPIC_API_KEY, SANITY_TOKEN)</li>
+              <li><strong>3.</strong> Update this dashboard to point to your production server</li>
+            </ol>
+          </div>
+
+          <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-left">
+            <h3 className="font-semibold mb-3">💡 Currently Active Features:</h3>
+            <ul className="space-y-2 text-sm">
+              <li>✅ <strong>Blog system</strong> with 237 pre-written FAQs</li>
+              <li>✅ <strong>Schema markup</strong> for AI search optimization</li>
+              <li>✅ <strong>Manual content creation</strong> via Sanity CMS</li>
+              <li>✅ <strong>Complete automation code</strong> ready for deployment</li>
+            </ul>
+          </div>
+
+          <div className="flex gap-4 justify-center mt-6">
+            <Button 
+              onClick={() => window.open('https://github.com/benjaminge1978/wealth-manager/blob/main/CONTENT-AUTOMATION-SETUP.md', '_blank')}
+              variant="default"
+            >
+              <HandDrawnIcon type="book-open" size={16} className="mr-2" />
+              View Setup Guide
+            </Button>
+            <Button 
+              onClick={() => window.location.href = '/insights'}
+              variant="outline"
+            >
+              <HandDrawnIcon type="newspaper" size={16} className="mr-2" />
+              View Blog
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   // Login form
   if (!authenticated && !loading) {
