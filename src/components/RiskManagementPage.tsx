@@ -56,6 +56,97 @@ function RoughCircleBackground({ color, size }: { color: string, size: number })
   );
 }
 
+function RoughNumber({ 
+  number, 
+  size = 64, 
+  color = 'currentColor', 
+  className = '' 
+}: { 
+  number: string;
+  size?: number;
+  color?: string;
+  className?: string;
+}) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const hasDrawn = useRef(false);
+
+  useEffect(() => {
+    if (!svgRef.current || hasDrawn.current) return;
+
+    const svg = svgRef.current;
+    const rc = rough.svg(svg);
+
+    const strokeWidth = Math.max(2, size / 20);
+    const roughness = 0.8;
+    const bowing = 0.5;
+
+    switch (number) {
+      case '01':
+      case '1':
+        svg.appendChild(rc.line(size * 0.5, size * 0.15, size * 0.5, size * 0.85, {
+          stroke: color,
+          strokeWidth: strokeWidth * 1.5,
+          roughness,
+          bowing
+        }));
+        break;
+      case '02':
+      case '2':
+        svg.appendChild(rc.path(`M${size * 0.2} ${size * 0.3} Q${size * 0.5} ${size * 0.15} ${size * 0.8} ${size * 0.3} L${size * 0.2} ${size * 0.7} L${size * 0.8} ${size * 0.7}`, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        break;
+      case '03':
+      case '3':
+        svg.appendChild(rc.path(`M${size * 0.2} ${size * 0.25} Q${size * 0.5} ${size * 0.15} ${size * 0.8} ${size * 0.3} Q${size * 0.5} ${size * 0.5} ${size * 0.8} ${size * 0.7} Q${size * 0.5} ${size * 0.85} ${size * 0.2} ${size * 0.75}`, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        break;
+      case '04':
+      case '4':
+        svg.appendChild(rc.line(size * 0.2, size * 0.2, size * 0.2, size * 0.5, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(size * 0.2, size * 0.5, size * 0.7, size * 0.5, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(size * 0.7, size * 0.2, size * 0.7, size * 0.8, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        break;
+    }
+
+    hasDrawn.current = true;
+  }, [number, size, color]);
+
+  return (
+    <svg
+      ref={svgRef}
+      width={size}
+      height={size}
+      className={className}
+      style={{ overflow: 'visible' }}
+    />
+  );
+}
+
 // Hero Section Component
 function RiskManagementHeroSection() {
   const navigate = useNavigate();
