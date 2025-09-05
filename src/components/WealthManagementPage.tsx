@@ -9,9 +9,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
-// TODO: Replace with actual wealth-freedom-hammock.jpg image
-// For now using family image as placeholder
-import heroImage from "../assets/wealth-management-happy-family.jpg";
+import heroImage from "../assets/wealth-managemt.webp";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
 import topRightScribble from "../assets/top-right-scribble.svg";
 
@@ -60,6 +58,8 @@ function RoughCircleBackground({ color, size }: { color: string, size: number })
 
 // Hero Section Component
 function WealthHeroSection() {
+  const navigate = useNavigate();
+  
   return (
     <section className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30 py-20 lg:py-32">
       <div className="container mx-auto px-4">
@@ -109,7 +109,7 @@ function WealthHeroSection() {
             <div className="relative z-10">
               <ImageWithFallback 
                 src={heroImage}
-                alt="Woman enjoying financial freedom and relaxation" 
+                alt="Professional wealth management consultation" 
                 className="w-full h-[400px] md:h-[500px] lg:h-[600px] object-cover rounded-lg shadow-2xl"
                 priority={true}
                 width={800}
@@ -131,20 +131,6 @@ function WealthHeroSection() {
                 aria-hidden="true"
               />
             </div>
-            <div className="absolute -top-4 w-52 h-16" style={{ right: '-6.25rem' }}>
-              <img 
-                src={topRightScribble} 
-                alt="" 
-                className="w-full h-full object-contain"
-                style={{
-                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
-                  opacity: 0.7,
-                  transform: 'rotate(45deg)'
-                }}
-                role="presentation"
-                aria-hidden="true"
-              />
-            </div>
           </div>
         </div>
       </div>
@@ -155,6 +141,7 @@ function WealthHeroSection() {
 
 // Benefits Grid Section Component
 function WealthBenefitsSection() {
+  const navigate = useNavigate();
   const benefits = [
     {
       icon: "clock" as const,
@@ -496,6 +483,7 @@ function RoughNumber({
 
 // Wealth Management Process Section Component
 function WealthProcessSection() {
+  const navigate = useNavigate();
   const stepColors = [
     {
       accent: "#8B7EFF",
@@ -634,6 +622,7 @@ function WealthProcessSection() {
 
 // Social Proof Section Component
 function WealthSocialProofSection() {
+  const navigate = useNavigate();
   const caseStudies = [
     {
       title: "From £50k Salary to £1.8M Portfolio",
@@ -1096,21 +1085,6 @@ function WealthFinalCTASection() {
                 aria-hidden="true"
               />
             </div>
-            {/* Top right scribble */}
-            <div className="absolute -top-4 w-40 h-12" style={{ right: 'calc(-2rem - 30px)' }}>
-              <img 
-                src={topRightScribble} 
-                alt="" 
-                className="w-full h-full object-contain"
-                style={{
-                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
-                  opacity: 0.7,
-                  transform: 'rotate(45deg)'
-                }}
-                role="presentation"
-                aria-hidden="true"
-              />
-            </div>
           </div>
         </div>
       </div>
@@ -1120,6 +1094,7 @@ function WealthFinalCTASection() {
 
 // FAQ Section Component for AEO Optimization
 function WealthFAQSection() {
+  const navigate = useNavigate();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const toggleFAQ = (index: number) => {
