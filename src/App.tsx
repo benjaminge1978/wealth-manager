@@ -19,6 +19,7 @@ import { LeedsAdvisors } from "./components/cities/LeedsAdvisors";
 import { AdvisorSelectionChecklist } from "./components/guides/AdvisorSelectionChecklist";
 import { AdvisorInterviewQuestions } from "./components/guides/AdvisorInterviewQuestions";
 import { FeeOnlyVsCommissionGuide } from "./components/guides/FeeOnlyVsCommissionGuide";
+import { AdminDashboard } from "./components/admin/AdminDashboard";
 
 // Lazy load blog components for code splitting
 const BlogListing = lazy(() => import("./components/blog/BlogListing").then(module => ({ default: module.BlogListing })));
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/financial-advisor-selection-checklist" element={<AdvisorSelectionChecklist />} />
           <Route path="/financial-advisor-interview-questions" element={<AdvisorInterviewQuestions />} />
           <Route path="/fee-only-vs-commission-financial-advisors" element={<FeeOnlyVsCommissionGuide />} />
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </Suspense>
       <Footer />

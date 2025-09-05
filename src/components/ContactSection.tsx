@@ -8,7 +8,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { Link } from "react-router-dom";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
-import topRightScribble from "../assets/top-right-scribble.svg";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -314,21 +313,6 @@ export function ContactSection() {
                 style={{
                   filter: 'brightness(0) saturate(100%) invert(89%) sepia(43%) saturate(463%) hue-rotate(320deg) brightness(101%) contrast(97%)',
                   opacity: 0.8,
-                  transform: 'rotate(45deg)'
-                }}
-                role="presentation"
-                aria-hidden="true"
-              />
-            </div>
-            {/* Top right scribble */}
-            <div className="absolute -top-4 w-40 h-12" style={{ right: 'calc(-2rem - 30px)' }}>
-              <img 
-                src={topRightScribble} 
-                alt="" 
-                className="w-full h-full object-contain"
-                style={{
-                  filter: 'brightness(0) saturate(100%) invert(76%) sepia(57%) saturate(1598%) hue-rotate(314deg) brightness(103%) contrast(102%)',
-                  opacity: 0.7,
                   transform: 'rotate(45deg)'
                 }}
                 role="presentation"
