@@ -4,7 +4,7 @@ import imageUrlBuilder from '@sanity/image-url'
 export const client = createClient({
   projectId: import.meta.env.VITE_SANITY_PROJECT_ID || 'uvt95dbx',
   dataset: import.meta.env.VITE_SANITY_DATASET || 'production',
-  useCdn: import.meta.env.VITE_SANITY_USE_CDN === 'true' || import.meta.env.PROD, // Use CDN in production
+  useCdn: false, // Disabled CDN to fix slow loading and stale data issues
   apiVersion: import.meta.env.VITE_SANITY_API_VERSION || '2023-05-03',
   perspective: 'published',
   stega: {
