@@ -9,7 +9,7 @@ import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
-import heroImage from "../assets/wealth-management-happy-family.jpg";
+import heroImage from "../assets/retirement-planning-netfin.webp";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
 import topRightScribble from "../assets/top-right-scribble.svg";
 
