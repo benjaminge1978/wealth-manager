@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -44,6 +44,25 @@ export function AdminDashboard({ serverUrl = 'http://localhost:3001' }: AdminDas
   const [credentials, setCredentials] = useState({ username: 'admin', password: '' });
   const [authenticated, setAuthenticated] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Add SEO meta tags to prevent indexing
+  React.useEffect(() => {
+    // Add noindex meta tag
+    const metaRobots = document.createElement('meta');
+    metaRobots.name = 'robots';
+    metaRobots.content = 'noindex, nofollow, noarchive, nosnippet';
+    document.head.appendChild(metaRobots);
+
+    // Update page title
+    const originalTitle = document.title;
+    document.title = 'Admin Dashboard - Content Automation';
+
+    // Cleanup on unmount
+    return () => {
+      document.head.removeChild(metaRobots);
+      document.title = originalTitle;
+    };
+  }, []);
   
   // Manual content generation form
   const [contentForm, setContentForm] = useState({
