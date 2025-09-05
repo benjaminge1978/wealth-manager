@@ -335,9 +335,6 @@ export function AdminDashboard({ serverUrl }: AdminDashboardProps) {
               Login
             </Button>
 
-            <div className="text-xs text-muted-foreground text-center">
-              Default password is in your .env file (ADMIN_PASSWORD)
-            </div>
           </div>
         </Card>
       </div>
