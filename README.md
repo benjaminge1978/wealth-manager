@@ -1,5 +1,5 @@
 
-  # Wealth Management Homepage
+  # Wealth Management Homepage - With Automated Content System
 
   This is a code bundle for Wealth Management Homepage. The original project is available at https://www.figma.com/design/y5FwYODKI0uKBW2kq3gHB2/Wealth-Management-Homepage.
 
