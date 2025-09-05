@@ -132,8 +132,8 @@ export function Header() {
           </nav>
 
           <div className="flex items-center space-x-4">
-            <Button aria-label="Schedule consultation with a financial adviser">
-              Speak to an adviser
+            <Button asChild aria-label="Schedule consultation with a financial adviser">
+              <Link to="/contact">Speak to an adviser</Link>
             </Button>
             <Button 
               variant="ghost" 
@@ -221,10 +221,11 @@ export function Header() {
                 Contact
               </Link>
               <Button 
+                asChild
                 className="w-full mt-4" 
                 aria-label="Schedule consultation with a financial adviser"
               >
-                Speak to an adviser
+                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>Speak to an adviser</Link>
               </Button>
             </div>
           </nav>
