@@ -103,16 +103,15 @@ function WealthHeroSection() {
           </div>
 
           <div className="relative lg:order-2 order-1">
-            <div className="relative z-10 w-full aspect-[8/5] overflow-hidden rounded-lg shadow-2xl">
+            <div className="relative z-10">
               <ImageWithFallback 
                 src={heroImage}
-                alt="Woman enjoying financial freedom and relaxation" 
-                className="w-full h-full object-cover"
+                alt="Professional wealth management advisor" 
+                className="w-full h-[400px] md:h-[500px] lg:h-[600px] object-cover rounded-lg shadow-2xl"
                 priority={true}
                 width={800}
-                height={500}
+                height={600}
                 loading="eager"
-                style={{ aspectRatio: '8/5' }}
               />
             </div>
             <div className="absolute -bottom-4 w-52 h-16" style={{ left: '-6.25rem' }}>
