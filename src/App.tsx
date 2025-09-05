@@ -4,7 +4,9 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { CookieConsentBanner } from "./components/CookieConsentBanner";
-import { initializeCookieConsent } from "./lib/cookieConsent";
+import { initializeCookieConsent, hasConsentFor } from "./lib/cookieConsent";
+import { initializeAnalytics } from "./lib/analytics";
+import { useAnalytics } from "./hooks/useAnalytics";
 import { HomePage } from "./components/HomePage";
 import { ContactPage } from "./components/ContactPage";
 import { PrivacyPolicy } from "./components/PrivacyPolicy";
@@ -26,9 +28,33 @@ const BlogListing = lazy(() => import("./components/blog/BlogListing").then(modu
 const BlogPost = lazy(() => import("./components/blog/BlogPost").then(module => ({ default: module.BlogPost })));
 
 export default function App() {
+  // Use analytics hook for automatic page tracking
+  useAnalytics();
+
   useEffect(() => {
     // Initialize cookie consent system on app load
     initializeCookieConsent();
+
+    // Initialize analytics if user has already consented
+    if (hasConsentFor('analytics')) {
+      initializeAnalytics();
+    }
+
+    // Listen for cookie consent changes to initialize/disable analytics
+    const handleConsentChange = (event: CustomEvent) => {
+      const preferences = event.detail;
+      if (preferences.analytics) {
+        initializeAnalytics();
+      }
+    };
+
+    // Listen for consent changes
+    window.addEventListener('cookieConsentChanged', handleConsentChange as EventListener);
+
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('cookieConsentChanged', handleConsentChange as EventListener);
+    };
   }, []);
 
   return (

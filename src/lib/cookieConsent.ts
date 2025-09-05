@@ -148,21 +148,17 @@ export function applyCookieConsent(): void {
   const preferences = getConsentPreferences();
   if (!preferences) return;
 
-  // Block/unblock analytics
+  // Handle analytics consent using react-ga4
   if (!preferences.analytics) {
-    // Disable Google Analytics if enabled
-    if (window.gtag) {
-      window.gtag('consent', 'update', {
-        analytics_storage: 'denied'
-      });
-    }
+    // Dynamically import analytics functions to avoid circular dependencies
+    import('./analytics').then(({ disableAnalytics }) => {
+      disableAnalytics();
+    }).catch(err => console.warn('Failed to disable analytics:', err));
   } else {
-    // Enable Google Analytics if disabled
-    if (window.gtag) {
-      window.gtag('consent', 'update', {
-        analytics_storage: 'granted'
-      });
-    }
+    // Enable analytics
+    import('./analytics').then(({ enableAnalytics }) => {
+      enableAnalytics();
+    }).catch(err => console.warn('Failed to enable analytics:', err));
   }
 
   // Handle functional cookies
