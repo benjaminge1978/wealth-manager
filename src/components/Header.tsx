@@ -85,18 +85,41 @@ export function Header() {
                   >
                     Wealth Management
                   </Link>
-                  <button
-                    onClick={() => { handleNavClick('services'); setServicesDropdownOpen(false); }}
-                    className="block w-full text-left px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
+                  <Link
+                    to="/financial-planning"
+                    className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors whitespace-nowrap"
+                    onClick={() => setServicesDropdownOpen(false)}
                   >
                     Financial Planning
-                  </button>
-                  <button
-                    onClick={() => { handleNavClick('services'); setServicesDropdownOpen(false); }}
-                    className="block w-full text-left px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors"
+                  </Link>
+                  <Link
+                    to="/risk-management"
+                    className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors whitespace-nowrap"
+                    onClick={() => setServicesDropdownOpen(false)}
+                  >
+                    Risk Management
+                  </Link>
+                  <Link
+                    to="/investment-advisory"
+                    className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors whitespace-nowrap"
+                    onClick={() => setServicesDropdownOpen(false)}
                   >
                     Investment Advisory
-                  </button>
+                  </Link>
+                  <Link
+                    to="/education-planning"
+                    className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors whitespace-nowrap"
+                    onClick={() => setServicesDropdownOpen(false)}
+                  >
+                    Education Planning
+                  </Link>
+                  <Link
+                    to="/retirement-planning"
+                    className="block px-4 py-3 text-sm font-medium text-foreground hover:bg-primary/5 hover:text-primary transition-colors whitespace-nowrap"
+                    onClick={() => setServicesDropdownOpen(false)}
+                  >
+                    Retirement Planning
+                  </Link>
                 </div>
               )}
             </div>
@@ -175,26 +198,66 @@ export function Header() {
                       <div className="text-xs text-muted-foreground">Build lasting wealth</div>
                     </div>
                   </Link>
-                  <button
-                    onClick={() => { handleNavClick('services'); setMobileMenuOpen(false); }}
-                    className="flex items-center w-full px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                  <Link
+                    to="/financial-planning"
+                    className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Go to Financial Planning page and close menu"
                   >
-                    <div className="w-2 h-2 rounded-full bg-emerald-500/30 mr-3"></div>
-                    <div className="text-left">
+                    <div className="w-2 h-2 rounded-full bg-sky-500/30 mr-3"></div>
+                    <div>
                       <div className="font-medium">Financial Planning</div>
                       <div className="text-xs text-muted-foreground">Goals-based strategies</div>
                     </div>
-                  </button>
-                  <button
-                    onClick={() => { handleNavClick('services'); setMobileMenuOpen(false); }}
-                    className="flex items-center w-full px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                  </Link>
+                  <Link
+                    to="/risk-management"
+                    className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Go to Risk Management page and close menu"
                   >
-                    <div className="w-2 h-2 rounded-full bg-blue-500/30 mr-3"></div>
-                    <div className="text-left">
+                    <div className="w-2 h-2 rounded-full bg-emerald-500/30 mr-3"></div>
+                    <div>
+                      <div className="font-medium">Risk Management</div>
+                      <div className="text-xs text-muted-foreground">Protect what matters most</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/investment-advisory"
+                    className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Go to Investment Advisory page and close menu"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-red-500/30 mr-3"></div>
+                    <div>
                       <div className="font-medium">Investment Advisory</div>
                       <div className="text-xs text-muted-foreground">Expert portfolio management</div>
                     </div>
-                  </button>
+                  </Link>
+                  <Link
+                    to="/education-planning"
+                    className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Go to Education Planning page and close menu"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-amber-500/30 mr-3"></div>
+                    <div>
+                      <div className="font-medium">Education Planning</div>
+                      <div className="text-xs text-muted-foreground">Strategic education funding</div>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/retirement-planning"
+                    className="flex items-center px-3 py-2 text-sm text-foreground hover:bg-primary/10 hover:text-primary transition-colors rounded-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                    aria-label="Go to Retirement Planning page and close menu"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-rose-500/30 mr-3"></div>
+                    <div>
+                      <div className="font-medium">Retirement Planning</div>
+                      <div className="text-xs text-muted-foreground">Secure your golden years</div>
+                    </div>
+                  </Link>
                 </div>
               </div>
               <button 

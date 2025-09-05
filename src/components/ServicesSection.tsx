@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { useServicesData } from "../hooks/useSanityData";
 import { useEffect, useRef, memo } from 'react';
+import { Link } from 'react-router-dom';
 import rough from 'roughjs';
 
 function RoughCircleBackground({ color, size }: { color: string, size: number }) {
@@ -71,7 +72,8 @@ const ServicesSection = memo(function ServicesSection() {
       iconColor: "#7c3aed", // Purple
       pastelColor: "#c4b5fd", // Light purple
       iconBackground: "bg-violet-100 group-hover:bg-violet-200",
-      circleColor: "bg-violet-300"
+      circleColor: "bg-violet-300",
+      link: "/wealth-management"
     },
     {
       icon: "FileText",
@@ -81,27 +83,30 @@ const ServicesSection = memo(function ServicesSection() {
       iconColor: "#0ea5e9", // Sky blue
       pastelColor: "#93c5fd", // Light sky blue
       iconBackground: "bg-sky-100 group-hover:bg-sky-200",
-      circleColor: "bg-sky-300"
+      circleColor: "bg-sky-300",
+      link: "/financial-planning"
     },
     {
       icon: "Shield",
-      title: "Protection",
+      title: "Risk Management",
       description: "Whatever matters most — your family, business, or income — we'll ensure it's properly protected with the right life, health and income plans.",
       order: 3,
       iconColor: "#059669", // Emerald
       pastelColor: "#86efac", // Light emerald
       iconBackground: "bg-emerald-100 group-hover:bg-emerald-200",
-      circleColor: "bg-emerald-300"
+      circleColor: "bg-emerald-300",
+      link: "/risk-management"
     },
     {
       icon: "TrendingUp",
-      title: "Mortgage Advice",
-      description: "Access experienced mortgage advisers who provide clear, regulated guidance for first-time buyers, remortgaging or buy-to-let solutions.",
+      title: "Investment Advisory",
+      description: "Professional investment management and portfolio strategies designed to grow and protect your wealth over time.",
       order: 4,
       iconColor: "#dc2626", // Red
       pastelColor: "#fca5a5", // Light red
       iconBackground: "bg-red-100 group-hover:bg-red-200",
-      circleColor: "bg-red-300"
+      circleColor: "bg-red-300",
+      link: "/investment-advisory"
     },
     {
       icon: "GraduationCap",
@@ -111,7 +116,8 @@ const ServicesSection = memo(function ServicesSection() {
       iconColor: "#d97706", // Amber
       pastelColor: "#fcd34d", // Light amber
       iconBackground: "bg-amber-100 group-hover:bg-amber-200",
-      circleColor: "bg-amber-300"
+      circleColor: "bg-amber-300",
+      link: "/education-planning"
     },
     {
       icon: "Heart",
@@ -121,11 +127,13 @@ const ServicesSection = memo(function ServicesSection() {
       iconColor: "#e11d48", // Rose
       pastelColor: "#fda4af", // Light rose
       iconBackground: "bg-rose-100 group-hover:bg-rose-200",
-      circleColor: "bg-rose-300"
+      circleColor: "bg-rose-300",
+      link: "/retirement-planning"
     }
   ];
 
-  const services = servicesData || fallbackServices;
+  // Force fallback services for now to ensure correct links
+  const services = fallbackServices;
 
   return (
     <section id="services" className="py-20 bg-gradient-to-b from-background to-muted/50">
@@ -142,7 +150,7 @@ const ServicesSection = memo(function ServicesSection() {
             const iconType = iconMap[service.icon as keyof typeof iconMap] || 'pie-chart';
             return (
               <Card key={index} className="group hover:shadow-lg hover:shadow-primary/10 transition-all duration-300 border-border/50 hover:border-primary/20">
-                <CardHeader className="space-y-4">
+                <CardHeader className="space-y-4 pb-2">
                   <div className="relative w-16 h-16 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
                     {/* Rough circle background - smaller with pastel colors */}
                     <RoughCircleBackground color={service.pastelColor} size={60} />
@@ -158,17 +166,27 @@ const ServicesSection = memo(function ServicesSection() {
                   </div>
                   <CardTitle className="text-xl">{service.title}</CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="pt-2">
                   <CardDescription className="text-base leading-relaxed mb-4">
                     {service.description}
                   </CardDescription>
-                  <a 
-                    href={service.link || "#services"} 
-                    className="text-primary hover:text-primary/80 text-base font-medium inline-flex items-center gap-1 transition-colors"
-                  >
-                    Learn more
-                    <span className="text-sm">›</span>
-                  </a>
+                  {service.link ? (
+                    <Link 
+                      to={service.link} 
+                      className="text-primary hover:text-primary/80 text-base font-medium inline-flex items-center gap-1 transition-colors"
+                    >
+                      Learn more
+                      <span className="text-sm">›</span>
+                    </Link>
+                  ) : (
+                    <a 
+                      href="#services"
+                      className="text-primary hover:text-primary/80 text-base font-medium inline-flex items-center gap-1 transition-colors"
+                    >
+                      Learn more
+                      <span className="text-sm">›</span>
+                    </a>
+                  )}
                 </CardContent>
               </Card>
             );

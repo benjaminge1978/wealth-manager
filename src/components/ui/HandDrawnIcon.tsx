@@ -8,7 +8,8 @@ interface HandDrawnIconProps {
         'star' | 'bookmark' | 'calendar' | 'users' | 'pie-chart' | 'file-text' |
         'graduation-cap' | 'heart' | 'briefcase' | 'help-circle' | 'chevron-down' |
         'plus' | 'minus' | 'quote' | 'x-circle' | 'lightbulb' | 'repeat' | 'handshake' |
-        'building' | 'globe' | 'alert-triangle';
+        'building' | 'globe' | 'alert-triangle' | 'check' | 'umbrella' | 'alert-circle' |
+        'book' | 'pound-sterling' | 'trending-down' | 'piggy-bank' | 'chevron-up';
   size?: number;
   className?: string;
   color?: string;
@@ -1385,6 +1386,237 @@ export function HandDrawnIcon({ type, size = 32, className = '', color = 'curren
           fill: color,
           fillStyle: 'solid'
         }));
+        break;
+
+      case 'check':
+        // Simple checkmark
+        svg.appendChild(rc.path(
+          `M ${size * 0.2} ${size * 0.5} L ${size * 0.4} ${size * 0.7} L ${size * 0.8} ${size * 0.3}`,
+          {
+            stroke: color,
+            strokeWidth: strokeWidth * 1.5,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        break;
+
+      case 'umbrella':
+        // Umbrella shape
+        const umbRadius = size * 0.35;
+        // Handle
+        svg.appendChild(rc.line(size/2, size * 0.85, size/2, size * 0.5, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Handle curve
+        svg.appendChild(rc.arc(size/2 - 6, size * 0.85, 12, 8, 0, Math.PI, false, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        // Umbrella top
+        svg.appendChild(rc.arc(size/2, size * 0.5, umbRadius * 2, umbRadius, Math.PI, 0, false, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        break;
+
+      case 'alert-circle':
+        // Circle
+        svg.appendChild(rc.circle(size/2, size/2, size * 0.8, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        // Exclamation line
+        svg.appendChild(rc.line(size/2, size * 0.3, size/2, size * 0.6, {
+          stroke: color,
+          strokeWidth: strokeWidth * 1.2,
+          roughness,
+          bowing
+        }));
+        // Exclamation dot
+        svg.appendChild(rc.circle(size/2, size * 0.75, 3, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: color,
+          fillStyle: 'solid'
+        }));
+        break;
+
+      case 'book':
+        // Book cover
+        const bookWidth = size * 0.6;
+        const bookHeight = size * 0.8;
+        const bookX = (size - bookWidth) / 2;
+        const bookY = (size - bookHeight) / 2;
+        
+        svg.appendChild(rc.rectangle(bookX, bookY, bookWidth, bookHeight, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        // Spine line
+        svg.appendChild(rc.line(bookX + 8, bookY, bookX + 8, bookY + bookHeight, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Pages
+        svg.appendChild(rc.line(bookX + 12, bookY + 8, bookX + bookWidth - 4, bookY + 8, {
+          stroke: color,
+          strokeWidth: strokeWidth * 0.8,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(bookX + 12, bookY + 16, bookX + bookWidth - 4, bookY + 16, {
+          stroke: color,
+          strokeWidth: strokeWidth * 0.8,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'pound-sterling':
+        // £ symbol
+        const pSize = size * 0.6;
+        const pX = (size - pSize) / 2;
+        const pY = (size - pSize) / 2;
+        
+        // Vertical line
+        svg.appendChild(rc.line(pX + pSize * 0.2, pY, pX + pSize * 0.2, pY + pSize, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Top curve
+        svg.appendChild(rc.arc(pX + pSize * 0.2, pY + pSize * 0.25, pSize * 0.4, pSize * 0.3, Math.PI, 0, false, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        // Bottom line
+        svg.appendChild(rc.line(pX, pY + pSize, pX + pSize * 0.8, pY + pSize, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Cross line
+        svg.appendChild(rc.line(pX - 2, pY + pSize * 0.6, pX + pSize * 0.5, pY + pSize * 0.6, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'trending-down':
+        // Downward trending line with points
+        svg.appendChild(rc.line(size * 0.15, size * 0.3, size * 0.45, size * 0.5, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(size * 0.45, size * 0.5, size * 0.85, size * 0.8, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Arrow head
+        svg.appendChild(rc.path(
+          `M ${size * 0.85} ${size * 0.8} L ${size * 0.75} ${size * 0.7} M ${size * 0.85} ${size * 0.8} L ${size * 0.75} ${size * 0.9}`,
+          {
+            stroke: color,
+            strokeWidth,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
+        break;
+
+      case 'piggy-bank':
+        // Piggy bank body
+        const piggyRadius = size * 0.25;
+        svg.appendChild(rc.ellipse(size/2, size * 0.6, piggyRadius * 2, piggyRadius * 1.5, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        // Head
+        svg.appendChild(rc.circle(size * 0.3, size * 0.4, piggyRadius, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        // Legs
+        svg.appendChild(rc.line(size * 0.4, size * 0.75, size * 0.4, size * 0.9, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        svg.appendChild(rc.line(size * 0.6, size * 0.75, size * 0.6, size * 0.9, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing
+        }));
+        // Tail
+        svg.appendChild(rc.arc(size * 0.75, size * 0.55, 8, 12, -Math.PI/4, Math.PI/2, false, {
+          stroke: color,
+          strokeWidth,
+          roughness,
+          bowing,
+          fill: 'none'
+        }));
+        // Coin slot
+        svg.appendChild(rc.line(size * 0.45, size * 0.45, size * 0.55, size * 0.45, {
+          stroke: color,
+          strokeWidth: strokeWidth * 1.5,
+          roughness,
+          bowing
+        }));
+        break;
+
+      case 'chevron-up':
+        // Upward pointing chevron
+        svg.appendChild(rc.path(
+          `M ${size * 0.3} ${size * 0.6} L ${size * 0.5} ${size * 0.4} L ${size * 0.7} ${size * 0.6}`,
+          {
+            stroke: color,
+            strokeWidth: strokeWidth * 1.2,
+            roughness,
+            bowing,
+            fill: 'none'
+          }
+        ));
         break;
     }
   }, [type, size, color]);

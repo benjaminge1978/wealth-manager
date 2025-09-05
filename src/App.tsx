@@ -16,6 +16,13 @@ const CookiePolicy = lazy(() => import("./components/CookiePolicy").then(module 
 const WealthManagementPage = lazy(() => import("./components/WealthManagementPage").then(module => ({ default: module.WealthManagementPage })));
 const AdvisorGuide = lazy(() => import("./components/AdvisorGuide").then(module => ({ default: module.AdvisorGuide })));
 
+// Lazy load service pages
+const FinancialPlanningPage = lazy(() => import("./components/FinancialPlanningPage").then(module => ({ default: module.FinancialPlanningPage })));
+const RiskManagementPage = lazy(() => import("./components/RiskManagementPage").then(module => ({ default: module.RiskManagementPage })));
+const InvestmentAdvisoryPage = lazy(() => import("./components/InvestmentAdvisoryPage").then(module => ({ default: module.InvestmentAdvisoryPage })));
+const EducationPlanningPage = lazy(() => import("./components/EducationPlanningPage").then(module => ({ default: module.EducationPlanningPage })));
+const RetirementPlanningPage = lazy(() => import("./components/RetirementPlanningPage").then(module => ({ default: module.RetirementPlanningPage })));
+
 // Lazy load city advisor pages
 const LondonAdvisors = lazy(() => import("./components/cities/LondonAdvisors").then(module => ({ default: module.LondonAdvisors })));
 const ManchesterAdvisors = lazy(() => import("./components/cities/ManchesterAdvisors").then(module => ({ default: module.ManchesterAdvisors })));
@@ -82,6 +89,11 @@ export default function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/wealth-management" element={<WealthManagementPage />} />
+          <Route path="/financial-planning" element={<FinancialPlanningPage />} />
+          <Route path="/risk-management" element={<RiskManagementPage />} />
+          <Route path="/investment-advisory" element={<InvestmentAdvisoryPage />} />
+          <Route path="/education-planning" element={<EducationPlanningPage />} />
+          <Route path="/retirement-planning" element={<RetirementPlanningPage />} />
           <Route path="/how-to-choose-financial-advisor" element={<AdvisorGuide />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
