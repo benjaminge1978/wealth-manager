@@ -8,7 +8,9 @@ import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { useEffect, useRef, useState } from 'react';
 import rough from 'roughjs';
-import heroImage from "../assets/wealth-management-london.webp";
+// TODO: Replace with actual wealth-freedom-hammock.jpg image
+// For now using family image as placeholder
+import heroImage from "../assets/wealth-management-happy-family.jpg";
 import bottomLeftScribble from "../assets/bottom-left-scribble.svg";
 import topRightScribble from "../assets/top-right-scribble.svg";
 
@@ -106,7 +108,7 @@ function WealthHeroSection() {
             <div className="relative z-10">
               <ImageWithFallback 
                 src={heroImage}
-                alt="Professional wealth management advisor" 
+                alt="Woman enjoying financial freedom and relaxation" 
                 className="w-full h-[400px] md:h-[500px] lg:h-[600px] object-cover rounded-lg shadow-2xl"
                 priority={true}
                 width={800}
