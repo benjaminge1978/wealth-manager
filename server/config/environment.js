@@ -1,12 +1,16 @@
 // Environment configuration for content automation
 import { config } from 'dotenv';
 
-// Load environment variables
-config();
+// Load environment variables from parent directory
+config({ path: '../.env' });
 
 export const env = {
   // Anthropic Claude API
   ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY || '',
+  
+  // Claude Model Configuration
+  PRIMARY_CLAUDE_MODEL: process.env.PRIMARY_CLAUDE_MODEL || 'claude-3-5-haiku-20241022',
+  FALLBACK_CLAUDE_MODELS: process.env.FALLBACK_CLAUDE_MODELS || 'claude-3-haiku-20240307',
   
   // Sanity CMS
   SANITY_PROJECT_ID: process.env.VITE_SANITY_PROJECT_ID || 'uvt95dbx',

@@ -13,6 +13,20 @@ import { BLOG_CATEGORIES } from '../../types/blog';
 
 const POSTS_PER_PAGE = 6;
 
+// Utility function to truncate excerpts for optimal card display
+const truncateExcerpt = (text: string, maxLength: number = 150): string => {
+  if (!text || text.length <= maxLength) return text;
+  
+  // Find last complete word within limit
+  const truncated = text.substring(0, maxLength);
+  const lastSpace = truncated.lastIndexOf(' ');
+  
+  // If no space found, just truncate at max length
+  if (lastSpace === -1) return truncated + '...';
+  
+  return truncated.substring(0, lastSpace) + '...';
+};
+
 export function BlogListing() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
@@ -35,7 +49,7 @@ export function BlogListing() {
     id: sanityPost._id,
     slug: sanityPost.slug?.current || sanityPost.slug,
     title: sanityPost.title,
-    excerpt: sanityPost.excerpt,
+    excerpt: truncateExcerpt(sanityPost.excerpt),
     content: sanityPost.body || sanityPost.content || '',
     author: {
       name: sanityPost.author?.name || 'NetFin Team',

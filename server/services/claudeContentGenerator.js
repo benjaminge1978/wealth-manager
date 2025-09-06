@@ -5,12 +5,14 @@ import ExpertAuthorManager from './expertAuthorManager.js';
 import AuthoritativeSourceManager from './authoritativeSourceManager.js';
 import CopywritingStyleManager from './copywritingStyleManager.js';
 import ProfessionalBoundaryManager from './professionalBoundaryManager.js';
+import ModelManager from './modelManager.js';
 
 class ClaudeContentGenerator {
   constructor() {
     this.anthropic = new Anthropic({
       apiKey: env.ANTHROPIC_API_KEY,
     });
+    this.modelManager = new ModelManager();
     this.expertAuthorManager = new ExpertAuthorManager();
     this.authoritativeSourceManager = new AuthoritativeSourceManager();
     this.copywritingStyleManager = new CopywritingStyleManager();
@@ -36,8 +38,12 @@ class ClaudeContentGenerator {
     try {
       console.log(`🤖 Generating content for: ${topic}`);
       
+      // Get the best available model through resilient selection
+      const selectedModel = await this.modelManager.getBestAvailableModel(true);
+      console.log(`🎯 Using model: ${selectedModel}`);
+      
       const message = await this.anthropic.messages.create({
-        model: 'claude-3-5-sonnet-latest',
+        model: selectedModel,
         max_tokens: 4000,
         messages: [{
           role: 'user',
@@ -198,11 +204,14 @@ QUALITY OVER VELOCITY:
 - Provide original insights, not recycled generic content
 - Meet the standard where AI engines would cite this as an authoritative source
 
-OUTPUT FORMAT:
-Provide ONLY a JSON object with this exact structure:
+OUTPUT FORMAT - CRITICAL REQUIREMENT:
+You MUST respond with ONLY a valid JSON object. Do NOT include any explanatory text, questions, or conversation. 
+Start your response immediately with '{' and end with '}'. No other text is allowed.
+
+Required JSON structure:
 {
   "title": "Question-based title optimized for AI queries (50-60 characters)",
-  "excerpt": "120-180 word plain-English answer that could stand alone",
+  "excerpt": "Concise 20-25 word summary for card display (120-150 characters max)",
   "content": "Full expert analysis in markdown with examples, calculations, and professional insights",
   "suggestedTags": ["specific", "professional", "uk-focused", "topic", "tags"],
   "readTimeMinutes": estimated_read_time_number,
@@ -283,11 +292,14 @@ UK REGULATORY COMPLIANCE:
 - Reference FCA guidance as supporting evidence for professional insights
 - Frame past performance context as professional experience: "Historical patterns inform my analysis"
 
-OUTPUT FORMAT:
-Provide ONLY a JSON object with this exact structure:
+OUTPUT FORMAT - CRITICAL REQUIREMENT:
+You MUST respond with ONLY a valid JSON object. Do NOT include any explanatory text, questions, or conversation. 
+Start your response immediately with '{' and end with '}'. No other text is allowed.
+
+Required JSON structure:
 {
   "title": "Professional market roundup title with date",
-  "excerpt": "120-180 word executive summary of key market themes",
+  "excerpt": "Concise 20-25 word market summary for card display (120-150 characters max)",
   "content": "Professional market analysis in markdown with expert insights and implications",
   "suggestedTags": ["market analysis", "uk investors", "professional commentary", "weekly roundup"],
   "readTimeMinutes": estimated_read_time_number,
@@ -306,8 +318,12 @@ CRITICAL REQUIREMENTS:
 - Quality must meet standards for AI engines to cite as authoritative market commentary`;
 
     try {
+      // Get the best available model for news roundup generation
+      const selectedModel = await this.modelManager.getBestAvailableModel(true);
+      console.log(`📰 Using model for news roundup: ${selectedModel}`);
+      
       const message = await this.anthropic.messages.create({
-        model: 'claude-3-5-sonnet-latest',
+        model: selectedModel,
         max_tokens: 4000,
         messages: [{ role: 'user', content: prompt }]
       });
@@ -332,7 +348,13 @@ CRITICAL REQUIREMENTS:
         throw new Error('No JSON found in response');
       }
       
-      const parsed = JSON.parse(jsonMatch[0]);
+      // Clean JSON string gently - only fix critical parsing issues
+      let jsonString = jsonMatch[0];
+      
+      // Only clean the most problematic control characters that break JSON parsing
+      jsonString = jsonString.replace(/[\u0000-\u001F\u007F-\u009F]/g, '');
+      
+      const parsed = JSON.parse(jsonString);
       
       // Validate core required fields
       const coreRequired = ['title', 'excerpt', 'content', 'suggestedTags', 'readTimeMinutes'];
@@ -496,8 +518,12 @@ CRITICAL REQUIREMENTS:
     try {
       const optimizationPrompt = this.createAdvancedSEOPrompt(content, keywords, targetAudience);
       
+      // Get the best available model for SEO optimization
+      const selectedModel = await this.modelManager.getBestAvailableModel(false); // Use cached health check
+      console.log(`🎯 Using model for SEO optimization: ${selectedModel}`);
+      
       const message = await this.anthropic.messages.create({
-        model: 'claude-3-5-sonnet-latest',
+        model: selectedModel,
         max_tokens: 3000,
         messages: [{ 
           role: 'user', 
@@ -984,7 +1010,7 @@ Return ONLY a JSON object with this structure:
     else if (content.title.length >= 40 && content.title.length <= 70) score += 15;
     
     // Meta description (20 points)
-    if (content.excerpt && content.excerpt.length >= 120 && content.excerpt.length <= 180) {
+    if (content.excerpt && content.excerpt.length >= 100 && content.excerpt.length <= 150) {
       score += 20;
     }
     
