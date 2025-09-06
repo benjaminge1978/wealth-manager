@@ -95,7 +95,7 @@ class StaticHtmlGenerator {
       const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000).toISOString();
       
       const recentPosts = await this.client.fetch(`
-        *[_type == "post" && _createdAt > $createdAfter && !(_id in path("drafts.**"))] {
+        *[(_type == "post" || _type == "blogPost") && _createdAt > $createdAfter && !(_id in path("drafts.**"))] {
           "slug": slug.current
         }
       `, { createdAfter: oneHourAgo });
@@ -122,7 +122,7 @@ class StaticHtmlGenerator {
    * @returns {Promise<Object|null>} Post data or null if not found
    */
   async fetchSinglePost(slug) {
-    const query = `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
+    const query = `*[(_type == "post" || _type == "blogPost") && slug.current == $slug && !(_id in path("drafts.**"))][0] {
       _id,
       title,
       "slug": slug.current,

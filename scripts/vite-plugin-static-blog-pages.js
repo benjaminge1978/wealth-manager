@@ -265,7 +265,7 @@ export function staticPages() {
         
         // Generate dynamic blog pages from Sanity
         try {
-          const query = `*[_type == "post" && !(_id in path("drafts.**"))] {
+          const query = `*[(_type == "post" || _type == "blogPost") && !(_id in path("drafts.**"))] {
             _id,
             title,
             "slug": slug.current,
