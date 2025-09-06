@@ -49,7 +49,7 @@ export function BlogPost() {
   const [copied, setCopied] = useState(false);
   
   // Fetch Sanity posts
-  const { data: sanityPosts } = useSanityData(queries.allPosts);
+  const { data: sanityPosts, loading: sanityLoading } = useSanityData(queries.allPosts);
   
   // Convert Sanity post to BlogPost format (same as in BlogListing)
   const convertSanityToBlogPost = (sanityPost: any): BlogPostType => ({
@@ -89,7 +89,20 @@ export function BlogPost() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  if (!post) {
+  // Show loading while Sanity data is being fetched
+  if (sanityLoading && !post) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-primary/30 border-t-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading article...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Only show "not found" after loading is complete and post is not found
+  if (!sanityLoading && !post) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
