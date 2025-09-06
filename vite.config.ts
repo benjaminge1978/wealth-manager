@@ -2,10 +2,10 @@
   import { defineConfig } from 'vite';
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
-  import { staticBlogPages } from './scripts/vite-plugin-static-blog-pages.js';
+  import { staticPages } from './scripts/vite-plugin-static-blog-pages.js';
 
   export default defineConfig({
-    plugins: [react(), staticBlogPages()],
+    plugins: [react(), staticPages()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
