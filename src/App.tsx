@@ -23,6 +23,9 @@ const InvestmentAdvisoryPage = lazy(() => import("./components/InvestmentAdvisor
 const EducationPlanningPage = lazy(() => import("./components/EducationPlanningPage").then(module => ({ default: module.EducationPlanningPage })));
 const RetirementPlanningPage = lazy(() => import("./components/RetirementPlanningPage").then(module => ({ default: module.RetirementPlanningPage })));
 
+// Lazy load pillar pages
+const FinancialPlanningPillarPage = lazy(() => import("./components/FinancialPlanningPillarPage").then(module => ({ default: module.FinancialPlanningPillarPage })));
+
 // Lazy load city advisor pages
 const LondonAdvisors = lazy(() => import("./components/cities/LondonAdvisors").then(module => ({ default: module.LondonAdvisors })));
 const ManchesterAdvisors = lazy(() => import("./components/cities/ManchesterAdvisors").then(module => ({ default: module.ManchesterAdvisors })));
@@ -90,6 +93,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/wealth-management" element={<WealthManagementPage />} />
           <Route path="/financial-planning" element={<FinancialPlanningPage />} />
+          <Route path="/financial-planning-guide-uk" element={<FinancialPlanningPillarPage />} />
           <Route path="/risk-management" element={<RiskManagementPage />} />
           <Route path="/investment-advisory" element={<InvestmentAdvisoryPage />} />
           <Route path="/education-planning" element={<EducationPlanningPage />} />

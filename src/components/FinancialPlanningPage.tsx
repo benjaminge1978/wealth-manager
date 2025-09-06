@@ -159,7 +159,7 @@ function FinancialPlanningHeroSection() {
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
                 Transform Your Dreams Into 
-                <span className="text-violet-600"> Achievable Financial Milestones</span>
+                <span className="text-primary"> Achievable Financial Milestones</span>
               </h1>
               <div className="flex items-center gap-2">
                 <HandDrawnIcon type="check-circle" size={20} color="#7c3aed" className="text-violet-600" />

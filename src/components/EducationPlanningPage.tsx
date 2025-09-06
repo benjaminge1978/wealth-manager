@@ -68,7 +68,7 @@ function EducationPlanningHeroSection() {
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
                 Secure Your Children's 
-                <span className="text-amber-600"> Educational Future</span>
+                <span className="text-primary"> Educational Future</span>
               </h1>
               <div className="flex items-center gap-2">
                 <HandDrawnIcon type="graduation-cap" size={20} color="#d97706" className="text-amber-600" />

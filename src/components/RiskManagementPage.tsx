@@ -159,7 +159,7 @@ function RiskManagementHeroSection() {
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
                 Protect What Matters Most
-                <span className="text-emerald-600"> Before It's Too Late</span>
+                <span className="text-primary"> Before It's Too Late</span>
               </h1>
               <div className="flex items-center gap-2">
                 <HandDrawnIcon type="shield" size={20} color="#059669" className="text-emerald-600" />

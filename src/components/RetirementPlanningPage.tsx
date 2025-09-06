@@ -68,7 +68,7 @@ function RetirementPlanningHeroSection() {
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
                 Retire on Your Terms,
-                <span className="text-rose-600"> Not Theirs</span>
+                <span className="text-primary"> Not Theirs</span>
               </h1>
               <div className="flex items-center gap-2">
                 <HandDrawnIcon type="clock" size={20} color="#e11d48" className="text-rose-600" />

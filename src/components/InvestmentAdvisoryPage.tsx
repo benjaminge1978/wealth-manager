@@ -159,7 +159,7 @@ function InvestmentAdvisoryHeroSection() {
             <div className="space-y-6">
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-medium leading-tight">
                 Professional Investment Management
-                <span className="text-sky-600"> That Outperforms</span>
+                <span className="text-primary"> That Outperforms</span>
               </h1>
               <div className="flex items-center gap-2">
                 <HandDrawnIcon type="trending-up" size={20} color="#0ea5e9" className="text-sky-600" />
