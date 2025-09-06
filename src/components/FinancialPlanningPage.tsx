@@ -172,7 +172,7 @@ function FinancialPlanningHeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="group bg-violet-600 hover:bg-violet-700" onClick={() => navigate('/contact')}>
+              <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 Get Your Free Financial Roadmap
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>

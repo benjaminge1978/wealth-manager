@@ -172,7 +172,7 @@ function RiskManagementHeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="group bg-emerald-600 hover:bg-emerald-700" onClick={() => navigate('/contact')}>
+              <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 Get Your Free Protection Review
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
               </Button>
