@@ -364,6 +364,9 @@ CRITICAL REQUIREMENTS:
         throw new Error(`Missing required fields: ${missing.join(', ')}`);
       }
 
+      // Validate title and excerpt lengths for optimal social media display
+      this.validateMetaTagLengths(parsed);
+
       // Validate E-E-A-T compliance fields (if present)
       const eeatFields = ['authorCredentials', 'fcaNumber', 'expertiseSignals', 'complianceNotes'];
       const hasEEATFields = eeatFields.some(field => parsed[field]);
@@ -404,6 +407,46 @@ CRITICAL REQUIREMENTS:
       console.log('Raw response:', response);
       throw new Error(`Content parsing failed: ${error.message}`);
     }
+  }
+
+  /**
+   * Validate title and excerpt lengths for optimal social media sharing
+   */
+  validateMetaTagLengths(content) {
+    const issues = [];
+    
+    // Validate title length (optimal: 50-60 characters, LinkedIn max: 150)
+    const titleLength = content.title ? content.title.length : 0;
+    if (titleLength === 0) {
+      issues.push('Title is empty');
+    } else if (titleLength > 60) {
+      issues.push(`Title too long: ${titleLength} characters (optimal: 50-60, max: 60 for best social media display)`);
+    }
+    
+    // Validate excerpt length (LinkedIn requires 100+ characters, optimal: 100-150)
+    const excerptLength = content.excerpt ? content.excerpt.length : 0;
+    if (excerptLength === 0) {
+      issues.push('Excerpt is empty');
+    } else if (excerptLength < 100) {
+      issues.push(`Excerpt too short: ${excerptLength} characters (LinkedIn minimum: 100)`);
+    } else if (excerptLength > 160) {
+      issues.push(`Excerpt too long: ${excerptLength} characters (optimal: 100-150, max: 160 for social media)`);
+    }
+    
+    // Validate word count for excerpt (optimal: 15-25 words)
+    if (content.excerpt) {
+      const wordCount = content.excerpt.split(' ').length;
+      if (wordCount > 30) {
+        issues.push(`Excerpt too wordy: ${wordCount} words (optimal: 15-25 words for social media cards)`);
+      }
+    }
+    
+    if (issues.length > 0) {
+      console.warn(`⚠️ Meta tag length validation issues:`, issues);
+      // For now, log warnings but don't block - AI can sometimes generate slightly over limits
+    }
+    
+    return issues.length === 0;
   }
 
   /**

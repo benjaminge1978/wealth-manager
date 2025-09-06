@@ -2,6 +2,7 @@ import { createClient } from '@sanity/client';
 import { env } from '../config/environment.js';
 import ExpertAuthorManager from './expertAuthorManager.js';
 import ImageManager from './imageManager.js';
+import StaticHtmlGenerator from './staticHtmlGenerator.js';
 
 class SanityIntegration {
   constructor() {
@@ -18,6 +19,9 @@ class SanityIntegration {
     
     // Initialize image manager for automated image selection
     this.imageManager = new ImageManager();
+    
+    // Initialize static HTML generator for automatic post HTML generation
+    this.staticHtmlGenerator = new StaticHtmlGenerator();
   }
 
   /**
@@ -64,6 +68,23 @@ class SanityIntegration {
       // Create the document
       const result = await this.client.create(blogPost);
       console.log(`✅ Blog post created: ${result._id}`);
+      
+      // Automatically generate static HTML for LinkedIn Post Inspector
+      try {
+        const postSlug = this.generateSlug(postData.title);
+        console.log(`🔄 Generating static HTML for LinkedIn sharing: ${postSlug}`);
+        
+        const htmlGenerated = await this.staticHtmlGenerator.generateSinglePostHtml(postSlug);
+        if (htmlGenerated) {
+          console.log(`🎉 Static HTML generated successfully for ${postSlug}`);
+          console.log(`🔗 LinkedIn Post Inspector ready: https://netfin.co.uk/insights/${postSlug}`);
+        } else {
+          console.warn(`⚠️  Static HTML generation failed for ${postSlug} - LinkedIn sharing may show generic meta tags`);
+        }
+      } catch (htmlError) {
+        console.warn(`⚠️  Static HTML generation error for ${postSlug}:`, htmlError.message);
+        console.warn('🔧 Post created successfully, but LinkedIn sharing may show generic meta tags until next build');
+      }
       
       return result;
       
