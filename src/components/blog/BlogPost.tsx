@@ -49,7 +49,21 @@ export function BlogPost() {
   const [copied, setCopied] = useState(false);
   
   // Fetch Sanity posts
-  const { data: sanityPosts, loading: sanityLoading } = useSanityData(queries.allPosts);
+  const { data: sanityPosts, loading: sanityLoading, error: sanityError } = useSanityData(queries.allPosts);
+  
+  // Debug Sanity data
+  useEffect(() => {
+    console.log('=== SANITY DEBUG ===');
+    console.log('Sanity loading:', sanityLoading);
+    console.log('Sanity error:', sanityError);
+    console.log('Sanity posts count:', sanityPosts?.length || 0);
+    console.log('Looking for slug:', slug);
+    
+    if (sanityPosts && sanityPosts.length > 0) {
+      console.log('Available Sanity slugs:', sanityPosts.map(p => p.slug?.current || p.slug));
+      console.log('Raw Sanity posts:', sanityPosts);
+    }
+  }, [sanityPosts, sanityLoading, sanityError, slug]);
   
   // Convert Sanity post to BlogPost format (same as in BlogListing)
   const convertSanityToBlogPost = (sanityPost: any): BlogPostType => ({
@@ -76,18 +90,49 @@ export function BlogPost() {
   
   // First try to find in Sanity posts
   if (sanityPosts) {
+    console.log('=== POST SEARCH DEBUG ===');
+    console.log('Converting Sanity posts...');
     const convertedSanityPosts = sanityPosts.map(convertSanityToBlogPost);
+    console.log('Converted posts:', convertedSanityPosts.map(p => ({slug: p.slug, title: p.title})));
+    
     post = convertedSanityPosts.find(p => p.slug === slug);
+    console.log('Found in Sanity:', !!post);
+    if (post) {
+      console.log('Sanity post data:', post);
+    }
   }
   
   // If not found in Sanity, try static posts
   if (!post) {
+    console.log('Searching static posts...');
     post = blogPosts.find(p => p.slug === slug);
+    console.log('Found in static posts:', !!post);
+    if (post) {
+      console.log('Static post data:', post);
+    }
   }
+  
+  console.log('Final post found:', !!post);
+  console.log('Final post slug:', post?.slug);
   
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [slug]);
+
+  // Debug logging for missing post data
+  useEffect(() => {
+    if (post) {
+      console.log('BlogPost data:', {
+        slug: post.slug,
+        title: post.title,
+        excerpt: post.excerpt,
+        author: post.author?.name,
+        featuredImage: post.featuredImage,
+        publishedDate: post.publishedDate,
+        tags: post.tags
+      });
+    }
+  }, [post]);
 
   // Show loading while Sanity data is being fetched
   if (sanityLoading && !post) {
@@ -155,18 +200,29 @@ export function BlogPost() {
     }
   };
 
+  // Debug SEO data being passed
+  const seoData = {
+    title: post?.title || 'Blog Post - Netfin',
+    description: post?.excerpt || 'Expert financial insights and advice from Netfin.',
+    image: post?.featuredImage || 'https://netfin.co.uk/og-image.jpg',
+    author: post?.author?.name || 'Netfin Team',
+    publishedTime: post?.publishedDate,
+    type: "article" as const,
+    url: `https://netfin.co.uk/insights/${post?.slug || ''}`,
+    keywords: post?.tags?.join(', ') || 'financial advice, wealth management'
+  };
+
+  console.log('=== SEO DATA DEBUG ===');
+  console.log('SEO data being passed to SEOHead:', seoData);
+  console.log('Post title:', post?.title);
+  console.log('Post excerpt:', post?.excerpt);
+  console.log('Post author:', post?.author?.name);
+  console.log('Post featuredImage:', post?.featuredImage);
+  console.log('Post publishedDate:', post?.publishedDate);
+
   return (
     <div className="bg-background pb-24">
-      <SEOHead
-        title={post.title}
-        description={post.excerpt}
-        image={post.featuredImage}
-        author={post.author.name}
-        publishedTime={post.publishedDate}
-        type="article"
-        url={`https://netfin.co.uk/insights/${post.slug}`}
-        keywords={post.tags.join(', ')}
-      />
+      <SEOHead {...seoData} />
       {/* Hero Section */}
       <section 
         className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30"
