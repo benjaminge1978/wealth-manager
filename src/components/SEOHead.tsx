@@ -24,15 +24,6 @@ export function SEOHead({
   modifiedTime
 }: SEOHeadProps) {
   
-  // Debug logging to confirm SEOHead is rendering
-  console.log('=== SEOHead RENDERING ===');
-  console.log('Title:', title);
-  console.log('Description:', description);
-  console.log('Author:', author);
-  console.log('Image:', image);
-  console.log('Type:', type);
-  console.log('URL:', url);
-  
   return (
     <Helmet>
       {/* Primary SEO Meta Tags */}
