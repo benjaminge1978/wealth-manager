@@ -6,6 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SEOHead } from "./SEOHead";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
@@ -83,9 +84,6 @@ function RetirementPlanningHeroSection() {
               <Button size="lg" className="group bg-rose-600 hover:bg-rose-700" onClick={() => navigate('/contact')}>
                 Get Your Free Retirement Analysis
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}>
-                Calculate Your Retirement Needs
               </Button>
             </div>
 
@@ -732,6 +730,13 @@ export function RetirementPlanningPage() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background" id="main-content">
+      <SEOHead
+        title="Retirement Planning Services | Retire On Your Terms | Netfin"
+        description="Expert retirement planning services helping clients retire 5-10 years early. Comprehensive pension advice, SIPP management, and retirement income strategies from FCA-regulated advisors."
+        image="https://netfin.co.uk/og-retirement-planning.jpg"
+        url="https://netfin.co.uk/retirement-planning"
+        keywords="retirement planning UK, pension advice, SIPP management, early retirement, retirement income, pension transfer, retirement financial advisor UK"
+      />
       <RetirementPlanningHeroSection />
       <RetirementCalculatorSection />
       <RetirementSolutionsSection />

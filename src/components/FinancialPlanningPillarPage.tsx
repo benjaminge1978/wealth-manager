@@ -5,6 +5,7 @@ import { Badge } from "./ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Separator } from "./ui/separator";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SEOHead } from "./SEOHead";
 import { useNavigate } from 'react-router-dom';
 import { 
   BookOpen, 
@@ -310,6 +311,16 @@ export function FinancialPlanningPillarPage() {
 
   return (
     <div className="bg-background pb-24">
+      <SEOHead
+        title="Complete Guide to Financial Planning in the UK: Expert Strategies for Wealth Building in 2025"
+        description="Comprehensive financial planning guide by FCA-regulated advisor Chris McConnachie. Expert strategies for investments, pensions, tax planning, and wealth management in the UK for 2025."
+        image="https://netfin.co.uk/og-financial-planning.jpg"
+        url="https://netfin.co.uk/financial-planning-guide-uk"
+        type="article"
+        keywords="financial planning guide UK, UK investment strategies, retirement planning guide, tax planning UK, wealth management strategies, financial advisor guide"
+        author="Chris McConnachie"
+        publishedTime={new Date().toISOString()}
+      />
       {/* Reading Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
         <div 

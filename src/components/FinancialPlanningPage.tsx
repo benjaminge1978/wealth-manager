@@ -6,6 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SEOHead } from "./SEOHead";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
@@ -174,9 +175,6 @@ function FinancialPlanningHeroSection() {
               <Button size="lg" className="group bg-violet-600 hover:bg-violet-700" onClick={() => navigate('/contact')}>
                 Get Your Free Financial Roadmap
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' })}>
-                See Our Planning Process
               </Button>
             </div>
 
@@ -711,6 +709,13 @@ export function FinancialPlanningPage() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background" id="main-content">
+      <SEOHead
+        title="Financial Planning Services | Transform Dreams Into Achievable Milestones | Netfin"
+        description="Expert financial planning services to transform your dreams into achievable financial milestones. Personalized wealth building strategies from FCA-regulated advisors. Book your free consultation."
+        image="https://netfin.co.uk/og-financial-planning.jpg"
+        url="https://netfin.co.uk/financial-planning"
+        keywords="financial planning UK, wealth building, financial goals, retirement planning, investment strategy, financial advisor UK"
+      />
       <FinancialPlanningHeroSection />
       <FinancialPlanningBenefitsSection />
       <FinancialPlanningProcessSection />

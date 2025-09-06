@@ -6,6 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SEOHead } from "./SEOHead";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
@@ -83,9 +84,6 @@ function WealthHeroSection() {
               <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 Get Your Free Wealth Assessment
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => navigate('/contact')}>
-                See Our Client Success Stories
               </Button>
             </div>
 
@@ -605,9 +603,6 @@ function WealthProcessSection() {
               <Button size="lg" className="group" onClick={() => navigate('/contact')}>
                 Begin Your Wealth Analysis
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => navigate('/contact')}>
-                Schedule a Call
               </Button>
             </div>
             <p className="text-sm text-muted-foreground mt-4">
@@ -1247,6 +1242,13 @@ export function WealthManagementPage() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background" id="main-content">
+      <SEOHead
+        title="Wealth Management Services | Turn Your Income Into Lasting Wealth | Netfin"
+        description="Expert wealth management services helping you turn income into lasting wealth. Comprehensive wealth planning, investment management, and financial advisory from FCA-regulated professionals."
+        image="https://netfin.co.uk/og-image.jpg"
+        url="https://netfin.co.uk/wealth-management"
+        keywords="wealth management UK, wealth planning, investment management, financial advisory, wealth building strategies, private wealth management"
+      />
       <WealthHeroSection />
       <WealthBenefitsSection />
       <WealthKnowledgeSection />

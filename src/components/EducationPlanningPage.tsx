@@ -6,6 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SEOHead } from "./SEOHead";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
@@ -83,9 +84,6 @@ function EducationPlanningHeroSection() {
               <Button size="lg" className="group bg-amber-600 hover:bg-amber-700" onClick={() => navigate('/contact')}>
                 Get Your Free Education Plan
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}>
-                Calculate Education Costs
               </Button>
             </div>
 
@@ -701,6 +699,13 @@ export function EducationPlanningPage() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background" id="main-content">
+      <SEOHead
+        title="Education Planning Services | Secure Your Children's Educational Future | Netfin"
+        description="Expert education planning and school fee financing services. Plan for private education costs averaging £300,000+ per child. Comprehensive education funding strategies and advice."
+        image="https://netfin.co.uk/og-education-planning.jpg"
+        url="https://netfin.co.uk/education-planning"
+        keywords="education planning UK, school fees planning, private school funding, education costs UK, children education savings, school fees advice"
+      />
       <EducationPlanningHeroSection />
       <EducationCostCalculator />
       <EducationSavingsStrategiesSection />

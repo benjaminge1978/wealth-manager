@@ -6,6 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SEOHead } from "./SEOHead";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
@@ -174,9 +175,6 @@ function RiskManagementHeroSection() {
               <Button size="lg" className="group bg-emerald-600 hover:bg-emerald-700" onClick={() => navigate('/contact')}>
                 Get Your Free Protection Review
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => document.getElementById('calculator')?.scrollIntoView({ behavior: 'smooth' })}>
-                Calculate Your Coverage Gap
               </Button>
             </div>
 
@@ -782,6 +780,13 @@ export function RiskManagementPage() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background" id="main-content">
+      <SEOHead
+        title="Risk Management Services | Protect What Matters Most | Netfin"
+        description="Comprehensive risk management and protection services. £500M+ in protection coverage arranged. Secure your family's financial future with expert insurance and risk planning advice."
+        image="https://netfin.co.uk/og-risk-management.jpg"
+        url="https://netfin.co.uk/risk-management"
+        keywords="risk management UK, life insurance, income protection, critical illness cover, family protection, insurance advice UK"
+      />
       <RiskManagementHeroSection />
       <RiskAssessmentCalculator />
       <CoverageTypesSection />

@@ -6,6 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { HandDrawnIcon } from "./ui/HandDrawnIcon";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
+import { SEOHead } from "./SEOHead";
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rough from 'roughjs';
@@ -174,9 +175,6 @@ function InvestmentAdvisoryHeroSection() {
               <Button size="lg" className="group bg-sky-600 hover:bg-sky-700" onClick={() => navigate('/contact')}>
                 Get Your Free Portfolio Review
                 <span className="ml-2 text-lg transition-transform duration-200 group-hover:translate-x-1">→</span>
-              </Button>
-              <Button variant="outline" size="lg" onClick={() => document.getElementById('performance')?.scrollIntoView({ behavior: 'smooth' })}>
-                See Our Track Record
               </Button>
             </div>
 
@@ -782,6 +780,13 @@ export function InvestmentAdvisoryPage() {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen bg-background" id="main-content">
+      <SEOHead
+        title="Investment Advisory Services | Professional Management That Outperforms | Netfin"
+        description="Professional investment management services with average 12.3% annual returns over 10 years. Expert portfolio strategies and regulated investment advisory from experienced wealth managers."
+        image="https://netfin.co.uk/og-investment-advisory.jpg"
+        url="https://netfin.co.uk/investment-advisory"
+        keywords="investment advisory UK, portfolio management, investment strategy, wealth management, FCA regulated investment advisor, ISA management"
+      />
       <InvestmentAdvisoryHeroSection />
       <PerformanceTrackRecordSection />
       <InvestmentPhilosophySection />

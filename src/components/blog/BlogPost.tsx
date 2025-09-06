@@ -18,6 +18,7 @@ import { queries } from '../../lib/sanity';
 import { BLOG_CATEGORIES } from '../../types/blog';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import ReactMarkdown from 'react-markdown';
+import { SEOHead } from '../SEOHead';
 
 // Helper function to convert Sanity's Portable Text to Markdown
 function convertPortableTextToMarkdown(blocks: any[]): string {
@@ -143,6 +144,16 @@ export function BlogPost() {
 
   return (
     <div className="bg-background pb-24">
+      <SEOHead
+        title={post.title}
+        description={post.excerpt}
+        image={post.featuredImage}
+        author={post.author.name}
+        publishedTime={post.publishedDate}
+        type="article"
+        url={`https://netfin.co.uk/insights/${post.slug}`}
+        keywords={post.tags.join(', ')}
+      />
       {/* Hero Section */}
       <section 
         className="relative bg-gradient-to-br from-background via-secondary/20 to-accent/30"
