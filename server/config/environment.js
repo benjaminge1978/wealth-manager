@@ -33,6 +33,9 @@ export const env = {
   // Admin Dashboard
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD || 'changeme123',
   
+  // Unsplash API (optional - works without API key using curated images)
+  UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
+  
   // Server
   PORT: parseInt(process.env.PORT || '3000'), // Railway uses PORT environment variable
   NODE_ENV: process.env.NODE_ENV || 'development'

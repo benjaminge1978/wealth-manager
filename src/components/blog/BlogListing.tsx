@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Badge } from '../ui/badge';
 import { HandDrawnIcon } from '../ui/HandDrawnIcon';
 import { blogPosts } from '../../data/blogPosts';
+import { useSanityData } from '../../hooks/useSanityData';
+import { queries } from '../../lib/sanity';
 import { BLOG_CATEGORIES } from '../../types/blog';
 
 const POSTS_PER_PAGE = 6;
@@ -17,9 +19,44 @@ export function BlogListing() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [sortBy, setSortBy] = useState<'date' | 'popular'>('date');
 
+  // Fetch live blog posts from Sanity CMS
+  const { data: sanityPosts, loading, error } = useSanityData(queries.allPosts);
+  
+  // Debug: Log Sanity data status in development
+  if (process.env.NODE_ENV === 'development') {
+    console.log('📰 Sanity posts:', sanityPosts?.length || 0, 'Loading:', loading, 'Error:', error?.message);
+    if (sanityPosts && sanityPosts.length > 0) {
+      console.log('📸 First post has featuredImageUrl:', sanityPosts[0]?.featuredImageUrl);
+    }
+  }
+
+  // Convert Sanity posts to BlogPost format
+  const convertSanityToBlogPost = (sanityPost: any) => ({
+    id: sanityPost._id,
+    slug: sanityPost.slug?.current || sanityPost.slug,
+    title: sanityPost.title,
+    excerpt: sanityPost.excerpt,
+    content: sanityPost.body || sanityPost.content || '',
+    author: {
+      name: sanityPost.author?.name || 'NetFin Team',
+      role: sanityPost.author?.role || 'Financial Advisor',
+      avatar: sanityPost.author?.image || '/images/team/default-avatar.jpg'
+    },
+    publishedDate: sanityPost.publishedAt,
+    readTime: sanityPost.readTime || 5,
+    category: BLOG_CATEGORIES.find(cat => cat.slug === 'investment-strategies') || BLOG_CATEGORIES[0],
+    tags: sanityPost.tags || [],
+    featuredImage: sanityPost.featuredImageUrl || sanityPost.mainImage || '/images/blog/default-featured.jpg',
+    isFeatured: sanityPost.featured || false
+  });
+
   // Filter and sort posts
   const filteredPosts = useMemo(() => {
-    let filtered = [...blogPosts];
+    // Convert Sanity posts to BlogPost format and combine with static posts
+    const convertedSanityPosts = sanityPosts ? sanityPosts.map(convertSanityToBlogPost) : [];
+    const allPosts = [...convertedSanityPosts, ...blogPosts];
+    
+    let filtered = [...allPosts];
 
     // Filter by search term
     if (searchTerm) {
@@ -32,7 +69,11 @@ export function BlogListing() {
 
     // Filter by category
     if (selectedCategory !== 'all') {
+      const beforeFilter = filtered.length;
       filtered = filtered.filter(post => post.category.id === selectedCategory);
+      if (process.env.NODE_ENV === 'development') {
+        console.log(`🔍 Category filter: ${beforeFilter} → ${filtered.length} posts (selected: ${selectedCategory})`);
+      }
     }
 
     // Sort posts
@@ -47,8 +88,12 @@ export function BlogListing() {
       });
     }
 
+    if (process.env.NODE_ENV === 'development') {
+      console.log(`📊 Final posts to display: ${filtered.length}`);
+    }
+    
     return filtered;
-  }, [searchTerm, selectedCategory, sortBy]);
+  }, [sanityPosts, searchTerm, selectedCategory, sortBy]);
 
   // Pagination
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);

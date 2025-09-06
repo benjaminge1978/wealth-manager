@@ -37,7 +37,7 @@ class ClaudeContentGenerator {
       console.log(`🤖 Generating content for: ${topic}`);
       
       const message = await this.anthropic.messages.create({
-        model: 'claude-3-5-sonnet-20240620',
+        model: 'claude-3-5-sonnet-latest',
         max_tokens: 4000,
         messages: [{
           role: 'user',
@@ -307,7 +307,7 @@ CRITICAL REQUIREMENTS:
 
     try {
       const message = await this.anthropic.messages.create({
-        model: 'claude-3-5-sonnet-20240620',
+        model: 'claude-3-5-sonnet-latest',
         max_tokens: 4000,
         messages: [{ role: 'user', content: prompt }]
       });

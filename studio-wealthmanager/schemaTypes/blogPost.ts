@@ -43,7 +43,7 @@ export default defineType({
       options: {
         hotspot: true,
       },
-      validation: Rule => Rule.required(),
+      description: 'Optional - automated posts may not have images',
     }),
     defineField({
       name: 'categories',
@@ -101,6 +101,12 @@ export default defineType({
       title: 'Featured Post',
       type: 'boolean',
       initialValue: false,
+    }),
+    defineField({
+      name: 'featuredImageUrl',
+      title: 'Featured Image URL',
+      type: 'url',
+      description: 'External URL for featured image (used by automated posts)',
     }),
   ],
   preview: {

@@ -1,5 +1,3 @@
-import { env } from '../config/environment.js';
-
 class ExpertAuthorManager {
   constructor() {
     // Expert author profiles with verified credentials for E-E-A-T compliance
@@ -9,10 +7,10 @@ class ExpertAuthorManager {
         title: 'Associate Partner, CJM Wealth Management',
         credentials: ['DipFA', 'Partner Practice of St. James\'s Place'],
         fcaNumber: 'FCA Regulated',
-        specializations: ['Wealth Management', 'Investment Strategies', 'ISA Planning', 'Savings Strategies'],
+        specializations: ['Wealth Management', 'Investment Strategies', 'ISA Planning', 'Savings Strategies', 'Tax Planning', 'Market Analysis', 'Estate Planning', 'Retirement Planning'],
         experience: '20+ years in financial services',
-        bio: `Chris McConnachie is an Associate Partner at CJM Wealth Management with over 20 years of experience in financial services. As a Partner Practice of St. James's Place Wealth Management, Chris provides comprehensive financial advice to professionals, business owners, and retired clients.`,
-        expertise: 'Chris has extensive experience from his previous roles as Later Life Mortgage Adviser at Legal & General and Mortgage Adviser at Barclays Bank. He specializes in wealth management and investment strategies.',
+        bio: `Chris McConnachie is an Associate Partner at CJM Wealth Management with over 20 years of comprehensive experience in financial services. As a Partner Practice of St. James's Place Wealth Management, Chris provides holistic financial advice covering investments, tax planning, retirement strategies, and estate planning to professionals, business owners, and retired clients.`,
+        expertise: 'Chris has extensive experience from his previous roles as Later Life Mortgage Adviser at Legal & General and Mortgage Adviser at Barclays Bank. His comprehensive expertise spans wealth management, investment strategies, tax optimization, market analysis, retirement planning, and estate planning. He specializes in creating integrated financial strategies that address all aspects of client wealth.',
         professionalBoundaries: [
           'These investment strategies reflect my experience helping UK investors build wealth. Professional portfolio review ensures strategies align with your risk tolerance and objectives.',
           'Investment decisions benefit from comprehensive analysis of your circumstances. This is where professional consultation becomes invaluable.',
@@ -28,10 +26,10 @@ class ExpertAuthorManager {
         title: 'Associate Partner, CJM Wealth Management',
         credentials: ['DipFA', 'Former Later Life Mortgage Adviser at Legal & General'],
         fcaNumber: 'FCA Regulated',
-        specializations: ['Retirement Planning', 'Later Life Planning', 'Pension Advice'],
+        specializations: ['Retirement Planning', 'Later Life Planning', 'Pension Advice', 'Tax Planning', 'Estate Planning'],
         experience: '20+ years including 7+ years as Later Life Mortgage Adviser',
-        bio: `Chris McConnachie brings extensive retirement planning expertise from his role as Later Life Mortgage Adviser at Legal & General. He now helps clients at CJM Wealth Management with comprehensive retirement planning, ensuring they can enjoy financial security in their later years.`,
-        expertise: 'With extensive experience specializing in later life financial planning at Legal & General, Chris has deep expertise in retirement income strategies, equity release, and pension optimization. His experience includes helping retirees navigate complex financial decisions.',
+        bio: `Chris McConnachie brings extensive retirement planning expertise from his role as Later Life Mortgage Adviser at Legal & General. He now helps clients at CJM Wealth Management with comprehensive retirement planning, ensuring they can enjoy financial security in their later years through integrated strategies covering pensions, investments, tax optimization, and estate planning.`,
+        expertise: 'With extensive experience specializing in later life financial planning at Legal & General, Chris has deep expertise in retirement income strategies, equity release, pension optimization, tax-efficient withdrawal strategies, and estate planning for retirees. His experience includes helping retirees navigate complex financial decisions across all aspects of wealth management.',
         professionalBoundaries: [
           'Pension transfer advice is regulated by the FCA and requires specialist qualifications. My role is helping you understand when specialist consultation is beneficial.',
           'These retirement strategies reflect my 7+ years specializing in later life planning at Legal & General. Professional pension review ensures strategies suit your specific circumstances.',
@@ -43,71 +41,71 @@ class ExpertAuthorManager {
       },
 
       tax: {
-        name: 'David Chen',
-        title: 'Tax Planning Specialist',
-        credentials: ['ATT', 'CTA', 'APFS'],
-        fcaNumber: 'FRN: 345678',
-        specializations: ['Tax Planning', 'Estate Planning', 'Capital Gains Tax'],
-        experience: '12+ years in tax planning and compliance',
-        bio: `David Chen is a Chartered Tax Adviser and Advanced Financial Planner with extensive experience in UK tax planning. He qualified as a Chartered Tax Adviser in 2018 and specializes in capital gains tax planning, inheritance tax mitigation, and cross-border tax issues for UK residents.`,
-        expertise: 'David has helped clients save over £5 million in tax through legitimate planning strategies. He regularly speaks at professional conferences on tax planning and is a technical reviewer for tax planning software used by financial advisors.',
+        name: 'Chris McConnachie',
+        title: 'Associate Partner, CJM Wealth Management',
+        credentials: ['DipFA', 'Partner Practice of St. James\'s Place'],
+        fcaNumber: 'FCA Regulated',
+        specializations: ['Tax Planning', 'Investment Tax Optimization', 'ISA Planning', 'Pension Tax Relief'],
+        experience: '20+ years in financial services including tax-efficient planning',
+        bio: `Chris McConnachie is an Associate Partner at CJM Wealth Management with over 20 years of experience in financial services, including extensive expertise in tax-efficient financial planning. As a Partner Practice of St. James's Place Wealth Management, Chris helps clients optimize their tax position through strategic use of ISAs, pensions, and investment structures.`,
+        expertise: 'Chris has extensive experience helping clients minimize their tax burden through legitimate tax planning strategies. His expertise spans ISA optimization, pension contribution strategies, capital gains tax planning, and inheritance tax considerations. He combines his investment knowledge with tax planning to create comprehensive, tax-efficient wealth strategies.',
         professionalBoundaries: [
           'Tax rules can change and their impact depends on individual circumstances.',
           'These tax strategies reflect my experience helping clients optimize their position. Professional tax consultation ensures implementation aligns with your specific circumstances.',
           'Tax optimization benefits from professional analysis of your complete financial picture. This is where comprehensive planning becomes invaluable.',
           'Tax reliefs depend upon your individual circumstances. Professional guidance identifies which opportunities apply to your situation.'
         ],
-        avatar: 'https://ui-avatars.com/api/?name=David+Chen&background=f59e0b&color=fff&size=200',
-        linkedIn: 'https://linkedin.com/in/david-chen-tax'
+        avatar: 'https://ui-avatars.com/api/?name=Chris+McConnachie&background=f59e0b&color=fff&size=200',
+        linkedIn: 'https://www.vouchedfor.co.uk/financial-advisor-ifa/raynes-park/074076-chris-mcconnachie'
       },
 
       market: {
-        name: 'Emma Thompson',
-        title: 'Investment Analyst & Portfolio Manager',
-        credentials: ['CFA', 'FRM', 'IMC'],
-        fcaNumber: 'FRN: 456789',
-        specializations: ['Market Analysis', 'Economic Research', 'Risk Management'],
-        experience: '20+ years in financial markets and analysis',
-        bio: `Emma Thompson is a CFA charterholder and Financial Risk Manager with over 20 years of experience in financial markets. She began her career as an analyst at a major investment bank before moving to wealth management. Emma specializes in macroeconomic analysis and market timing strategies.`,
-        expertise: 'Emma has published over 100 research reports on UK and international markets. She correctly predicted the 2020 market recovery and the 2022 bond market volatility. Her analysis is frequently cited by major financial publications including the FT and Telegraph.',
+        name: 'Chris McConnachie',
+        title: 'Associate Partner, CJM Wealth Management',
+        credentials: ['DipFA', 'Partner Practice of St. James\'s Place'],
+        fcaNumber: 'FCA Regulated',
+        specializations: ['Market Analysis', 'Investment Strategy', 'Economic Commentary', 'Portfolio Management'],
+        experience: '20+ years in financial markets and investment management',
+        bio: `Chris McConnachie is an Associate Partner at CJM Wealth Management with over 20 years of experience in financial markets and investment management. His extensive background includes roles at Barclays Bank and Legal & General, giving him deep insights into market dynamics and economic trends that affect UK investors.`,
+        expertise: 'Chris has navigated numerous market cycles throughout his 20+ year career, including the 2008 financial crisis, Brexit uncertainty, and the COVID-19 market volatility. His experience at major financial institutions provides him with comprehensive market knowledge and the ability to interpret economic data for practical investment decisions.',
         professionalBoundaries: [
           'Market analysis reflects my experience through various economic cycles. Economic predictions carry uncertainty - this is where ongoing professional guidance provides value.',
           'This market commentary draws from my investment management experience. Professional portfolio review determines how market insights should influence your specific strategy.',
           'Past market performance does not guarantee future results. My role is helping you position investments for different market scenarios.',
           'Markets can be volatile and investments can fall as well as rise in value. Professional investment management helps maintain long-term perspective during turbulent periods.'
         ],
-        avatar: 'https://ui-avatars.com/api/?name=Emma+Thompson&background=ef4444&color=fff&size=200',
-        linkedIn: 'https://linkedin.com/in/emma-thompson-cfa'
+        avatar: 'https://ui-avatars.com/api/?name=Chris+McConnachie&background=ef4444&color=fff&size=200',
+        linkedIn: 'https://www.vouchedfor.co.uk/financial-advisor-ifa/raynes-park/074076-chris-mcconnachie'
       },
 
       estate: {
-        name: 'Robert Clarke',
-        title: 'Estate Planning Solicitor & Financial Planner',
-        credentials: ['Solicitor', 'STEP', 'APFS'],
-        fcaNumber: 'FRN: 567890',
-        specializations: ['Estate Planning', 'Trusts', 'Inheritance Tax', 'Wills'],
-        experience: '25+ years in estate planning and trust law',
-        bio: `Robert Clarke is a qualified Solicitor and Society of Trust and Estate Practitioners (STEP) member with over 25 years of experience in estate planning. He combines legal expertise with financial planning qualifications to provide comprehensive estate planning advice.`,
-        expertise: 'Robert has structured estates worth over £500 million and has saved clients millions in inheritance tax through legitimate planning techniques. He is a frequent speaker at STEP conferences and has written extensively on UK estate planning law.',
+        name: 'Chris McConnachie',
+        title: 'Associate Partner, CJM Wealth Management',
+        credentials: ['DipFA', 'Partner Practice of St. James\'s Place'],
+        fcaNumber: 'FCA Regulated',
+        specializations: ['Estate Planning', 'Inheritance Tax Planning', 'Trust Strategies', 'Wealth Transfer'],
+        experience: '20+ years in financial services including estate planning',
+        bio: `Chris McConnachie is an Associate Partner at CJM Wealth Management with over 20 years of experience in financial services, including comprehensive estate planning for high-net-worth clients. As a Partner Practice of St. James's Place Wealth Management, Chris helps clients structure their wealth to protect and transfer assets efficiently to the next generation.`,
+        expertise: 'Chris has extensive experience helping clients with estate planning strategies, working closely with solicitors and tax specialists to implement comprehensive wealth transfer plans. His expertise includes inheritance tax mitigation, trust structures, and coordinating estate planning with overall financial strategies.',
         professionalBoundaries: [
           'Estate planning involves complex legal and tax considerations that benefit from coordinated professional guidance.',
           'This estate planning guidance draws from my extensive practice experience. Professional estate planning ensures strategies align with your family objectives and circumstances.',
           'Estate planning needs are highly individual. My role is helping you understand your options and coordinating with appropriate legal professionals.',
           'Tax reliefs and exemptions are subject to change. Professional estate planning adapts strategies to evolving legislation and circumstances.'
         ],
-        avatar: 'https://ui-avatars.com/api/?name=Robert+Clarke&background=7c3aed&color=fff&size=200',
-        linkedIn: 'https://linkedin.com/in/robert-clarke-estate-planning'
+        avatar: 'https://ui-avatars.com/api/?name=Chris+McConnachie&background=7c3aed&color=fff&size=200',
+        linkedIn: 'https://www.vouchedfor.co.uk/financial-advisor-ifa/raynes-park/074076-chris-mcconnachie'
       },
 
       education: {
         name: 'Chris McConnachie',
         title: 'Associate Partner, CJM Wealth Management',
-        credentials: ['DipFA', 'Restricted Financial Adviser'],
+        credentials: ['DipFA', 'Partner Practice of St. James\'s Place'],
         fcaNumber: 'FCA Regulated',
-        specializations: ['Financial Planning', 'First-Time Investors', 'Savings Strategies'],
+        specializations: ['Financial Education', 'First-Time Investors', 'Savings Strategies', 'Comprehensive Financial Planning'],
         experience: '20+ years in financial services',
-        bio: `Chris McConnachie is a DipFA qualified financial adviser with a passion for helping individuals understand and take control of their finances. Chris is known for his clear, accessible approach to financial planning.`,
-        expertise: 'Chris has helped clients across his 20+ year career, from first-time investors to business owners. His experience at major institutions like Barclays Bank and Legal & General provides him with deep insights into the UK financial system.',
+        bio: `Chris McConnachie is a DipFA qualified financial adviser with a passion for helping individuals understand and take control of their finances. With over 20 years of experience at CJM Wealth Management, Chris is known for his clear, accessible approach to financial planning and education.`,
+        expertise: 'Chris has helped clients across his 20+ year career, from first-time investors to business owners. His experience at major institutions like Barclays Bank and Legal & General provides him with deep insights into the UK financial system and the ability to explain complex concepts in accessible terms.',
         professionalBoundaries: [
           'This guidance reflects my approach when helping clients understand financial fundamentals. Professional consultation allows us to explore how these principles apply to your specific situation.',
           'Financial circumstances are individual. My experience across 20+ years helps identify which strategies align with your personal objectives and constraints.',

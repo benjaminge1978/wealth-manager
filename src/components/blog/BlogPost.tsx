@@ -13,15 +13,76 @@ import {
 } from 'lucide-react';
 import { blogPosts } from '../../data/blogPosts';
 import { BlogPost as BlogPostType } from '../../types/blog';
+import { useSanityData } from '../../hooks/useSanityData';
+import { queries } from '../../lib/sanity';
+import { BLOG_CATEGORIES } from '../../types/blog';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import ReactMarkdown from 'react-markdown';
+
+// Helper function to convert Sanity's Portable Text to Markdown
+function convertPortableTextToMarkdown(blocks: any[]): string {
+  return blocks.map(block => {
+    if (!block._type || block._type !== 'block') return '';
+    
+    const text = block.children?.map((child: any) => child.text || '').join('') || '';
+    
+    switch (block.style) {
+      case 'h1':
+        return `# ${text}`;
+      case 'h2':
+        return `## ${text}`;
+      case 'h3':
+        return `### ${text}`;
+      case 'h4':
+        return `#### ${text}`;
+      case 'normal':
+      default:
+        return text;
+    }
+  }).join('\n\n');
+}
 
 export function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
   
-  const post = blogPosts.find(p => p.slug === slug);
+  // Fetch Sanity posts
+  const { data: sanityPosts } = useSanityData(queries.allPosts);
+  
+  // Convert Sanity post to BlogPost format (same as in BlogListing)
+  const convertSanityToBlogPost = (sanityPost: any): BlogPostType => ({
+    id: sanityPost._id,
+    slug: sanityPost.slug?.current || sanityPost.slug,
+    title: sanityPost.title,
+    excerpt: sanityPost.excerpt,
+    content: sanityPost.body ? convertPortableTextToMarkdown(sanityPost.body) : (sanityPost.content || ''),
+    author: {
+      name: sanityPost.author?.name || 'NetFin Team',
+      role: sanityPost.author?.role || 'Financial Advisor',
+      avatar: sanityPost.author?.image || '/images/team/default-avatar.jpg'
+    },
+    publishedDate: sanityPost.publishedAt,
+    readTime: sanityPost.readTime || 5,
+    category: BLOG_CATEGORIES.find(cat => cat.slug === 'investment-strategies') || BLOG_CATEGORIES[0],
+    tags: sanityPost.tags || [],
+    featuredImage: sanityPost.featuredImageUrl || sanityPost.mainImage || '/images/blog/default-featured.jpg',
+    isFeatured: sanityPost.featured || false
+  });
+  
+  // Search in both Sanity posts and static posts
+  let post: BlogPostType | undefined;
+  
+  // First try to find in Sanity posts
+  if (sanityPosts) {
+    const convertedSanityPosts = sanityPosts.map(convertSanityToBlogPost);
+    post = convertedSanityPosts.find(p => p.slug === slug);
+  }
+  
+  // If not found in Sanity, try static posts
+  if (!post) {
+    post = blogPosts.find(p => p.slug === slug);
+  }
   
   useEffect(() => {
     window.scrollTo(0, 0);

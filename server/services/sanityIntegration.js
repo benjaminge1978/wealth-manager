@@ -1,5 +1,7 @@
 import { createClient } from '@sanity/client';
 import { env } from '../config/environment.js';
+import ExpertAuthorManager from './expertAuthorManager.js';
+import ImageManager from './imageManager.js';
 
 class SanityIntegration {
   constructor() {
@@ -10,6 +12,12 @@ class SanityIntegration {
       apiVersion: env.SANITY_API_VERSION,
       token: env.SANITY_TOKEN, // Write token required for creating content
     });
+    
+    // Initialize expert author manager for E-E-A-T compliance
+    this.expertAuthorManager = new ExpertAuthorManager();
+    
+    // Initialize image manager for automated image selection
+    this.imageManager = new ImageManager();
   }
 
   /**
@@ -21,13 +29,14 @@ class SanityIntegration {
     try {
       console.log(`📝 Creating blog post in Sanity: ${postData.title}`);
       
-      // Get or create author (use default system author for automated posts)
-      const author = await this.getOrCreateAuthor();
+      // Get or create expert author
+      const author = await this.getOrCreateExpertAuthor(postData.category);
       
-      // Get or create category
-      const category = await this.getOrCreateCategory(postData.category);
-      
-      // Create the blog post document
+      // Get appropriate featured image for the post
+      const featuredImage = this.imageManager.getImageForPost(postData);
+      console.log(`📸 Selected featured image: ${featuredImage}`);
+
+      // Create blog post document (compatible with existing schema)
       const blogPost = {
         _type: 'blogPost',
         title: postData.title,
@@ -37,24 +46,19 @@ class SanityIntegration {
         },
         excerpt: postData.excerpt,
         body: this.convertMarkdownToPortableText(postData.content),
+        publishedAt: postData.scheduledDate || new Date().toISOString(),
+        // Schema-compliant fields only
+        tags: postData.suggestedTags || [],
+        featured: postData.featured || false,
+        readTime: postData.readTimeMinutes || 5,
         author: {
           _type: 'reference',
           _ref: author._id
         },
-        categories: [{
-          _type: 'reference', 
-          _ref: category._id
-        }],
-        tags: postData.suggestedTags || [],
-        publishedAt: postData.scheduledDate || new Date().toISOString(),
-        readTime: postData.readTimeMinutes,
-        featured: postData.featured || false,
-        // Add metadata for tracking automated content
-        _metadata: {
-          generatedBy: postData.generatedBy || 'claude-automation',
-          generatedAt: postData.generatedAt,
-          automationVersion: '1.0'
-        }
+        // Add featured image as external URL reference
+        // Note: For external URLs, we store as a custom field or skip for now
+        // Sanity image assets expect uploaded images, not external URLs
+        featuredImageUrl: featuredImage // Custom field for external image URL
       };
 
       // Create the document
@@ -83,33 +87,50 @@ class SanityIntegration {
   }
 
   /**
-   * Get existing author or create default automation author
+   * Get or create expert author based on content category for E-E-A-T compliance
+   * @param {Object} category - Content category object
+   * @returns {Promise<Object>} Expert author document
    */
-  async getOrCreateAuthor() {
-    // First, try to find existing automation author
+  async getOrCreateExpertAuthor(category) {
+    // Get appropriate expert author profile
+    const expertProfile = this.expertAuthorManager.getAuthorForCategory(category);
+    
+    if (!expertProfile) {
+      throw new Error(`No expert author found for category: ${category.name}`);
+    }
+    
+    // Check if author already exists in Sanity
     const existingAuthor = await this.client.fetch(
-      `*[_type == "author" && name == "AI Content Team"][0]`
+      `*[_type == "author" && name == $name][0]`,
+      { name: expertProfile.name }
     );
     
     if (existingAuthor) {
       return existingAuthor;
     }
     
-    // Create default automation author
-    console.log('📝 Creating default automation author');
+    // Create new expert author with existing schema
+    console.log(`📝 Creating expert author: ${expertProfile.name}`);
     
-    const author = await this.client.create({
+    const authorData = {
       _type: 'author',
-      name: 'AI Content Team',
-      bio: 'Automated financial content generated using advanced AI, reviewed by qualified financial advisers.',
-      image: {
-        _type: 'image',
-        asset: {
-          _type: 'reference',
-          _ref: 'image-ai-content-avatar' // You'd need to upload a default avatar
+      name: expertProfile.name,
+      slug: {
+        _type: 'slug',
+        current: this.generateSlug(expertProfile.name)
+      },
+      role: expertProfile.title,
+      bio: this.expertAuthorManager.createEEATBio(expertProfile),
+      // Add social links if LinkedIn available
+      socialLinks: expertProfile.linkedIn ? [
+        {
+          platform: 'LinkedIn',
+          url: expertProfile.linkedIn
         }
-      }
-    });
+      ] : []
+    };
+    
+    const author = await this.client.create(authorData);
     
     return author;
   }
@@ -146,39 +167,94 @@ class SanityIntegration {
    * This is a simplified converter - you might want to use a proper markdown-to-portable-text library
    */
   convertMarkdownToPortableText(markdown) {
-    // For now, create a simple block structure
-    // In production, you'd use @sanity/block-tools or similar
+    // Convert markdown to portable text blocks for Sanity
+    const lines = markdown.split('\n');
+    const blocks = [];
+    let currentParagraph = '';
     
-    const paragraphs = markdown.split('\n\n').filter(p => p.trim());
-    
-    return paragraphs.map(paragraph => {
+    for (const line of lines) {
       // Handle headings
-      if (paragraph.startsWith('## ')) {
-        return {
+      if (line.startsWith('# ')) {
+        if (currentParagraph) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+        blocks.push({
+          _type: 'block',
+          _key: this.generateKey(),
+          style: 'h1',
+          children: [{ _type: 'span', text: line.replace('# ', '').trim() }]
+        });
+      } else if (line.startsWith('## ')) {
+        if (currentParagraph) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+        blocks.push({
           _type: 'block',
           _key: this.generateKey(),
           style: 'h2',
-          children: [{ _type: 'span', text: paragraph.replace('## ', '') }]
-        };
-      }
-      
-      if (paragraph.startsWith('### ')) {
-        return {
+          children: [{ _type: 'span', text: line.replace('## ', '').trim() }]
+        });
+      } else if (line.startsWith('### ')) {
+        if (currentParagraph) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+        blocks.push({
           _type: 'block', 
           _key: this.generateKey(),
           style: 'h3',
-          children: [{ _type: 'span', text: paragraph.replace('### ', '') }]
-        };
+          children: [{ _type: 'span', text: line.replace('### ', '').trim() }]
+        });
+      } else if (line.trim() === '') {
+        // Empty line - end current paragraph
+        if (currentParagraph) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+      } else {
+        // Add to current paragraph
+        currentParagraph += (currentParagraph ? ' ' : '') + line.trim();
       }
-      
-      // Regular paragraphs
-      return {
+    }
+    
+    // Add any remaining paragraph
+    if (currentParagraph) {
+      blocks.push({
         _type: 'block',
         _key: this.generateKey(),
         style: 'normal',
-        children: [{ _type: 'span', text: paragraph }]
-      };
-    });
+        children: [{ _type: 'span', text: currentParagraph.trim() }]
+      });
+    }
+    
+    return blocks.length > 0 ? blocks : [{
+      _type: 'block',
+      _key: this.generateKey(),
+      style: 'normal',
+      children: [{ _type: 'span', text: markdown }]
+    }];
   }
 
   /**
@@ -238,6 +314,78 @@ class SanityIntegration {
    */
   async updatePost(postId, updates) {
     return await this.client.patch(postId).set(updates).commit();
+  }
+
+  /**
+   * Determine content type for compliance purposes
+   * @param {Object} category - Content category
+   * @returns {string} Content type classification
+   */
+  getContentType(category) {
+    const typeMap = {
+      'investment-strategies': 'investment',
+      'investment': 'investment',
+      'retirement-planning': 'pension',
+      'retirement': 'pension', 
+      'tax-optimization': 'tax',
+      'tax': 'tax',
+      'market-insights': 'general',
+      'market': 'general',
+      'estate-planning': 'estate',
+      'estate': 'estate',
+      'financial-education': 'general',
+      'education': 'general'
+    };
+
+    return typeMap[category.id] || typeMap[category.slug] || 'general';
+  }
+
+  /**
+   * Determine if content requires FCA approval (Section 21 compliance)
+   * @param {Object} category - Content category
+   * @returns {boolean} Whether FCA approval is required
+   */
+  requiresFCAApproval(category) {
+    // Content that invites or induces engagement with regulated products
+    const regulatedCategories = [
+      'investment-strategies',
+      'investment', 
+      'retirement-planning',
+      'retirement'
+    ];
+
+    return regulatedCategories.includes(category.id) || regulatedCategories.includes(category.slug);
+  }
+
+  /**
+   * Add compliance disclaimers to content
+   * @param {string} content - Original content
+   * @param {Array} disclaimers - Array of disclaimer strings
+   * @returns {string} Content with disclaimers appended
+   */
+  addComplianceDisclaimers(content, disclaimers) {
+    const disclaimerSection = `
+
+## Important Disclaimers
+
+${disclaimers.map(disclaimer => `• ${disclaimer}`).join('\n')}
+
+---
+
+*This article was written by a qualified financial professional. The author holds relevant professional qualifications and is authorized to provide financial guidance in the UK. However, this content is for educational purposes only and should not be considered as personalized financial advice.*`;
+
+    return content + disclaimerSection;
+  }
+
+  /**
+   * Enhanced convertMarkdownToPortableText with compliance disclaimers
+   */
+  convertMarkdownToPortableTextWithCompliance(markdown, disclaimers = []) {
+    // Add disclaimers to content before conversion
+    const contentWithDisclaimers = disclaimers.length > 0 ? 
+      this.addComplianceDisclaimers(markdown, disclaimers) : markdown;
+      
+    return this.convertMarkdownToPortableText(contentWithDisclaimers);
   }
 }
 

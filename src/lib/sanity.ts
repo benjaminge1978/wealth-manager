@@ -56,6 +56,22 @@ export const getResponsiveImageUrls = (source: any, sizes: number[], format?: 'w
 
 // GROQ queries for fetching content
 export const queries = {
+  // Get all blog posts (E-E-A-T enhanced)
+  allPosts: `*[_type == "blogPost"] | order(publishedAt desc){
+    _id,
+    title,
+    slug,
+    excerpt,
+    body,
+    publishedAt,
+    tags,
+    featured,
+    readTime,
+    author->{name, role, bio},
+    mainImage,
+    featuredImageUrl
+  }`,
+
   // Get hero section content
   hero: `*[_type == "hero"][0]{
     headline,
