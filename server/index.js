@@ -7,6 +7,7 @@ import ContentScheduler from './services/contentScheduler.js';
 import ClaudeContentGenerator from './services/claudeContentGenerator.js';
 import SanityIntegration from './services/sanityIntegration.js';
 import NewsAggregator from './services/newsAggregator.js';
+import NetlifyBuildHook from './services/netlifyBuildHook.js';
 
 // Validate environment before starting
 validateEnvironment();
@@ -589,6 +590,51 @@ app.post('/api/admin/trigger-daily-generation', basicAuth, async (req, res) => {
     
   } catch (error) {
     console.error('Manual daily generation failed:', error);
+    res.status(500).json({ error: error.message, stack: error.stack });
+  }
+});
+
+// 🔧 NEW: Test Netlify Build Hook
+app.post('/api/admin/test-build-hook', basicAuth, async (req, res) => {
+  try {
+    console.log('🔧 Testing Netlify build hook...');
+    
+    const buildHook = new NetlifyBuildHook();
+    
+    if (!buildHook.isConfigured()) {
+      return res.status(400).json({ 
+        error: 'Netlify build hook not configured',
+        message: 'Please set NETLIFY_BUILD_HOOK_URL environment variable',
+        configured: false
+      });
+    }
+    
+    const testPost = {
+      title: req.body.title || 'Test Blog Post for Meta Tag Verification',
+      slug: req.body.slug || 'test-blog-post-meta-tags'
+    };
+    
+    const buildTriggered = await buildHook.triggerBuildForPost(testPost);
+    
+    if (buildTriggered) {
+      res.json({
+        success: true,
+        message: 'Netlify build triggered successfully',
+        testPost: testPost,
+        note: 'Static HTML will be generated with proper meta tags in ~2-3 minutes',
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Failed to trigger Netlify build',
+        testPost: testPost,
+        timestamp: new Date().toISOString()
+      });
+    }
+    
+  } catch (error) {
+    console.error('Build hook test failed:', error);
     res.status(500).json({ error: error.message, stack: error.stack });
   }
 });

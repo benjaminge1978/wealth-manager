@@ -2,7 +2,7 @@ import { createClient } from '@sanity/client';
 import { env } from '../config/environment.js';
 import ExpertAuthorManager from './expertAuthorManager.js';
 import ImageManager from './imageManager.js';
-import StaticHtmlGenerator from './staticHtmlGenerator.js';
+import NetlifyBuildHook from './netlifyBuildHook.js';
 
 class SanityIntegration {
   constructor() {
@@ -20,8 +20,8 @@ class SanityIntegration {
     // Initialize image manager for automated image selection
     this.imageManager = new ImageManager();
     
-    // Initialize static HTML generator for automatic post HTML generation
-    this.staticHtmlGenerator = new StaticHtmlGenerator();
+    // Initialize Netlify build hook for triggering site rebuilds after new posts
+    this.netlifyBuildHook = new NetlifyBuildHook();
   }
 
   /**
@@ -69,21 +69,29 @@ class SanityIntegration {
       const result = await this.client.create(blogPost);
       console.log(`✅ Blog post created: ${result._id}`);
       
-      // Automatically generate static HTML for LinkedIn Post Inspector
+      // Trigger Netlify build to generate static HTML with proper meta tags
       try {
         const postSlug = this.generateSlug(postData.title);
-        console.log(`🔄 Generating static HTML for LinkedIn sharing: ${postSlug}`);
+        console.log(`🔄 Triggering Netlify build for new post: ${postSlug}`);
         
-        const htmlGenerated = await this.staticHtmlGenerator.generateSinglePostHtml(postSlug);
-        if (htmlGenerated) {
-          console.log(`🎉 Static HTML generated successfully for ${postSlug}`);
-          console.log(`🔗 LinkedIn Post Inspector ready: https://netfin.co.uk/insights/${postSlug}`);
+        const buildTriggered = await this.netlifyBuildHook.triggerBuildForPost({
+          title: postData.title,
+          slug: postSlug
+        });
+        
+        if (buildTriggered) {
+          console.log(`🎉 Netlify build triggered successfully for ${postSlug}`);
+          console.log(`🔗 Static HTML will be generated with proper meta tags for LinkedIn/social sharing`);
+          console.log(`📅 Build typically completes in 2-3 minutes`);
         } else {
-          console.warn(`⚠️  Static HTML generation failed for ${postSlug} - LinkedIn sharing may show generic meta tags`);
+          console.warn(`⚠️  Netlify build trigger failed for ${postSlug} - may need manual rebuild`);
+          if (!this.netlifyBuildHook.isConfigured()) {
+            console.warn('📝 NETLIFY_BUILD_HOOK_URL not configured in environment variables');
+          }
         }
-      } catch (htmlError) {
-        console.warn(`⚠️  Static HTML generation error for ${postSlug}:`, htmlError.message);
-        console.warn('🔧 Post created successfully, but LinkedIn sharing may show generic meta tags until next build');
+      } catch (buildError) {
+        console.warn(`⚠️  Netlify build trigger error for ${postSlug}:`, buildError.message);
+        console.warn('🔧 Post created successfully, but static HTML generation may be delayed');
       }
       
       return result;

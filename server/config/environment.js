@@ -40,6 +40,9 @@ export const env = {
   // Unsplash API (optional - works without API key using curated images)
   UNSPLASH_ACCESS_KEY: process.env.UNSPLASH_ACCESS_KEY,
   
+  // Netlify Build Hook (for triggering site rebuild after new posts)
+  NETLIFY_BUILD_HOOK_URL: process.env.NETLIFY_BUILD_HOOK_URL || '',
+  
   // Server
   PORT: parseInt(process.env.PORT || '3000'), // Railway uses PORT environment variable
   NODE_ENV: process.env.NODE_ENV || 'development'
