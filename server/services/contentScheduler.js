@@ -175,11 +175,25 @@ class ContentScheduler {
         }
       }
 
-      // Determine publication status based on compliance
+      // Determine publication status based on compliance AND quality
       let publicationStatus = 'published';
+      
+      // Check compliance requirements
       if (complianceReport.complianceAssessment.requiresManualReview) {
         publicationStatus = 'draft';
         console.log(`📋 Content flagged for manual review due to: ${complianceReport.complianceAssessment.section21.requiresApproval ? 'Section 21 approval required' : 'High compliance risk'}`);
+      }
+      
+      // Check content quality threshold (80/100)
+      if (generatedContent.qualityAnalysis && !generatedContent.qualityAnalysis.passesQualityGate) {
+        publicationStatus = 'draft';
+        console.log(`📋 Content quality below threshold: ${generatedContent.qualityAnalysis.overallScore}/100 (requires 80+). Creating as draft for review.`);
+      }
+      
+      // Override: if content meets quality but only compliance issues, still publish
+      if (publicationStatus === 'draft' && generatedContent.qualityAnalysis && generatedContent.qualityAnalysis.passesQualityGate && !complianceReport.complianceAssessment.requiresManualReview) {
+        publicationStatus = 'published';
+        console.log(`✅ Content quality sufficient (${generatedContent.qualityAnalysis.overallScore}/100), no compliance issues. Auto-publishing.`);
       }
 
       // Create the post in Sanity with enhanced compliance metadata
