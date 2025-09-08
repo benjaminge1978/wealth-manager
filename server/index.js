@@ -668,7 +668,7 @@ process.on('SIGTERM', () => {
 
 // Start server
 app.listen(PORT, () => {
-  console.log('🚀 Content Automation Server Started (E-E-A-T Enhanced)');
+  console.log('🚀 Content Automation Server Started (E-E-A-T Enhanced + Fixed Prompts)');
   console.log(`📡 Server running on port ${PORT}`);
   console.log(`🌍 Environment: ${env.NODE_ENV}`);
   console.log(`🏢 Sanity Project: ${env.SANITY_PROJECT_ID}`);
