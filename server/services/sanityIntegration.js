@@ -196,15 +196,27 @@ class SanityIntegration {
    * This is a simplified converter - you might want to use a proper markdown-to-portable-text library
    */
   convertMarkdownToPortableText(markdown) {
-    // Convert markdown to portable text blocks for Sanity
-    const lines = markdown.split('\n');
+    // Enhanced markdown to portable text converter with better parsing
     const blocks = [];
+    
+    // First normalize the markdown - ensure proper line breaks
+    let normalizedMarkdown = markdown
+      .replace(/([.!?])\s*([#]{1,6}\s)/g, '$1\n\n$2') // Add line breaks before headers after sentences
+      .replace(/([#]{1,6}\s[^\n]*)\s*([^#\n])/g, '$1\n\n$2') // Add line breaks after headers
+      .replace(/\n{3,}/g, '\n\n') // Normalize multiple line breaks to double
+      .trim();
+    
+    const lines = normalizedMarkdown.split('\n');
     let currentParagraph = '';
     
-    for (const line of lines) {
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      const trimmedLine = line.trim();
+      
       // Handle headings
-      if (line.startsWith('# ')) {
-        if (currentParagraph) {
+      if (trimmedLine.match(/^#{1,6}\s/)) {
+        // Flush any current paragraph
+        if (currentParagraph.trim()) {
           blocks.push({
             _type: 'block',
             _key: this.generateKey(),
@@ -213,14 +225,41 @@ class SanityIntegration {
           });
           currentParagraph = '';
         }
+        
+        // Determine heading level and create block
+        let headingLevel = 'h1';
+        let text = trimmedLine;
+        
+        if (trimmedLine.startsWith('###### ')) {
+          headingLevel = 'h6';
+          text = trimmedLine.replace('###### ', '').trim();
+        } else if (trimmedLine.startsWith('##### ')) {
+          headingLevel = 'h5';
+          text = trimmedLine.replace('##### ', '').trim();
+        } else if (trimmedLine.startsWith('#### ')) {
+          headingLevel = 'h4';
+          text = trimmedLine.replace('#### ', '').trim();
+        } else if (trimmedLine.startsWith('### ')) {
+          headingLevel = 'h3';
+          text = trimmedLine.replace('### ', '').trim();
+        } else if (trimmedLine.startsWith('## ')) {
+          headingLevel = 'h2';
+          text = trimmedLine.replace('## ', '').trim();
+        } else if (trimmedLine.startsWith('# ')) {
+          headingLevel = 'h1';
+          text = trimmedLine.replace('# ', '').trim();
+        }
+        
         blocks.push({
           _type: 'block',
           _key: this.generateKey(),
-          style: 'h1',
-          children: [{ _type: 'span', text: line.replace('# ', '').trim() }]
+          style: headingLevel,
+          children: [{ _type: 'span', text: text }]
         });
-      } else if (line.startsWith('## ')) {
-        if (currentParagraph) {
+        
+      } else if (trimmedLine === '') {
+        // Empty line - end current paragraph if it exists
+        if (currentParagraph.trim()) {
           blocks.push({
             _type: 'block',
             _key: this.generateKey(),
@@ -229,95 +268,40 @@ class SanityIntegration {
           });
           currentParagraph = '';
         }
+        
+      } else if (trimmedLine.match(/^\d+\.\s/) || trimmedLine.match(/^[-*+]\s/)) {
+        // Handle list items - for now treat as separate paragraphs
+        // Flush current paragraph if exists
+        if (currentParagraph.trim()) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+        
+        // Add list item as paragraph
         blocks.push({
           _type: 'block',
           _key: this.generateKey(),
-          style: 'h2',
-          children: [{ _type: 'span', text: line.replace('## ', '').trim() }]
+          style: 'normal',
+          children: [{ _type: 'span', text: trimmedLine }]
         });
-      } else if (line.startsWith('### ')) {
-        if (currentParagraph) {
-          blocks.push({
-            _type: 'block',
-            _key: this.generateKey(),
-            style: 'normal',
-            children: [{ _type: 'span', text: currentParagraph.trim() }]
-          });
-          currentParagraph = '';
-        }
-        blocks.push({
-          _type: 'block', 
-          _key: this.generateKey(),
-          style: 'h3',
-          children: [{ _type: 'span', text: line.replace('### ', '').trim() }]
-        });
-      } else if (line.startsWith('#### ')) {
-        if (currentParagraph) {
-          blocks.push({
-            _type: 'block',
-            _key: this.generateKey(),
-            style: 'normal',
-            children: [{ _type: 'span', text: currentParagraph.trim() }]
-          });
-          currentParagraph = '';
-        }
-        blocks.push({
-          _type: 'block', 
-          _key: this.generateKey(),
-          style: 'h4',
-          children: [{ _type: 'span', text: line.replace('#### ', '').trim() }]
-        });
-      } else if (line.startsWith('##### ')) {
-        if (currentParagraph) {
-          blocks.push({
-            _type: 'block',
-            _key: this.generateKey(),
-            style: 'normal',
-            children: [{ _type: 'span', text: currentParagraph.trim() }]
-          });
-          currentParagraph = '';
-        }
-        blocks.push({
-          _type: 'block', 
-          _key: this.generateKey(),
-          style: 'h5',
-          children: [{ _type: 'span', text: line.replace('##### ', '').trim() }]
-        });
-      } else if (line.startsWith('###### ')) {
-        if (currentParagraph) {
-          blocks.push({
-            _type: 'block',
-            _key: this.generateKey(),
-            style: 'normal',
-            children: [{ _type: 'span', text: currentParagraph.trim() }]
-          });
-          currentParagraph = '';
-        }
-        blocks.push({
-          _type: 'block', 
-          _key: this.generateKey(),
-          style: 'h6',
-          children: [{ _type: 'span', text: line.replace('###### ', '').trim() }]
-        });
-      } else if (line.trim() === '') {
-        // Empty line - end current paragraph
-        if (currentParagraph) {
-          blocks.push({
-            _type: 'block',
-            _key: this.generateKey(),
-            style: 'normal',
-            children: [{ _type: 'span', text: currentParagraph.trim() }]
-          });
-          currentParagraph = '';
-        }
+        
       } else {
-        // Add to current paragraph
-        currentParagraph += (currentParagraph ? ' ' : '') + line.trim();
+        // Regular content line - add to current paragraph with space separator
+        if (currentParagraph && trimmedLine) {
+          currentParagraph += ' ' + trimmedLine;
+        } else if (trimmedLine) {
+          currentParagraph = trimmedLine;
+        }
       }
     }
     
     // Add any remaining paragraph
-    if (currentParagraph) {
+    if (currentParagraph.trim()) {
       blocks.push({
         _type: 'block',
         _key: this.generateKey(),
@@ -326,12 +310,17 @@ class SanityIntegration {
       });
     }
     
-    return blocks.length > 0 ? blocks : [{
-      _type: 'block',
-      _key: this.generateKey(),
-      style: 'normal',
-      children: [{ _type: 'span', text: markdown }]
-    }];
+    // Fallback if no blocks created
+    if (blocks.length === 0) {
+      blocks.push({
+        _type: 'block',
+        _key: this.generateKey(),
+        style: 'normal',
+        children: [{ _type: 'span', text: markdown.trim() }]
+      });
+    }
+    
+    return blocks;
   }
 
   /**
