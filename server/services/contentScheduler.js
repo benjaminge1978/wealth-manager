@@ -42,44 +42,45 @@ class ContentScheduler {
 
     console.log('🚀 Starting automated content scheduler...');
     
-    // Daily content generation (Monday-Thursday at 9 AM)
-    const dailyJob = cron.schedule('0 9 * * 1-4', async () => {
-      await this.generateDailyContent();
+    // First daily post (Every day at 20:30 CET)
+    const firstPostJob = cron.schedule('30 20 * * *', async () => {
+      await this.generateDailyContent('primary');
     }, { 
       scheduled: false,
-      timezone: 'Europe/London'
+      timezone: 'Europe/Paris'
     });
 
-    // Weekly news roundup (Friday at 9 AM)
-    const weeklyJob = cron.schedule('0 9 * * 5', async () => {
-      await this.generateWeeklyRoundup();
+    // Second daily post (Every day at 21:30 CET - 1 hour later)
+    const secondPostJob = cron.schedule('30 21 * * *', async () => {
+      await this.generateDailyContent('secondary');
     }, { 
       scheduled: false,
-      timezone: 'Europe/London'
+      timezone: 'Europe/Paris'
     });
 
-    // Content quality check (Daily at 10 AM)
-    const qualityCheckJob = cron.schedule('0 10 * * *', async () => {
+    // Content quality check (Daily at 22:30 CET)
+    const qualityCheckJob = cron.schedule('30 22 * * *', async () => {
       await this.performQualityCheck();
     }, { 
       scheduled: false,
-      timezone: 'Europe/London'
+      timezone: 'Europe/Paris'
     });
 
     // Start all jobs
-    dailyJob.start();
-    weeklyJob.start();
+    firstPostJob.start();
+    secondPostJob.start();
     qualityCheckJob.start();
 
-    this.scheduledJobs.set('daily', dailyJob);
-    this.scheduledJobs.set('weekly', weeklyJob);
+    this.scheduledJobs.set('firstPost', firstPostJob);
+    this.scheduledJobs.set('secondPost', secondPostJob);
     this.scheduledJobs.set('quality', qualityCheckJob);
 
     this.isRunning = true;
     console.log('✅ Content scheduler started successfully');
-    console.log('📅 Daily posts: Monday-Thursday 9:00 AM');
-    console.log('📰 Weekly roundup: Friday 9:00 AM');
-    console.log('🔍 Quality checks: Daily 10:00 AM');
+    console.log('📅 First daily post: Every day at 20:30 CET');
+    console.log('📅 Second daily post: Every day at 21:30 CET');
+    console.log('🔍 Quality checks: Daily at 22:30 CET');
+    console.log('📊 Total: 14 posts per week (2 per day × 7 days)');
   }
 
   /**
@@ -106,32 +107,37 @@ class ContentScheduler {
   /**
    * Generate daily content based on the day of the week
    */
-  async generateDailyContent() {
+  async generateDailyContent(postType = 'primary') {
     try {
-      console.log('📝 Generating daily content...');
+      console.log(`📝 Generating ${postType} daily content...`);
       
       const today = new Date();
       const dayName = format(today, 'EEEE').toLowerCase();
       
-      // Skip weekends
-      if (isWeekend(today)) {
-        console.log('📅 Skipping weekend content generation');
-        return;
-      }
-
+      // Get content strategy based on post type
+      const contentStrategy = this.getContentStrategy(postType, dayName);
+      
       // Get niche topic cluster for today - focus on UK↔US cross-border expertise
-      const nicheTopicData = this.nicheTopicClusters.getTopicClusterForDay(dayName.substring(0, dayName.length - 1));
+      const nicheTopicData = this.nicheTopicClusters.getTopicClusterForDay(
+        dayName.substring(0, dayName.length - 1),
+        contentStrategy.nichePreference
+      );
 
       if (!nicheTopicData) {
-        console.log(`❌ No niche topic cluster found for ${dayName}`);
-        return;
+        console.log(`❌ No niche topic cluster found for ${dayName} (${postType})`);
+        // Fallback to standard topics
+        const fallbackTopic = this.getFallbackTopic(dayName, postType);
+        return await this.generateFallbackContent(fallbackTopic, contentStrategy);
       }
 
-      // Use specialized niche topic instead of generic topics
-      const selectedTopic = nicheTopicData.selectedTopic.title;
+      // Use specialized niche topic with post type considerations
+      const selectedTopic = contentStrategy.adaptTopic(nicheTopicData.selectedTopic);
       const topicKeywords = nicheTopicData.selectedTopic.keywords;
-      const topicWordCount = nicheTopicData.selectedTopic.wordCount;
-      const targetAudience = nicheTopicData.clusterInfo.targetAudience;
+      const topicWordCount = Math.max(
+        contentStrategy.wordCount, 
+        nicheTopicData.selectedTopic.wordCount
+      );
+      const targetAudience = contentStrategy.audience;
       
       // Map to appropriate content category for author selection
       const mappedCategory = this.mapNicheToCategory(nicheTopicData.cluster);
@@ -229,6 +235,100 @@ class ContentScheduler {
       console.error('❌ Daily content generation failed:', error);
       this.logContentGeneration('daily', 'unknown', 'failed', null, error.message);
     }
+  }
+
+  /**
+   * Get content strategy based on post type and day
+   * @param {string} postType - 'primary' or 'secondary' 
+   * @param {string} dayName - Name of the day
+   * @returns {Object} Content strategy configuration
+   */
+  getContentStrategy(postType, dayName) {
+    const strategies = {
+      primary: {
+        wordCount: 1500,
+        audience: 'Professional investors and advisors',
+        nichePreference: 'detailed',
+        adaptTopic: (topic) => ({
+          ...topic,
+          title: topic.title,
+          contentType: 'comprehensive-guide'
+        })
+      },
+      secondary: {
+        wordCount: 800,
+        audience: 'General UK investors',
+        nichePreference: 'practical',
+        adaptTopic: (topic) => ({
+          ...topic,
+          title: topic.title.includes('Guide') ? 
+            topic.title.replace('Guide', 'Quick Tips') : 
+            `Quick Guide: ${topic.title}`,
+          contentType: 'practical-tips'
+        })
+      }
+    };
+
+    return strategies[postType] || strategies.primary;
+  }
+
+  /**
+   * Get fallback topic when niche topics aren't available
+   * @param {string} dayName - Name of the day
+   * @param {string} postType - 'primary' or 'secondary'
+   * @returns {Object} Fallback topic configuration
+   */
+  getFallbackTopic(dayName, postType) {
+    const fallbackTopics = {
+      primary: {
+        monday: { category: CONTENT_CATEGORIES.INVESTMENT, topic: 'Advanced portfolio construction for UK investors' },
+        tuesday: { category: CONTENT_CATEGORIES.RETIREMENT, topic: 'SIPP vs workplace pension: Professional analysis' },
+        wednesday: { category: CONTENT_CATEGORIES.TAX, topic: 'Capital gains tax optimization strategies' },
+        thursday: { category: CONTENT_CATEGORIES.ESTATE, topic: 'Estate planning for high net worth individuals' },
+        friday: { category: CONTENT_CATEGORIES.MARKET_INSIGHTS, topic: 'Weekly market analysis and outlook' },
+        saturday: { category: CONTENT_CATEGORIES.FINANCIAL_EDUCATION, topic: 'Understanding UK financial regulations' },
+        sunday: { category: CONTENT_CATEGORIES.INVESTMENT, topic: 'ESG investing trends in the UK market' }
+      },
+      secondary: {
+        monday: { category: CONTENT_CATEGORIES.INVESTMENT, topic: '5 quick investment tips for beginners' },
+        tuesday: { category: CONTENT_CATEGORIES.RETIREMENT, topic: 'Pension basics: What you need to know' },
+        wednesday: { category: CONTENT_CATEGORIES.TAX, topic: 'ISA allowance: Make the most of yours' },
+        thursday: { category: CONTENT_CATEGORIES.ESTATE, topic: 'Will writing essentials for UK residents' },
+        friday: { category: CONTENT_CATEGORIES.MARKET_INSIGHTS, topic: 'This week in financial markets' },
+        saturday: { category: CONTENT_CATEGORIES.FINANCIAL_EDUCATION, topic: 'Financial planning checklist' },
+        sunday: { category: CONTENT_CATEGORIES.INVESTMENT, topic: 'Weekend market wrap-up' }
+      }
+    };
+
+    return fallbackTopics[postType][dayName] || fallbackTopics[postType].monday;
+  }
+
+  /**
+   * Generate content using fallback topics
+   * @param {Object} fallbackTopic - Topic configuration
+   * @param {Object} contentStrategy - Content strategy
+   * @returns {Promise<Object>} Generated content result
+   */
+  async generateFallbackContent(fallbackTopic, contentStrategy) {
+    console.log(`🔄 Using fallback topic: ${fallbackTopic.topic}`);
+    
+    const generatedContent = await this.contentGenerator.generateBlogPost({
+      topic: fallbackTopic.topic,
+      category: fallbackTopic.category,
+      keywords: ['UK investors', 'financial planning', 'investment advice'],
+      wordCount: contentStrategy.wordCount,
+      targetAudience: contentStrategy.audience,
+      contentType: contentStrategy.adaptTopic({ title: fallbackTopic.topic }).contentType
+    });
+
+    // Continue with the same quality checks and publishing logic...
+    const result = await this.sanity.createBlogPost({
+      ...generatedContent,
+      status: generatedContent.qualityAnalysis?.passesQualityGate ? 'published' : 'draft'
+    });
+
+    console.log(`✅ Fallback content generated: ${result._id}`);
+    return result;
   }
 
   /**

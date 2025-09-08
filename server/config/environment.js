@@ -19,8 +19,8 @@ export const env = {
   SANITY_API_VERSION: '2023-05-03',
   
   // Content Settings
-  POSTS_PER_WEEK: parseInt(process.env.POSTS_PER_WEEK || '5'), // Mon-Fri posting
-  CONTENT_GENERATION_TIME: process.env.CONTENT_GENERATION_TIME || '09:00', // 9 AM daily
+  POSTS_PER_WEEK: parseInt(process.env.POSTS_PER_WEEK || '14'), // 2 posts daily (7 days)
+  CONTENT_GENERATION_TIME: process.env.CONTENT_GENERATION_TIME || '20:30', // 8:30 PM CET daily
   
   // News APIs (Free tier initially)
   NEWS_RSS_FEEDS: [
