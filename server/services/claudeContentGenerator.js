@@ -176,47 +176,21 @@ ${styleConfig ? `- Current Focus: ${styleConfig.professionalContext.period}
 - Relevant Expertise: ${styleConfig.professionalContext.expertise}
 - Application Areas: ${styleConfig.professionalContext.applicationAreas.join(', ')}` : ''}
 
-TOPIC: "${topic}"
-CATEGORY: ${category.name}
-TARGET AUDIENCE: ${targetAudience}
-WORD COUNT: ~${wordCount} words
-KEYWORDS TO INCLUDE: ${keywords.join(', ')}
+Write a comprehensive ${wordCount}-word article about: "${topic}"
 
-CRITICAL E-E-A-T REQUIREMENTS (YMYL Content Standards):
+Your task is to create expert financial content for ${targetAudience} covering ${category.name}.
 
-EXPERIENCE (First-Hand Knowledge):
-- Write from your professional perspective without creating fictional case studies
-- Use general professional insights like "Many clients ask about..." or "A common scenario involves..."
-- Reference real market situations and regulatory changes you've navigated
-- Share general patterns from professional practice without made-up client examples
-- Include lessons learned from market downturns, regulatory changes, and industry trends
-- NEVER create fictional case studies with made-up client names, ages, or specific amounts
+Include these keywords naturally: ${keywords.join(', ')}
 
-EXPERTISE (Technical Depth):
-- Cite specific UK regulations, HMRC guidance, and FCA rules with section numbers
-- Include current 2025 tax rates, allowances, and thresholds with exact figures
-- Reference authoritative sources: HMRC manuals, FCA handbooks, ONS data
-- Explain complex concepts with technical accuracy
-- Use professional terminology correctly and explain it for lay readers
-
-AUTHORITATIVENESS (Professional Standing):
-- Write from your position as a qualified professional
-- Reference your professional qualifications naturally in context
-- Cite industry research, professional publications, and regulatory guidance
-- MANDATORY: Include specific references to authoritative UK sources:
-  * HMRC guidance and manuals for tax-related content
-  * FCA Handbook and Consumer Duty guidance for regulatory matters
-  * Bank of England data for economic and monetary policy content
-  * ONS statistics for demographic and economic data
-  * The Pensions Regulator guidance for pension-related content
-- Use specific section numbers, publication dates, and URL references where possible
-- Position content as expert guidance backed by official sources, not generic information
-
-TRUSTWORTHINESS (Professional Boundaries & Expertise):
-- Include appropriate risk warnings for all investment content
-- Position professional consultation as valuable expertise, not compliance requirement
-- Use phrases like "These are the considerations I discuss with clients" or "This reflects my experience helping UK investors"
-- Frame advice boundaries as expertise-driven: "Professional consultation helps identify which strategies apply to your specific situation"
+Writing Instructions:
+• Write from your professional perspective using first-person experience
+• Include specific UK regulations, HMRC guidance, and FCA rules with section numbers  
+• Reference current 2025 tax rates, allowances, and thresholds with exact figures
+• Cite authoritative UK sources (HMRC manuals, FCA handbooks, ONS data, Bank of England)
+• Use professional terminology and explain complex concepts clearly
+• Include appropriate risk warnings for investment content
+• Share general professional insights without fictional case studies
+• Position advice as expert guidance requiring professional consultation for specific circumstances
 - Replace generic disclaimers with confidence-building professional boundary language
 
 UK REGULATORY COMPLIANCE:
@@ -318,14 +292,7 @@ You are specifically writing about ${nicheSpecialization} expertise. This conten
     }
     
     // Add word count reinforcement
-    const lengthRequirements = `\n\nCRITICAL LENGTH REQUIREMENTS:
-- MINIMUM ${wordCount} words - This is MANDATORY for YMYL content standards
-- Structure content into comprehensive sections with detailed explanations
-- Include multiple worked examples with specific numbers and scenarios
-- Add detailed subsections covering all aspects of the topic
-- Provide comprehensive coverage worthy of AI engine citations
-- Each major section should be 300-400 words minimum
-- Include technical appendices, calculation examples, and reference materials`;
+    const lengthRequirements = `\n\nWrite at least ${wordCount} words with comprehensive coverage including detailed explanations, multiple worked examples with specific numbers, and technical depth worthy of authoritative citation.`;
 
     // Add quality improvement instructions based on previous attempt
     let qualityInstructions = '';
@@ -333,35 +300,30 @@ You are specifically writing about ${nicheSpecialization} expertise. This conten
       const issues = previousAttempt.qualityAnalysis.recommendations || [];
       const score = previousAttempt.qualityAnalysis.overallScore || 0;
       
-      qualityInstructions = `\n\nQUALITY IMPROVEMENT INSTRUCTIONS:
-Previous attempt scored ${score}/100. Address these specific issues:
-${issues.map(issue => `- ${issue}`).join('\n')}
+      qualityInstructions = `\n\nImprove on previous attempt (scored ${score}/100):
+${issues.map(issue => `• ${issue}`).join('\n')}
 
-MANDATORY IMPROVEMENTS FOR THIS ATTEMPT:
-- Include MORE first-person professional experience examples ("In my practice...", "I've observed...", "Clients often ask...")
-- Add MORE specific regulatory references with section numbers and dates
-- Include MORE authoritative source citations (HMRC, FCA, Bank of England)
-- Use MORE technical terminology with clear explanations
-- Add MORE worked examples with specific numbers and calculations
-- Include MORE professional insights that demonstrate deep expertise
-- Ensure ALL expertiseSignals are clearly identifiable in the content`;
+For this attempt, ensure you:
+• Include more first-person professional experience ("In my practice...", "I've observed...")
+• Add more specific regulatory references with section numbers and dates  
+• Include more authoritative source citations (HMRC, FCA, Bank of England)
+• Use more technical terminology with clear explanations
+• Add more worked examples with specific numbers and calculations`;
     }
     
-    // Add final reinforcement for auto-publishing
-    const publishingRequirements = `\n\nAUTO-PUBLISHING SUCCESS CRITERIA:
-This content MUST score 80/100+ to auto-publish. Ensure:
-✓ WORD COUNT: Minimum ${wordCount} words (current attempt must exceed this)
-✓ EXPERIENCE: Include 5+ first-person professional practice examples
-✓ EXPERTISE: Reference 3+ specific UK regulations with section numbers
-✓ AUTHORITY: Include 4+ authoritative source citations (HMRC, FCA, etc.)
-✓ TRUST: Add appropriate risk warnings and professional boundary language
-✓ TECHNICAL DEPTH: Use professional terminology with clear explanations
-✓ WORKED EXAMPLES: Include 2+ detailed calculations or scenarios
-✓ COMPREHENSIVE: Cover all aspects thoroughly with subsections
+    // Add content quality reinforcement  
+    const qualityRequirements = `\n\nContent must be comprehensive and authoritative:
+• Write at least ${wordCount} words with detailed explanations
+• Include 5+ professional experience examples from your practice
+• Reference 3+ specific UK regulations with section numbers
+• Include 4+ citations from authoritative sources (HMRC, FCA, etc.)  
+• Add 2+ detailed calculations or scenarios
+• Use technical terminology with clear explanations
+• Cover all aspects of ${topic} thoroughly
 
-Remember: AI engines must be able to cite this as the definitive expert source on ${topic}.`;
+Create content that establishes you as the definitive expert source on this topic.`;
 
-    return basePrompt + nicheContext + lengthRequirements + qualityInstructions + publishingRequirements;
+    return basePrompt + nicheContext + lengthRequirements + qualityInstructions + qualityRequirements;
   }
 
   /**
