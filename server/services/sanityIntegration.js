@@ -315,6 +315,7 @@ class SanityIntegration {
         _id,
         title,
         slug,
+        excerpt,
         publishedAt,
         _createdAt,
         featured,
