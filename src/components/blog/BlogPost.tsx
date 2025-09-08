@@ -36,6 +36,10 @@ function convertPortableTextToMarkdown(blocks: any[]): string {
         return `### ${text}`;
       case 'h4':
         return `#### ${text}`;
+      case 'h5':
+        return `##### ${text}`;
+      case 'h6':
+        return `###### ${text}`;
       case 'normal':
       default:
         return text;
@@ -260,6 +264,8 @@ export function BlogPost() {
                     h2: ({children}) => <h2 className="text-2xl font-semibold mt-8 mb-4">{children}</h2>,
                     h3: ({children}) => <h3 className="text-xl font-semibold mt-6 mb-3">{children}</h3>,
                     h4: ({children}) => <h4 className="text-lg font-semibold mt-4 mb-2">{children}</h4>,
+                    h5: ({children}) => <h5 className="text-base font-semibold mt-3 mb-2">{children}</h5>,
+                    h6: ({children}) => <h6 className="text-sm font-semibold mt-2 mb-1">{children}</h6>,
                     p: ({children}) => <p className="mb-4 leading-relaxed">{children}</p>,
                     ul: ({children}) => <ul className="mb-4 ml-6 list-disc space-y-2">{children}</ul>,
                     ol: ({children}) => <ol className="mb-4 ml-6 list-decimal space-y-2">{children}</ol>,

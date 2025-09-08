@@ -251,6 +251,54 @@ class SanityIntegration {
           style: 'h3',
           children: [{ _type: 'span', text: line.replace('### ', '').trim() }]
         });
+      } else if (line.startsWith('#### ')) {
+        if (currentParagraph) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+        blocks.push({
+          _type: 'block', 
+          _key: this.generateKey(),
+          style: 'h4',
+          children: [{ _type: 'span', text: line.replace('#### ', '').trim() }]
+        });
+      } else if (line.startsWith('##### ')) {
+        if (currentParagraph) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+        blocks.push({
+          _type: 'block', 
+          _key: this.generateKey(),
+          style: 'h5',
+          children: [{ _type: 'span', text: line.replace('##### ', '').trim() }]
+        });
+      } else if (line.startsWith('###### ')) {
+        if (currentParagraph) {
+          blocks.push({
+            _type: 'block',
+            _key: this.generateKey(),
+            style: 'normal',
+            children: [{ _type: 'span', text: currentParagraph.trim() }]
+          });
+          currentParagraph = '';
+        }
+        blocks.push({
+          _type: 'block', 
+          _key: this.generateKey(),
+          style: 'h6',
+          children: [{ _type: 'span', text: line.replace('###### ', '').trim() }]
+        });
       } else if (line.trim() === '') {
         // Empty line - end current paragraph
         if (currentParagraph) {
