@@ -168,6 +168,15 @@ function generateBlogHTML(post, assets) {
   const cssAssets = assets.filter(asset => asset.fileName.endsWith('.css'));
   const moduleAssets = assets.filter(asset => asset.fileName.endsWith('.js') && !asset.fileName.includes('index-'));
 
+  // Use custom SEO fields if available, fallback to defaults
+  const seo = post.seo || {};
+  const metaTitle = seo.metaTitle || post.title;
+  const metaDescription = seo.metaDescription || post.excerpt;
+  const ogTitle = seo.ogTitle || seo.metaTitle || post.title;
+  const ogDescription = seo.ogDescription || seo.metaDescription || post.excerpt;
+  const twitterTitle = seo.twitterTitle || ogTitle;
+  const keywords = seo.seoKeywords?.join(', ') || post.tags?.join(', ') || 'financial advice, wealth management';
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -175,18 +184,19 @@ function generateBlogHTML(post, assets) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Blog-specific SEO Meta Tags -->
-  <title>${post.title}</title>
-  <meta name="title" content="${post.title}">
-  <meta name="description" content="${post.excerpt}">
-  <meta name="keywords" content="${post.tags?.join(', ') || 'financial advice, wealth management'}">
+  <title>${metaTitle}</title>
+  <meta name="title" content="${metaTitle}">
+  <meta name="description" content="${metaDescription}">
+  <meta name="keywords" content="${keywords}">
   <meta name="author" content="${post.author?.name || 'Netfin Team'}">
+  ${seo.focusKeyword ? `<meta name="focus-keyword" content="${seo.focusKeyword}">` : ''}
   <link rel="canonical" href="https://netfin.co.uk/insights/${post.slug}">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://netfin.co.uk/insights/${post.slug}">
-  <meta property="og:title" content="${post.title}">
-  <meta property="og:description" content="${post.excerpt}">
+  <meta property="og:title" content="${ogTitle}">
+  <meta property="og:description" content="${ogDescription}">
   <meta property="og:image" content="${post.featuredImage || 'https://netfin.co.uk/og-image.jpg'}">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -200,8 +210,8 @@ function generateBlogHTML(post, assets) {
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://netfin.co.uk/insights/${post.slug}">
-  <meta property="twitter:title" content="${post.title}">
-  <meta property="twitter:description" content="${post.excerpt}">
+  <meta property="twitter:title" content="${twitterTitle}">
+  <meta property="twitter:description" content="${ogDescription}">
   <meta property="twitter:image" content="${post.featuredImage || 'https://netfin.co.uk/og-image.jpg'}">
   <meta property="twitter:creator" content="@NetfinUK">
   <meta property="twitter:site" content="@NetfinUK">
@@ -274,7 +284,8 @@ export function staticPages() {
             tags,
             author->{name, role},
             featuredImageUrl,
-            mainImage
+            mainImage,
+            seo
           }`;
           
           const posts = await client.fetch(query);
@@ -290,7 +301,8 @@ export function staticPages() {
               publishedDate: post.publishedAt,
               tags: post.tags || [],
               author: post.author,
-              featuredImage: post.featuredImageUrl || post.mainImage || 'https://netfin.co.uk/og-image.jpg'
+              featuredImage: post.featuredImageUrl || post.mainImage || 'https://netfin.co.uk/og-image.jpg',
+              seo: post.seo || null
             };
             
             const html = generateBlogHTML(processedPost, assets);

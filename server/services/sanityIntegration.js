@@ -62,7 +62,10 @@ class SanityIntegration {
         // Add featured image as external URL reference
         // Note: For external URLs, we store as a custom field or skip for now
         // Sanity image assets expect uploaded images, not external URLs
-        featuredImageUrl: featuredImage // Custom field for external image URL
+        featuredImageUrl: featuredImage, // Custom field for external image URL
+        
+        // Add SEO meta tags if provided
+        ...(postData.seo && { seo: postData.seo })
       };
 
       // Create the document
@@ -201,8 +204,7 @@ class SanityIntegration {
     
     // First normalize the markdown - ensure proper line breaks
     let normalizedMarkdown = markdown
-      .replace(/([.!?])\s*([#]{1,6}\s)/g, '$1\n\n$2') // Add line breaks before headers after sentences
-      .replace(/([#]{1,6}\s[^\n]*)\s*([^#\n])/g, '$1\n\n$2') // Add line breaks after headers
+      .replace(/([.!?])\s*([#]{1,6}\s)/g, '$1\n\n$2') // Add line breaks before headers after sentences  
       .replace(/\n{3,}/g, '\n\n') // Normalize multiple line breaks to double
       .trim();
     
@@ -250,6 +252,16 @@ class SanityIntegration {
           text = trimmedLine.replace('# ', '').trim();
         }
         
+        // Check if the next line might be a continuation (single character)
+        if (i + 1 < lines.length) {
+          const nextLine = lines[i + 1].trim();
+          if (nextLine.length === 1 && /[a-zA-Z]/.test(nextLine)) {
+            // Merge the single character with the heading text
+            text += nextLine;
+            i++; // Skip the next line since we've processed it
+          }
+        }
+        
         blocks.push({
           _type: 'block',
           _key: this.generateKey(),
@@ -293,7 +305,13 @@ class SanityIntegration {
       } else {
         // Regular content line - add to current paragraph with space separator
         if (currentParagraph && trimmedLine) {
-          currentParagraph += ' ' + trimmedLine;
+          // Check if this is a single character that might be split from previous line
+          if (trimmedLine.length === 1 && /[a-zA-Z]/.test(trimmedLine)) {
+            // Likely a split character - append to previous paragraph without space
+            currentParagraph += trimmedLine;
+          } else {
+            currentParagraph += ' ' + trimmedLine;
+          }
         } else if (trimmedLine) {
           currentParagraph = trimmedLine;
         }
