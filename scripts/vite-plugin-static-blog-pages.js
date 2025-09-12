@@ -281,64 +281,78 @@ function generateStaticPageHTML(page, assets) {
   ${moduleAssets.map(asset => `<link rel="modulepreload" crossorigin href="/${asset.fileName}">`).join('\n  ')}
   
   <style>
-    /* Basic SEO-friendly styles for static content */
-    body { font-family: 'DM Sans', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-    header { background: #1e40af; color: white; padding: 1rem 0; }
-    nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-    nav ul { list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0; }
-    nav a { color: white; text-decoration: none; font-weight: 500; }
-    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
-    h1 { font-size: 2.5rem; color: #1e40af; margin-bottom: 1rem; }
-    h2 { font-size: 2rem; color: #1e40af; margin: 2rem 0 1rem 0; }
-    h3 { font-size: 1.5rem; color: #1e40af; margin: 1.5rem 0 0.5rem 0; }
-    section { margin-bottom: 3rem; }
-    ul { margin: 1rem 0; padding-left: 2rem; }
-    li { margin-bottom: 0.5rem; }
-    a { color: #1e40af; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .cta-button { background: #1e40af; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; display: inline-block; margin-top: 1rem; }
+    /* Static content for SEO - will be hidden when React loads */
+    .seo-static-content { font-family: 'DM Sans', sans-serif; line-height: 1.6; color: #333; }
+    .seo-static-content header { background: #1e40af; color: white; padding: 1rem 0; }
+    .seo-static-content nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .seo-static-content nav ul { list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0; }
+    .seo-static-content nav a { color: white; text-decoration: none; font-weight: 500; }
+    .seo-static-content main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .seo-static-content h1 { font-size: 2.5rem; color: #1e40af; margin-bottom: 1rem; }
+    .seo-static-content h2 { font-size: 2rem; color: #1e40af; margin: 2rem 0 1rem 0; }
+    .seo-static-content h3 { font-size: 1.5rem; color: #1e40af; margin: 1.5rem 0 0.5rem 0; }
+    .seo-static-content section { margin-bottom: 3rem; }
+    .seo-static-content ul { margin: 1rem 0; padding-left: 2rem; }
+    .seo-static-content li { margin-bottom: 0.5rem; }
+    .seo-static-content a { color: #1e40af; text-decoration: none; }
+    .seo-static-content a:hover { text-decoration: underline; }
+    .seo-static-content .cta-button { background: #1e40af; color: white; padding: 0.75rem 1.5rem; border-radius: 0.5rem; display: inline-block; margin-top: 1rem; }
+    
+    /* Hide static content once React starts loading */
+    .react-loading .seo-static-content { display: none; }
   </style>
+  
+  <script>
+    // Mark that React is starting to load
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        document.body.classList.add('react-loading');
+      }, 100);
+    });
+  </script>
 </head>
 <body>
   <div id="root">
     <!-- Static content for SEO - React will hydrate over this -->
-    <header>
-      <nav>
-        <a href="/" aria-label="Netfin Home">Netfin</a>
-        <ul>
-          <li><a href="/wealth-management">Wealth Management</a></li>
-          <li><a href="/financial-planning">Financial Planning</a></li>
-          <li><a href="/investment-advisory">Investment Advisory</a></li>
-          <li><a href="/retirement-planning">Retirement Planning</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
-    
-    <main>
-      <h1>${page.title.replace(' | Netfin', '')}</h1>
-      <p><strong>${page.description}</strong></p>
+    <div class="seo-static-content">
+      <header>
+        <nav>
+          <a href="/" aria-label="Netfin Home">Netfin</a>
+          <ul>
+            <li><a href="/wealth-management">Wealth Management</a></li>
+            <li><a href="/financial-planning">Financial Planning</a></li>
+            <li><a href="/investment-advisory">Investment Advisory</a></li>
+            <li><a href="/retirement-planning">Retirement Planning</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
       
-      ${generatePageContent(page)}
-      
-      <section>
-        <h2>Why Choose Netfin?</h2>
-        <p>Netfin provides comprehensive financial advisory services to UK investors and families. Our qualified, FCA-regulated advisors help you build wealth, plan for retirement, and achieve your financial goals through personalized investment strategies and ongoing support.</p>
+      <main>
+        <h1>${page.title.replace(' | Netfin', '')}</h1>
+        <p><strong>${page.description}</strong></p>
         
-        <ul>
-          <li><strong>FCA Regulated:</strong> Fully authorized and regulated financial advisors</li>
-          <li><strong>Personalized Service:</strong> Tailored strategies for your unique situation</li>
-          <li><strong>Comprehensive Solutions:</strong> From wealth management to retirement planning</li>
-          <li><strong>Ongoing Support:</strong> Regular reviews and strategy adjustments</li>
-        </ul>
-      </section>
-      
-      <section>
-        <h2>Start Your Financial Journey Today</h2>
-        <p>Ready to take control of your financial future? Contact our experienced financial advisors for a free consultation. We're here to help you make informed investment decisions and secure your financial future.</p>
-        <a href="/contact" class="cta-button">Get Your Free Consultation</a>
-      </section>
-    </main>
+        ${generatePageContent(page)}
+        
+        <section>
+          <h2>Why Choose Netfin?</h2>
+          <p>Netfin provides comprehensive financial advisory services to UK investors and families. Our qualified, FCA-regulated advisors help you build wealth, plan for retirement, and achieve your financial goals through personalized investment strategies and ongoing support.</p>
+          
+          <ul>
+            <li><strong>FCA Regulated:</strong> Fully authorized and regulated financial advisors</li>
+            <li><strong>Personalized Service:</strong> Tailored strategies for your unique situation</li>
+            <li><strong>Comprehensive Solutions:</strong> From wealth management to retirement planning</li>
+            <li><strong>Ongoing Support:</strong> Regular reviews and strategy adjustments</li>
+          </ul>
+        </section>
+        
+        <section>
+          <h2>Start Your Financial Journey Today</h2>
+          <p>Ready to take control of your financial future? Contact our experienced financial advisors for a free consultation. We're here to help you make informed investment decisions and secure your financial future.</p>
+          <a href="/contact" class="cta-button">Get Your Free Consultation</a>
+        </section>
+      </main>
+    </div>
   </div>
   
   <!-- Main JS Bundle -->
@@ -425,96 +439,110 @@ function generateBlogHTML(post, assets) {
   ${moduleAssets.map(asset => `<link rel="modulepreload" crossorigin href="/${asset.fileName}">`).join('\n  ')}
   
   <style>
-    /* Basic SEO-friendly styles for static content */
-    body { font-family: 'DM Sans', sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; }
-    header { background: #1e40af; color: white; padding: 1rem 0; }
-    nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
-    nav ul { list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0; }
-    nav a { color: white; text-decoration: none; font-weight: 500; }
-    main { max-width: 800px; margin: 0 auto; padding: 2rem; }
-    article { margin-bottom: 3rem; }
-    h1 { font-size: 2.5rem; color: #1e40af; margin-bottom: 1rem; line-height: 1.2; }
-    h2 { font-size: 2rem; color: #1e40af; margin: 2rem 0 1rem 0; }
-    h3 { font-size: 1.5rem; color: #1e40af; margin: 1.5rem 0 0.5rem 0; }
-    .article-meta { color: #666; margin-bottom: 2rem; }
-    .article-excerpt { font-size: 1.1rem; color: #555; margin-bottom: 2rem; font-style: italic; }
-    section { margin-bottom: 2rem; }
-    p { margin-bottom: 1rem; }
-    a { color: #1e40af; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .tags { margin-top: 2rem; }
-    .tag { display: inline-block; background: #f0f0f0; padding: 0.25rem 0.5rem; margin: 0.25rem; border-radius: 0.25rem; font-size: 0.9rem; }
+    /* Static content for SEO - will be hidden when React loads */
+    .seo-static-content { font-family: 'DM Sans', sans-serif; line-height: 1.6; color: #333; }
+    .seo-static-content header { background: #1e40af; color: white; padding: 1rem 0; }
+    .seo-static-content nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .seo-static-content nav ul { list-style: none; display: flex; gap: 2rem; margin: 0; padding: 0; }
+    .seo-static-content nav a { color: white; text-decoration: none; font-weight: 500; }
+    .seo-static-content main { max-width: 800px; margin: 0 auto; padding: 2rem; }
+    .seo-static-content article { margin-bottom: 3rem; }
+    .seo-static-content h1 { font-size: 2.5rem; color: #1e40af; margin-bottom: 1rem; line-height: 1.2; }
+    .seo-static-content h2 { font-size: 2rem; color: #1e40af; margin: 2rem 0 1rem 0; }
+    .seo-static-content h3 { font-size: 1.5rem; color: #1e40af; margin: 1.5rem 0 0.5rem 0; }
+    .seo-static-content .article-meta { color: #666; margin-bottom: 2rem; }
+    .seo-static-content .article-excerpt { font-size: 1.1rem; color: #555; margin-bottom: 2rem; font-style: italic; }
+    .seo-static-content section { margin-bottom: 2rem; }
+    .seo-static-content p { margin-bottom: 1rem; }
+    .seo-static-content a { color: #1e40af; text-decoration: none; }
+    .seo-static-content a:hover { text-decoration: underline; }
+    .seo-static-content .tags { margin-top: 2rem; }
+    .seo-static-content .tag { display: inline-block; background: #f0f0f0; padding: 0.25rem 0.5rem; margin: 0.25rem; border-radius: 0.25rem; font-size: 0.9rem; }
+    
+    /* Hide static content once React starts loading */
+    .react-loading .seo-static-content { display: none; }
   </style>
+  
+  <script>
+    // Mark that React is starting to load
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        document.body.classList.add('react-loading');
+      }, 100);
+    });
+  </script>
 </head>
 <body>
   <div id="root">
     <!-- Static content for SEO - React will hydrate over this -->
-    <header>
-      <nav>
-        <a href="/" aria-label="Netfin Home">Netfin</a>
-        <ul>
-          <li><a href="/insights">Articles</a></li>
-          <li><a href="/wealth-management">Wealth Management</a></li>
-          <li><a href="/financial-planning">Financial Planning</a></li>
-          <li><a href="/investment-advisory">Investment Advisory</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </nav>
-    </header>
-    
-    <main>
-      <article>
-        <h1>${post.title}</h1>
-        
-        <div class="article-meta">
-          ${post.publishedDate ? `Published: ${new Date(post.publishedDate).toLocaleDateString('en-GB')}` : ''}
-          ${post.author?.name ? ` • By ${post.author.name}` : ''}
-        </div>
-        
-        <div class="article-excerpt">
-          <strong>${post.excerpt}</strong>
-        </div>
-        
-        <section>
-          <h2>Expert Financial Insights</h2>
-          <p>This comprehensive guide provides expert analysis and practical advice for UK investors. Our experienced financial advisors share insights to help you make informed investment decisions and optimize your financial strategy.</p>
-          
-          <p>At Netfin, we understand that every investor's situation is unique. That's why our articles combine market expertise with practical guidance tailored to UK regulations, tax implications, and investment opportunities.</p>
-        </section>
-        
-        <section>
-          <h2>Key Takeaways</h2>
-          <p>This article covers essential considerations for UK investors, including regulatory requirements, tax implications, and strategic planning approaches. Our analysis is based on current market conditions and regulatory guidance from the FCA.</p>
-          
-          <p>For personalized advice based on your specific situation, we recommend consulting with one of our qualified financial advisors who can provide tailored strategies aligned with your financial goals.</p>
-        </section>
-        
-        <section>
-          <h2>Professional Financial Advice</h2>
-          <p>The information provided in this article is for educational purposes and should not replace professional financial advice. Every investor's circumstances are different, and what works for one person may not be suitable for another.</p>
-          
-          <p>Our FCA-regulated financial advisors can provide personalized guidance based on your individual situation, risk tolerance, and financial objectives. <a href="/contact">Contact us today</a> to discuss your financial planning needs.</p>
-        </section>
-        
-        ${post.tags && post.tags.length > 0 ? `
-        <div class="tags">
-          <strong>Topics:</strong>
-          ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-        </div>
-        ` : ''}
-      </article>
+    <div class="seo-static-content">
+      <header>
+        <nav>
+          <a href="/" aria-label="Netfin Home">Netfin</a>
+          <ul>
+            <li><a href="/insights">Articles</a></li>
+            <li><a href="/wealth-management">Wealth Management</a></li>
+            <li><a href="/financial-planning">Financial Planning</a></li>
+            <li><a href="/investment-advisory">Investment Advisory</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+        </nav>
+      </header>
       
-      <section>
-        <h2>Related Services</h2>
-        <p>Interested in learning more about our financial advisory services? Explore our comprehensive offerings:</p>
-        <ul>
-          <li><a href="/wealth-management">Wealth Management Services</a></li>
-          <li><a href="/financial-planning">Financial Planning</a></li>
-          <li><a href="/investment-advisory">Investment Advisory</a></li>
-          <li><a href="/retirement-planning">Retirement Planning</a></li>
-        </ul>
-      </section>
-    </main>
+      <main>
+        <article>
+          <h1>${post.title}</h1>
+          
+          <div class="article-meta">
+            ${post.publishedDate ? `Published: ${new Date(post.publishedDate).toLocaleDateString('en-GB')}` : ''}
+            ${post.author?.name ? ` • By ${post.author.name}` : ''}
+          </div>
+          
+          <div class="article-excerpt">
+            <strong>${post.excerpt}</strong>
+          </div>
+          
+          <section>
+            <h2>Expert Financial Insights</h2>
+            <p>This comprehensive guide provides expert analysis and practical advice for UK investors. Our experienced financial advisors share insights to help you make informed investment decisions and optimize your financial strategy.</p>
+            
+            <p>At Netfin, we understand that every investor's situation is unique. That's why our articles combine market expertise with practical guidance tailored to UK regulations, tax implications, and investment opportunities.</p>
+          </section>
+          
+          <section>
+            <h2>Key Takeaways</h2>
+            <p>This article covers essential considerations for UK investors, including regulatory requirements, tax implications, and strategic planning approaches. Our analysis is based on current market conditions and regulatory guidance from the FCA.</p>
+            
+            <p>For personalized advice based on your specific situation, we recommend consulting with one of our qualified financial advisors who can provide tailored strategies aligned with your financial goals.</p>
+          </section>
+          
+          <section>
+            <h2>Professional Financial Advice</h2>
+            <p>The information provided in this article is for educational purposes and should not replace professional financial advice. Every investor's circumstances are different, and what works for one person may not be suitable for another.</p>
+            
+            <p>Our FCA-regulated financial advisors can provide personalized guidance based on your individual situation, risk tolerance, and financial objectives. <a href="/contact">Contact us today</a> to discuss your financial planning needs.</p>
+          </section>
+          
+          ${post.tags && post.tags.length > 0 ? `
+          <div class="tags">
+            <strong>Topics:</strong>
+            ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          </div>
+          ` : ''}
+        </article>
+        
+        <section>
+          <h2>Related Services</h2>
+          <p>Interested in learning more about our financial advisory services? Explore our comprehensive offerings:</p>
+          <ul>
+            <li><a href="/wealth-management">Wealth Management Services</a></li>
+            <li><a href="/financial-planning">Financial Planning</a></li>
+            <li><a href="/investment-advisory">Investment Advisory</a></li>
+            <li><a href="/retirement-planning">Retirement Planning</a></li>
+          </ul>
+        </section>
+      </main>
+    </div>
   </div>
   
   <!-- Main JS Bundle -->
