@@ -34,8 +34,19 @@ const testStaticPageGeneration = () => {
       process.exit(1);
     }
     
-    if (!content.includes('<div id="root"></div>')) {
+    if (!content.includes('<div id="root">')) {
       console.error(`❌ Test failed: ${page.file} missing React root div`);
+      process.exit(1);
+    }
+    
+    // Check for static content inside root div
+    if (!content.includes('<header>')) {
+      console.error(`❌ Test failed: ${page.file} missing static header content`);
+      process.exit(1);
+    }
+    
+    if (!content.includes('<main>')) {
+      console.error(`❌ Test failed: ${page.file} missing static main content`);
       process.exit(1);
     }
     
