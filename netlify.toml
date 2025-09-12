@@ -22,10 +22,71 @@
   to = "/insights/maximizing-your-retirement-savings-2025"
   status = 301
 
+# SPA fallback - only for routes without static files
+# Static files (blog posts, marketing pages) will be served directly
+[[redirects]]
+  from = "/insights"
+  to = "/insights/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/wealth-management"
+  to = "/wealth-management/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/financial-planning"
+  to = "/financial-planning/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/investment-advisory"
+  to = "/investment-advisory/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/retirement-planning"
+  to = "/retirement-planning/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/risk-management"
+  to = "/risk-management/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/education-planning"
+  to = "/education-planning/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/how-to-choose-financial-advisor"
+  to = "/how-to-choose-financial-advisor/index.html"
+  status = 200
+
+# SPA fallback for dynamic routes only (not static file routes)
+[[redirects]]
+  from = "/admin*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/calculators*"
+  to = "/index.html"
+  status = 200
+
+# SPA fallback for routes that don't have static files
+# This will only trigger if no static file exists at the path
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
 # Security headers
 [[headers]]
