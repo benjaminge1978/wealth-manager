@@ -3,9 +3,10 @@
   import react from '@vitejs/plugin-react-swc';
   import path from 'path';
   import { staticPages } from './scripts/vite-plugin-static-blog-pages.js';
+  import { dynamicSitemap } from './scripts/vite-plugin-dynamic-sitemap.js';
 
   export default defineConfig({
-    plugins: [react(), staticPages()],
+    plugins: [react(), staticPages(), dynamicSitemap()],
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
