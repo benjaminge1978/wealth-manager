@@ -5,6 +5,25 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Canonical domain + HTTPS (avoid redirect chains and duplicate hosts)
+[[redirects]]
+  from = "http://netfin.co.uk/*"
+  to = "https://netfin.co.uk/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.netfin.co.uk/*"
+  to = "https://netfin.co.uk/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.netfin.co.uk/*"
+  to = "https://netfin.co.uk/:splat"
+  status = 301
+  force = true
+
 # 301 redirects for blog to insights migration
 [[redirects]]
   from = "/blog"
